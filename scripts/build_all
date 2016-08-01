@@ -1,0 +1,12 @@
+#!/bin/sh
+
+[ ! -f ./config.in ] && exit 1
+. ./config.in
+
+DIR=$(dirname $(dirname $ME))/share
+
+mkdir -p $DIR
+
+for i in $(ls *.sh | grep -v emacs.sh); do
+    bash $i build
+done

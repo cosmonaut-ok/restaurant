@@ -1,0 +1,20 @@
+WGET="`which wget` -q"
+TMP="$(mktemp -d /tmp/.inst_el.XXX)"
+CD=`which cd`
+ME=`realpath $0`
+DST="$(dirname $(dirname $ME))/share/"
+TAR=`which tar`
+UZIP=`which unzip`
+RM=`which rm`
+MKDIR=`which mkdir`
+
+$MKDIR -p $TMP
+
+
+get_url_with_name()
+# args: $name $url dst_file
+{
+	echo -n "Getting $1..."
+	cd $TMP
+	$WGET $2 -O $3 && echo "[ DONE ]" || echo "[ FALSE ]"
+}

@@ -32,7 +32,6 @@ build-iPhoneSimulator/
 ## Documentation cache and generated files:
 /.yardoc/
 /_yardoc/
-/doc/
 /rdoc/
 
 ## Environment normalization:
@@ -48,3 +47,55 @@ build-iPhoneSimulator/
 
 # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
 .rvmrc
+
+
+
+
+
+####################################################################################################
+#*
+*#
+share
+.packages.installed.p
+.python-environments
+ac-comphist.dat
+*~
+session.*
+auto-save-list
+backups
+ac-comphist.dat
+el-get
+el-get-user
+elpa
+ido.last
+recentf
+srecode-map.el
+ac-comphist.dat
+nano*
+projectile-bookmarks.eld
+projectile.cache
+recentf
+srecode-map.el
+tramp
+_region_.*
+*/auto/*
+*.aux
+*.log
+*.out
+*.pdf
+*.toc
+*.fmt
+*.log
+custom.el
+jabber-*
+elim
+url
+semanticdb
+rc/.bundle
+places
+Gemfile.lock
+ede-projects.el
+rc.local.el
+rc.custom.el
+tags
+emacs/

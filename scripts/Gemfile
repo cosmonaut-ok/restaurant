@@ -1,0 +1,33 @@
+source 'https://rubygems.org'
+
+gem 'rubocop', '= 0.41.0'
+gem 'pry'
+gem 'pry-doc'
+gem 'method_source'
+
+# # gem 'berkshelf', '~> 3.2.1'
+# # # use the same version of chef as the bootstrapped nodes
+# # # see site-cookbooks/tc-base/attributes/chef-client.rb
+gem 'chef', '= 11.16.2'
+# # # TODO remove ffi-yajl binding when we upgrade to chef 12+
+# # gem 'ffi-yajl', '= 1.2.0'
+# # gem 'chef-provisioning', '= 0.16'
+# # gem 'chef-provisioning-fog', '= 0.10.0'
+gem 'knife-solo'
+gem 'knife-solo_data_bag'
+# # gem 'knife-block'
+# # gem 'thor', '~> 0.19.0'
+# # gem 'foodcritic'
+gem 'test-kitchen'
+# # gem 'kitchen-rackspace'
+gem 'kitchen-vagrant'
+gem 'chefspec', '~> 4.0.2'
+gem 'serverspec', '= 2.0.0'
+gem 'rack', '=1.5.2'
+# # gem 'kitchen-openstack'
+# # gem 'jvmargs'
+# # gem 'fog', '= 1.24.0'
+# # gem 'nio4r', '=1.1.1'
+
+# # # We need to install this so that we can run chefspec in tc-rs-dns
+# # gem 'dnsruby'

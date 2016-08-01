@@ -1,0 +1,12 @@
+
+case $1 in
+    "build")
+	pkg_install && echo "[ INSTALLED ]" || echo "[ FAILED TO INSTALL ]"
+	;;
+    "update")
+	pkg_update && echo "[ UPDATED ]" || echo "[ FAILED TO UPDATED ]"
+	;;
+    *)
+	echo "Not implemented"
+	;;
+esac
