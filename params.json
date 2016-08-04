@@ -1,6 +1,6 @@
 {
   "name": "Restaurant",
   "tagline": "emacs, chef, ide",
-  "body": "### Restaurant Project\r\n\r\nThis is the **Restaurant** project - an emacs-based IDE for working with chef ecosystem",
+  "body": "### Restaurant Project\r\n\r\nThis is the **Restaurant** project - an emacs-based IDE for working with chef ecosystem\r\n\r\nHere is [WIKI](wiki)",
   "note": "Don't delete this file! It's used internally to help with page regeneration."
 }
