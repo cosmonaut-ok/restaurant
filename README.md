@@ -8,6 +8,11 @@ There is no specialized Chef IDE for DevOps for free usage (there is RubyMine wi
 
 **NOTE:** To use Restaurant, you must have working **ruby, bundler, chef, knife, rspec and kitchen**
 
+### Install basic packages
+```bash
+user@host$ apt-get install emacs24 git gpg
+```
+
 ### Install RVM (optional)
 ```bash
 user@host$ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
@@ -16,9 +21,9 @@ user@host$ rvm install 2.1 # or what ruby version you want
 user@host$ rvm docs generate-ri # optional. Generate documentation
 ```
 
-### Install basic packages
+### Install basic packages (w/o RVM)
 ```bash
-user@host$ apt-get install emacs24 git gpg
+user@host$ apt-get install emacs24 git gpg ruby gem ruby-bundler
 ```
 
 ### Install Restaurant
