@@ -17,10 +17,11 @@ MYDIR=$(dirname $ME)
 if [ ! -z $EMACS ]; then
     :
 elif [ -x $MYDIR/../emacs/src/emacs ]; then
-    EMACS=$MYDIR/../emacs/src/emacs
-    EMACSDATA=$MYDIR/../emacs/etc/
+    export EMACS=$MYDIR/../emacs/src/emacs
+    export EMACSDATA=$MYDIR/../emacs/etc/
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MYDIR/../emacs/lib/
 elif [ ! -z `which emacs` ]; then
-    EMACS=`which emacs`
+    export EMACS=`which emacs`
 else
     echo "ERROR: There is no ``emacs`` binary in system"
     exit 1
