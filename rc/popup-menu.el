@@ -22,8 +22,12 @@ See `popup-commands' which calls this"
      (choose-from-menu
       "Context menu"
       (list
+       (cons "Open Terminal here" "(open-console)")
+       (cons "-" "")
        (cons "Open File [C-x C-f]" "(call-interactively 'find-file)")
        (cons "Save File [C-x C-s]" "(call-interactively 'save-buffer)")
+       (cons "-" "")
+       (cons "Open Buffer in new window" "(make-frame-command)")
        (cons "-" "")
        (cons "Cut [C-w]" "(kill-ring)")
        (cons "Copy [M-w]" "(kill-ring-save)")
