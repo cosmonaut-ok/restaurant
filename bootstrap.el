@@ -1,5 +1,5 @@
 (defvar restaurant/source-directory (file-name-directory load-file-name))
-(defvar restaurant/packages-installed-p (concat restaurant/source-directory ".packages.installed.p"))
+(defvar restaurant/packages-installed-p (concat restaurant/source-directory "build"))
 (defvar restaurant/elget-user-recipes-path (concat restaurant/source-directory "el-get-user/recipes"))
 (defvar restaurant/do-bootstrap t)
 
@@ -47,6 +47,7 @@
     "yasnippets"
     "yasnippet-snippets"
     "popup"
+    "projectile"
     ;; fun
     "nyan-mode"
     ))
@@ -115,11 +116,12 @@
 
 ;;; Waiting for installation completed
 (when (and (not (null (process-list))) restaurant/do-bootstrap)
-  (message "Waiting while installation completed..."))
-;; awaiting
-(loop
- t
- (if (null (process-list))
-     (return)
-   ;; (sleep-for 10)))
-   (and  (sleep-for 10) (message "...still running. Waiting 10 sec..."))))
+  (message "Waiting while installation completed...")
+  (sleep-for 30))
+;; ;; awaiting
+;; (loop
+;;  t
+;;  (if (null (process-list))
+;;      (return)
+;;    ;; (sleep-for 10)))
+;;    (and  (sleep-for 10) (message "...still running. Waiting 10 sec..."))))

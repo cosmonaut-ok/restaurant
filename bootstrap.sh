@@ -13,7 +13,7 @@ realpath () {
 
 [ ! -z $EMACS ] || EMACS=`which emacs`
 
-REQUIRED_APPS="convert ruby git"
+REQUIRED_APPS="convert ruby git autoconf automake"
 BIN_DIR=~/bin/
 ME=$(dirname $(realpath $0))
 
@@ -24,31 +24,15 @@ fi
 
 for i in $REQUIRED_APPS; do
     if [ -z `which $i 2>/dev/null` ]; then
-        echo "You must install realpath, imagemagik, ruby and git before running this script"
+        echo "You must install realpath, imagemagik, ruby, git mercurial and autotools before running this script"
         exit 1
     fi
 done
 
-if [ -z "$(which git)" ]; then
-    echo "Install ``git'' before bootstrapping"
-    exit 1
-elif [ -z "$(which hg)" ]; then
-    echo "Install ``mercurial'' before bootstrapping"
-    exit 1
-elif [ -z "$(which autoconf)" ]; then
-    echo "Install ``autoconf'' before bootstrapping"
-    exit 1
-elif [ -z "$(which automake)" ]; then
-    echo "Install ``automake'' before bootstrapping"
-    exit 1
-fi
-
 do_build()
 {
     cd ${ME}
-    $EMACS -Q --debug-init --script "$(dirname $0)"/bootstrap.el
-    cd ${ME}/scripts/
-    ./build_all
+    make build
 }
 
 install_desktop_and_icons()
@@ -106,10 +90,7 @@ do_install()
 do_clean()
 {
     cd ${ME}
-    echo -n "Clearing source directory..."
-    rm -rf share el-get elpa .packages.installed.p
-    find ${ME} -type f -name '*~' -delete
-    echo '[ DONE ]'
+    make clean
 }
 
 do_help()

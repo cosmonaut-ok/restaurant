@@ -1,10 +1,10 @@
 
-EMACS_URI=http://ftp.gnu.org/pub/gnu/emacs/emacs-24.5.tar.gz
-BUILD_DIR=/tmp/restaurant-release-tmp.zKdT0u
+EMACS_URI=@EMACS_URI@
+BUILD_DIR=@BUILD_DIR@
 ARCHIVE_NAME=$(shell basename ${EMACS_URI})
 SOURCE_DIR=$(shell basename ${EMACS_URI} .tar.gz)
-RUBY=yes
-BUNDLE=yes
+RUBY=@RUBY@
+BUNDLE=@BUNDLE@
 
 all: emacs build clean-build clean-local
 
@@ -18,7 +18,7 @@ emacs:
 	@tar -C ${BUILD_DIR} -xf ${BUILD_DIR}/${ARCHIVE_NAME}
 	@echo "Building emacs..."
 	cd ${BUILD_DIR}/${SOURCE_DIR} && \
-	./configure --prefix=/ --without-pop --with-x-toolkit=gtk  --without-gif --without-png --without-jpeg --without-tiff && \
+	./configure --prefix=/ --without-pop --with-x-toolkit=@GUI_TOOLKIT@ @BUILD_OPTIONS@ && \
 	make && \
 	make install DESTDIR=${BUILD_DIR}/emacs-build
 	@cp -r ${BUILD_DIR}/${SOURCE_DIR}/lib-src ${BUILD_DIR}/emacs-build/lib-src
@@ -28,7 +28,7 @@ emacs:
 
 package:
 	@echo "Building package..."
-	@for i in bin bootstrap.el bootstrap.sh data init.el LICENSE rc README.md scripts snippets themes el-get elpa emacs; do cp -rp $$i ${BUILD_DIR}/restaurant/; done
+	@for i in @RELEASE_FILES@; do cp -rp $$i ${BUILD_DIR}/restaurant/; done
 	@touch ${BUILD_DIR}/restaurant/build
 	@echo "Stripping package from unneded files..."
 	@find ${BUILD_DIR}/restaurant/ -type d -name '.git' -exec rm -rf {} +
@@ -38,8 +38,8 @@ package:
 	@find ${BUILD_DIR}/restaurant/ -type f -name '.*#$$' -delete
 	# TODO: add external libraries
 	@echo "Packaging..."
-	@cd ${BUILD_DIR} && tar -czpf restaurant-0.1-CURRENT.tar.gz restaurant
-	@cp ${BUILD_DIR}/restaurant-0.1-CURRENT.tar.gz .
+	@cd ${BUILD_DIR} && tar -czpf restaurant-@RESTAURANT_VERSION@.tar.gz restaurant
+	@cp ${BUILD_DIR}/restaurant-@RESTAURANT_VERSION@.tar.gz .
 
 clean-build:
 	@echo "Clearing build directory..."
@@ -59,7 +59,7 @@ clean: clean-build clean-local
 
 build:
 	@echo "Building restaurant..."
-	/usr/bin/emacs -Q --debug-init --script ./bootstrap.el
+	@EMACS@ -Q --debug-init --script ./bootstrap.el
 	@cd scripts && ./build_all
 	@chmod 755 bin/restaurant
 	@cat bootstrap.el > build

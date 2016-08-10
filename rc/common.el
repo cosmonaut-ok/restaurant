@@ -8,6 +8,8 @@
 (require 'hideshowvis)
 (require 'redo)
 
+(add-to-list 'load-path (locate-source-file "data"))
+
 (defun add-auto-mode (mode &rest files)
   "Connect file type to some"
   (dolist (f files)
@@ -138,7 +140,9 @@
   (company-quickhelp-mode 1)
   (hideshowvis-minor-mode 1)
   (auto-fill-mode -1)
-  ;; (projectile-mode 1)
+  ;; projectile
+  (require 'projectile)
+  (projectile-mode 1)
 
   (subword-mode 1)
   (when restaurant/highlight-parentheses-mode
@@ -429,13 +433,8 @@ ARGS is dummy"
 (defun open-console (&optional command)
   (interactive)
   (if command
-      (shell-command (concat restaurant/default-terminal-emulator " " "-e" " " command))
-    (shell-command restaurant/default-terminal-emulator)))
-
-(add-to-list 'load-path (locate-source-file "data"))
-
-;; add
-(tool-bar-add-item "terminal" 'open-console 'run-console-here)
+      (async-shell-command (concat restaurant/default-terminal-emulator " " "-e" " " command))
+    (async-shell-command restaurant/default-terminal-emulator)))
 
 ;;;
 ;;; initialize package
