@@ -429,8 +429,8 @@ ARGS is dummy"
 (defun open-console (&optional command)
   (interactive)
   (if command
-      (shell-command (concat restaurant/default-terminal-emulator " " "-e" " " command))
-    (shell-command restaurant/default-terminal-emulator)))
+      (async-shell-command (concat restaurant/default-terminal-emulator " " "-e" " " command))
+    (async-shell-command restaurant/default-terminal-emulator)))
 
 (add-to-list 'load-path (locate-source-file "data"))
 
