@@ -48,15 +48,10 @@ build-iPhoneSimulator/
 # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
 .rvmrc
 
-
-
-
-
 ####################################################################################################
 #*
 *#
 share
-.packages.installed.p
 .python-environments
 ac-comphist.dat
 *~
@@ -95,7 +90,11 @@ rc/.bundle
 places
 Gemfile.lock
 ede-projects.el
-rc.local.el
-rc.custom.el
 tags
 emacs/
+autom4te.cache
+config.status
+configure
+bin/restaurant
+build
+*.tar.gz

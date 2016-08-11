@@ -1,3 +1,7 @@
+;; check if ruby installed
+(when (not (shell-command "which ruby"))
+  (warn "WARNING! There is no ruby in system. Extended ruby/chef features are not supported"))
+
 (defvar restaurant/source-directory (file-name-directory load-file-name))
 (defvar restaurant/list-load-components '("common" "company" "ruby" "chef" "ecb" "markdown" "web" "yasnippet" "popup-menu" "menubar" "toolbar" "theme"))
 
@@ -10,9 +14,7 @@
 ;; user-restaurant-lisp-directory
 ;; user-restaurant-documents-directory
 
-(defvar restaurant/packages-installed-p (locate-source-file ".packages.installed.p"))
-
-(princ (locate-source-file ".packages.installed.p"))
+(defvar restaurant/packages-installed-p (locate-source-file "build"))
 
 (load (locate-source-file "bootstrap.el"))
 (require 'el-get)

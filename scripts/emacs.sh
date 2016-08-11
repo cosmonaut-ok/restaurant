@@ -6,6 +6,14 @@ _PWD=$PWD
 
 MYDIR=`mktemp -d /tmp/emacs-tmp.XXXX`
 
+find_projdir() {
+    
+}
+
+
+
+
+
 echo $MYDIR
 
 cd $MYDIR
