@@ -43,35 +43,6 @@ See URL `http://acrmp.github.io/foodcritic/'."
 
 (add-hook 'chef-mode-hook #'restaurant/chef-kitchen)
 
-;; add kitchen menu
-(define-key ruby-mode-map
-  [menu-bar test-kitchen]
-  (cons "Test Kitchen" (make-sparse-keymap "Test Kitchen")))
-
-(define-key ruby-mode-map
-  [menu-bar test-kitchen converge]
-  '("Converge" . test-kitchen-converge))
-
-(define-key ruby-mode-map
-  [menu-bar test-kitchen list]
-  '("List" . test-kitchen-list))
-
-(define-key ruby-mode-map
-  [menu-bar test-kitchen verify]
-  '("Verify" . test-kitchen-verify))
-
-(define-key ruby-mode-map
-  [menu-bar test-kitchen destroy]
-  '("Destroy" . test-kitchen-destroy))
-
-(define-key ruby-mode-map
-  [menu-bar test-kitchen test]
-  '("Test" . test-kitchen-test))
-
-;; (defun test-kitchen-login ()
-;;   (interactive)
-;;   (open-console "kitchen login"))
-
 (defun test-kitchen-login ()
   (interactive)
   (let ((root-dir (test-kitchen-locate-root-dir)))
@@ -80,10 +51,6 @@ See URL `http://acrmp.github.io/foodcritic/'."
               (out-buffer (get-buffer-create "*chef output*")))
           (open-console "kitchen login"))
       (error "Couldn't locate .kitchen.yml!"))))
-  
-(define-key ruby-mode-map
-  [menu-bar test-kitchen test]
-  '("Login" . test-kitchen-login))
 
 ;; kitchen customs
 (defgroup restaurant/chef nil

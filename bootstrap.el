@@ -47,6 +47,7 @@
     "yasnippets"
     "yasnippet-snippets"
     "popup"
+    "projectile"
     ;; fun
     "nyan-mode"
     ))
