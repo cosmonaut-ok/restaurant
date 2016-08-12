@@ -84,7 +84,7 @@ branches:
 ###
 
 install:
-  - sudo apt-get -qq install realpath imagemagick
+  - sudo apt-get -qq install realpath imagemagick autoconf automake git mercurial
   - if [ "$EMACS" = 'emacs23' ]; then
         sudo apt-get -qq update &&
         sudo apt-get -qq -f install &&
@@ -105,8 +105,9 @@ install:
     fi
 
 script:
-  - /bin/bash -x ./bootstrap.sh install
-  - /bin/bash -x ./bootstrap.sh clean
+  - autoconf
+  - ./configure
+  - make
 
 ###
 ### settings
