@@ -8,6 +8,7 @@
 (defvar *el-get-packages-list*
   '(
     "ruby-mode"
+    "ruby-electric"
     "ruby-hash-syntax"
     "robe-mode"
     "company-mode"

@@ -5,6 +5,7 @@
 ;;; Code:
 
 (require 'ruby-mode)
+(require 'ruby-electric)
 (require 'ruby-hash-syntax)
 
 (add-auto-mode 'ruby-mode
@@ -45,6 +46,11 @@
   '(add-hook 'robe-mode-hook #'restaurant/push-company-robe))
 
 (add-hook 'ruby-mode-hook 'restaurant/ruby-robe)
+
+;;;
+;;; ruby-electric
+;;;
+(add-hook 'ruby-mode-hook #'ruby-electric-mode)
 
 ;;;
 ;;; rvm

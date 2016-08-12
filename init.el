@@ -3,7 +3,7 @@
   (warn "WARNING! There is no ruby in system. Extended ruby/chef features are not supported"))
 
 (defvar restaurant/source-directory (file-name-directory load-file-name))
-(defvar restaurant/list-load-components '("common" "company" "ruby" "chef" "ecb" "markdown" "web" "yasnippet" "popup-menu" "menubar" "toolbar" "theme"))
+(defvar restaurant/list-load-components '("common" "company" "ruby" "chef" "ecb" "markdown" "web" "yasnippet" "popup-menu" "erb" "menubar" "toolbar" "theme"))
 
 (load (concat restaurant/source-directory "rc/user-directories.el"))
 ;;;; DIRS:
