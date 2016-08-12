@@ -7,7 +7,7 @@
 ;;       (quote
 ;;        ("orange1" "gray" "greenyellow" "green1" "springgreen1" "cyan1" "slateblue1" "magenta1" "purple")))
 
-(setq custom-theme-directory (concat restaurant/source-directory "/themes"))
+(setq custom-theme-directory (concat restaurant/source-directory "data/themes"))
 
 (mkdir restaurant/user-data-directory t)
 (add-to-list 'custom-theme-load-path (concat restaurant/user-data-directory "/themes")) ;; TODO: add all themes in this folder

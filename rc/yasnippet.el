@@ -8,21 +8,22 @@
 (require 'popup)
 
 (require 'yasnippet)
+;; (require 'yasnippets)
+
 (yas/initialize)
 
-(add-to-list 'yas/snippet-dirs (concat restaurant/source-directory "snippets/"))
+(add-to-list 'yas/snippet-dirs (concat restaurant/source-directory "/data/snippets/"))
 (add-to-list 'yas/snippet-dirs (concat restaurant/source-directory "el-get/yasnippet-snippets/"))
-(add-to-list 'yas/snippet-dirs (concat restaurant/source-directory "el-get/yasnippet/snippets/"))
 (add-to-list 'yas/snippet-dirs (concat restaurant/source-directory "el-get/yasnippets/"))
 (add-to-list 'yas/snippet-dirs (concat restaurant/source-directory "share/rspec-mode/snippets/"))
-(add-to-list 'yas/snippet-dirs (locate-user-data-file "/snippets/"))
+(add-to-list 'yas/snippet-dirs (concat restaurant/user-data-directory "/snippets/"))
 
 ;; (yas-global-mode 1)
 (yas/reload-all)
 
 ;; do not bind yasnippet to TAB key. Bind it to C-TAB
-;; (define-key yas-minor-mode-map (kbd "<C-M-tab>") ;; 'yas-ido-expand)
-(define-key yas-minor-mode-map (kbd "<C-M-tab>") nil)
+(define-key yas-minor-mode-map (kbd "<C-M-tab>") 'yas-ido-expand)
+(define-key yas-minor-mode-map (kbd "<tab>") nil)
 (global-set-key (kbd "<C-tab>") 'company-yasnippet)
 ;; (add-to-list 'auto-mode-alist '("/snippets/" . snippet-mode))
 
@@ -79,6 +80,22 @@
 (eval-after-load 'rspec-mode
   '(rspec-install-snippets))
 
-;; (define-key yas-minor-mode-map (kbd "<C-tab>") 'yas-ido-expand)
+;; yas-chef-mode
+(add-hook 'chef-mode-hook
+	  #'(lambda ()
+	      (yas-activate-extra-mode 'chef-mode)))
 
-;;; emacs-rc-yasnippet.el ends here
+;; do not activate yas in term
+(add-hook 'term-mode-hook (lambda()
+			    (setq yas-dont-activate t)))
+
+;;;
+;;; yas-minor-mode
+;;;
+(defun restaurant/yas-minor-mode-init ()
+  (yas-minor-mode-on)
+  )
+
+(add-hook 'prog-mode-hook 'restaurant/yas-minor-mode-init)
+
+;;; yasnippet.el ends here

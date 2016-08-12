@@ -1,0 +1,15 @@
+source 'https://rubygems.org'
+
+gem 'rubocop', '= 0.41.0'
+gem 'pry'
+gem 'pry-doc'
+gem 'method_source'
+
+gem 'berkshelf'
+gem 'chef'
+gem 'knife-solo'
+gem 'knife-solo_data_bag'
+gem 'foodcritic'
+gem 'test-kitchen'
+gem 'chefspec'
+gem 'serverspec'

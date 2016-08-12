@@ -1,15 +1,28 @@
+;;;
+;;; company-mode
+;;;
 (require 'company)
-(add-hook 'after-init-hook 'global-company-mode)
+(require 'company-quickhelp)
+
+
+;; (add-hook 'after-init-hook 'global-company-mode)
+
+(add-hook 'prog-mode-hook #'(lambda () (company-mode 1)))
 
 (setq company-idle-delay 0
-      company-auto-complete nil
+      company-auto-complete t
       company-minimum-prefix-length 3
       company-dabbrev-downcase nil
-      company-dabbrev-ignore-case nil
-      company-dabbrev-code-ignore-case nil)
-
-;; (define-key evil-insert-state-map "\C-n" nil)
-;; (evil-define-key 'insert company-mode-map (kbd "C-n") 'company-complete)
+      company-dabbrev-ignore-case t
+      company-dabbrev-code-ignore-case t)
 
 (define-key company-active-map (kbd "C-n") #'company-select-next)
 (define-key company-active-map (kbd "C-p") #'company-select-previous)
+
+(eval-after-load 'company
+  (lambda ()
+    (setq company-quickhelp-delay 1)
+    (define-key company-active-map (kbd "M-h") #'company-quickhelp-manual-begin)
+    (global-set-key (kbd "<backtab>") 'company-complete)
+    ))
+

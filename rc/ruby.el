@@ -4,101 +4,130 @@
 
 ;;; Code:
 
-(require 'ruby-mode)
-(require 'ruby-electric)
+(require 'enh-ruby-mode)
+(defalias 'ruby-mode 'enh-ruby-mode)
+
+;; Adapted from the method used by TextMate, this library provides a command
+;; ruby-toggle-hash-syntax which attempts to automatically convert the
+;; selected region of ruby code between 1.8 and 1.9 hash styles.
 (require 'ruby-hash-syntax)
 
-(add-auto-mode 'ruby-mode
-               "Rakefile\\'" "\\.rake\\'" "\\.rxml\\'"
+;; add auto-modes
+(add-auto-mode 'enh-ruby-mode
+               "Rakefile\\'" "\\.rake\\'" "\\.rxml\\'" "\\/spec\\/" "\\.rb\\'"
                "\\.rjs\\'" "\\.irbrc\\'" "\\.pryrc\\'" "\\.builder\\'" "\\.ru\\'"
                "\\.gemspec\\'" "Gemfile\\'")
 
+;; TODO: add it to restaurant/init function
 (setf ruby-indent-level restaurant/indent-level)
 
-;;;
-;;; robe mode: code navigtion, documentation
-;;;
-(add-hook 'ruby-mode-hook 'robe-mode)
+(eval-after-load 'ruby-mode
+  '(define-key enh-ruby-mode-map (kbd "TAB") 'indent-for-tab-command))
 
-(defgroup restaurant/ruby nil
-  "Ruby-specific options"
-  :group 'restaurant
-)
-
-(defcustom restaurant/robe-auto-enable nil
-  "Enable ROBE automatically, when open ruby file"
-  :type 'boolean
-  :group 'restaurant/ruby
-  )
-
-(defun restaurant/ruby-robe ()
-  (when restaurant/robe-auto-enable
-    (require 'robe)
-    (push 'company-robe company-backends)
-    (setq robe-turn-on-eldoc nil)
-    (robe-start)))
-
-;; push robe to company backends
-(defun restaurant/push-company-robe ()
-  (push 'company-robe company-backends))
-
-(eval-after-load "company"
-  '(add-hook 'robe-mode-hook #'restaurant/push-company-robe))
-
-(add-hook 'ruby-mode-hook 'restaurant/ruby-robe)
-
+(add-hook 'enh-ruby-mode-hook (lambda ()
+                            (setf ruby-indent-level restaurant/indent-level)))
 ;;;
 ;;; ruby-electric
 ;;;
-(add-hook 'ruby-mode-hook #'ruby-electric-mode)
+(defun restaurant/ruby-electric-init ()
+  (when restaurant/enable-electric
+    (require 'ruby-electric)
+    (ruby-electric-mode t)))
+
+(add-hook 'enh-ruby-mode-hook #'restaurant/ruby-electric-init)
+
+;;;
+;;; ruby-tools
+;;;
+(defun restaurant/ruby-tools-init ()
+  (when restaurant/enable-ruby-tools
+    (require 'ruby-tools)
+    (ruby-tools-mode 1)))
+
+(add-hook 'enh-ruby-mode-hook 'restaurant/ruby-tools-init)
+
+;;;
+;;; ruby-refactor
+;;;
+(defun restaurant/ruby-refactor-init ()
+  (when restaurant/enable-ruby-refactor
+    (require 'ruby-refactor)
+    (ruby-refactor-mode 1)))
+
+(add-hook 'enh-ruby-mode-hook 'restaurant/ruby-refactor-init)
 
 ;;;
 ;;; rvm
 ;;;
-(defun restaurant/ruby-rvm ()
-  (rvm-use-default)
-  (require 'rvm)
-  ;; connect rvm+robe
-  (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
-    (rvm-activate-corresponding-ruby))
-  )
+(defun restaurant/rvm-init ()
+  (when restaurant/enable-rvm
+    ;; (rvm-use-default)
+    (require 'rvm)
+    ;; connect rvm+robe
+    (when restaurant/enable-robe
+      (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
+	(rvm-activate-corresponding-ruby)))
+    ))
 
-(add-hook 'ruby-mode-hook 'restaurant/ruby-rvm)
+(add-hook 'enh-ruby-mode-hook 'restaurant/rvm-init)
+
+;;;
+;;; robe mode: code navigtion, documentation
+;;;
+(defun restaurant/robe-init ()
+  (when restaurant/enable-robe
+    (require 'robe)
+    (setq robe-turn-on-eldoc t)
+    (when (ignore-errors (robe-start))
+      ;; integrate with company mode
+      (push 'company-robe company-backends))))
+
+(add-hook 'enh-ruby-mode-hook 'restaurant/robe-init)
 
 ;;;
 ;;; rubocop
 ;;;
-(defun restaurant/ruby-rubocop ()
-  (require 'rubocop))
+(defun restaurant/rubocop-init ()
+  (when restaurant/enable-rubocop
+    (require 'rubocop)
+    (rubocop-mode 1)
+    (auto-revert-mode 1) ;; TODO: is it needed here?
+    ))
 
-(add-hook 'ruby-mode-hook #'rubocop-mode)
-(add-hook 'ruby-mode-hook #'auto-revert-mode)
-
-(add-hook 'ruby-mode-hook (lambda ()
-                            (setf ruby-indent-level restaurant/indent-level)))
-
-;;;
-;;; flycheck/flymake
-;;;
-(require 'flycheck)
-(add-hook 'ruby-mode-hook #'flycheck-mode)
-(setq-default flycheck-check-syntax-automatically '(save mode-enabled))
-
-;; flymake
-(require 'flymake)
-;; I don't like the default colors :)
-(set-face-background 'flymake-errline "red4")
-(set-face-background 'flymake-warnline "dark slate blue")
-
-(require 'flymake-ruby)
-(add-hook 'ruby-mode-hook 'flymake-ruby-load)
+(add-hook 'enh-ruby-mode-hook 'restaurant/rubocop-init)
 
 ;;;
-;;; rspec
+;;; flycheck
 ;;;
-(add-to-list 'auto-mode-alist '("/spec/" . ruby-mode))
-(add-to-list 'auto-mode-alist '("/spec/" . rspec-mode))
+(defun restaurant/flycheck-ruby-init ()
+  (when restaurant/enable-flycheck
+    ;; (require 'flycheck) already activated in prog-mode
+    (flycheck-mode 1)
+    (setq-default flycheck-check-syntax-automatically '(save mode-enabled))))
 
-(provide 'restaurant-ruby)
+(add-hook 'enh-ruby-mode-hook 'restaurant/flycheck-ruby-init)
+;;;
+;;; flymake
+;;;
+(defun restaurant/flymake-ruby-init ()
+  (when restaurant/enable-flymake
+    ;; (require 'flymake) already activated in prog-mode
+    (require 'flymake-ruby)
+    (flymake-ruby-load) ;; FIXME: not loading automatically
+    (flymake-mode 1)))
+
+(add-hook 'enh-ruby-mode-hook 'restaurant/flymake-ruby-init)
+
+;;;
+;;; ri
+;;;
+(defun restaurant/ri-yari-init ()
+  (when restaurant/enable-ri
+    (require 'yari)
+    (defalias 'ri 'yari)
+    (local-set-key [f1] 'yari)
+    ))
+
+(add-hook 'enh-ruby-mode-hook 'restaurant/ri-yari-init)
 
 ;;; ruby.el ends here

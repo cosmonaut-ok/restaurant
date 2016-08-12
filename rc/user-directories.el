@@ -129,7 +129,7 @@ See user-get-directory-from-environment."
   :type 'string :group 'restaurant/user-directories)
 
 (defcustom restaurant/user-documents-directory
-  (if (zerop (shell-command "xdg-user-dir"))
+  (if (zerop (call-process "xdg-user-dir" nil nil nil))
       (remove ?\n (shell-command-to-string "xdg-user-dir \"DOCUMENTS\""))
     (expand-file-name "~/Documents"))
   "The user directory where the user stores it's documents."

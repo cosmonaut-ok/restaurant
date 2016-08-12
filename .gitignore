@@ -41,7 +41,7 @@ build-iPhoneSimulator/
 
 # for a library or gem, you might want to ignore these files since the code is
 # intended to run in multiple environments; otherwise, check them in:
-# Gemfile.lock
+Gemfile.lock
 # .ruby-version
 # .ruby-gemset
 
@@ -88,13 +88,11 @@ url
 semanticdb
 rc/.bundle
 places
-Gemfile.lock
 ede-projects.el
 tags
 emacs/
 autom4te.cache
 config.status
 configure
-bin/restaurant
 build
 *.tar.gz

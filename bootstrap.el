@@ -7,19 +7,29 @@
 
 (defvar *el-get-packages-list*
   '(
-    "ruby-mode"
+    ;; libraries and frameworks
+    ;; "helm"
+    "f"
+    "s"
+    "apel"
+    ;; ruby
+    "enh-ruby-mode"
     "ruby-electric"
     "ruby-hash-syntax"
     "robe-mode"
+    ;; "helm-robe"
+    "ruby-tools"
+    "ruby-refactor"
+    "rubocop"
+    "rvm"
+    "yari"
+    "bundler"
+    ;; "rspec-mode" ;; moved to scripts
+    ;; completion
     "company-mode"
     "company-inf-ruby"
     "company-quickhelp"
     "company-web"
-    "rubocop"
-    "company-web"
-    "rvm"
-    "ri-emacs"
-    ;; "rspec-mode" ;; moved to scripts
     ;; markdown
     "markdown-mode"
     "markdown-preview-mode"
@@ -27,13 +37,14 @@
     ;; yaml
     "yaml-mode"
     ;; json
-    "json"
     "json-mode"
     ;; xml
     ;; web
     "web-mode"
+    "mmm-mode"
     ;; other
     "ecb"
+    "sr-speedbar"
     "magit"
     "color-theme"
     "fill-column-indicator"
@@ -43,7 +54,6 @@
     "flycheck-pos-tip"
     "flymake-ruby"
     "tabbar"
-    "f"
     "yasnippet"
     "yasnippets"
     "yasnippet-snippets"
@@ -51,6 +61,15 @@
     "projectile"
     ;; fun
     "nyan-mode"
+    ;; TODO: make button instead search this file
+    ;; "helm-swoop"
+    ;; themes
+    "color-theme-zenburn"
+    "solarized-emacs"
+    "birds-of-paradise-plus-theme"
+    "color-theme-sanityinc"
+    "dream-theme"
+    "leuven-theme"
     ))
 
 (defun init-elget-user-recipes ()
