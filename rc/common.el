@@ -44,6 +44,9 @@
  '(initial-frame-alist (quote ((fullscreen . maximized)))) ; start maximized
  )
 
+;; disable EDE
+(add-hook 'emacs-startup-hook #'(lambda () (global-ede-mode 0)))
+
 ;;;; visual mode
 (global-visual-line-mode t) ;; wrap long lines visually to several lines
 ;; Remove visual line from buffer
@@ -147,13 +150,19 @@
 ;;;
 ;;; activate generic options
 ;;;
+(require 'magit)
+(require 'magit-gh-pulls)
+
 (defun restaurant/generic-prog-mode-init ()
   (auto-fill-mode -1)
   ;; projectile
   (require 'projectile)
+  ;; magit
+  (setq magit-completing-read-function 'magit-ido-completing-read)
+  ;;
   (subword-mode 1)
   (font-lock-mode 1)
-
+  
   ;; (setq indent-tabs-mode t) ;; Turn Off Tab Character
   
   (local-set-key (kbd "C-c C-f") 'flash-cross)
@@ -162,7 +171,8 @@
   (message "Prog mode enabled. USE Shift+SPACE to show or hide blocks"))
 
 (add-hook 'prog-mode-hook 'restaurant/generic-prog-mode-init)
-
+;; magit-gh-pulls
+(add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
 ;;;
 ;;; indicate paren
 ;;;
