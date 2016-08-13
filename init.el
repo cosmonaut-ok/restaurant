@@ -10,7 +10,7 @@
   (warn "WARNING! There is no ruby in system. Extended ruby/chef features are not supported"))
 
 (defvar restaurant/source-directory (file-name-directory load-file-name))
-(defvar restaurant/list-load-components '("face" "common" "company" "ruby" "rspec" "chef" "kitchen" "ecb" "markdown" "yaml" "json" "web" "erb" "fly" "yasnippet" "popup-menu"  "menubar" "toolbar" "theme" "version"))
+(defvar restaurant/list-load-components '("face" "common" "company" "ruby" "rspec" "chef" "kitchen" "codebrowser" "markdown" "yaml" "json" "web" "erb" "fly" "yasnippet" "popup-menu"  "menubar" "toolbar" "theme" "version"))
 
 (load (concat restaurant/source-directory "rc/user-directories.el"))
 
@@ -33,7 +33,6 @@
   (write-region "" nil custom-file))
 
 ;; load rc files
-;; (load (concat restaurant/source-directory "load.el"))
 (dolist (file restaurant/list-load-components)
   (load (locate-source-file (concat "rc" "/" file ".el"))))
 

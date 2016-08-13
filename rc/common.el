@@ -47,7 +47,7 @@
 ;;;; visual mode
 (global-visual-line-mode t) ;; wrap long lines visually to several lines
 ;; Remove visual line from buffer
-(add-hook 'minibuffer-setup-hook (lambda ()
+(add-hook 'minibuffer-setup-hook '(lambda ()
                                    (visual-line-mode -1)))
 
 ;;;; enable cua mode

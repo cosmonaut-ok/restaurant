@@ -126,7 +126,7 @@
   :group 'restaurant/programming
   )
 
-(defcustom restaurant/enable-code-browser t
+(defcustom restaurant/code-browser-switch-to-simple nil
   "Automatically activate code browser, when program file opens"
   :type 'boolean
   :group 'restaurant/programming

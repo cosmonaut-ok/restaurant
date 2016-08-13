@@ -27,4 +27,4 @@ if [ ! -z $1 ] && [ $1 == "devmode" ]; then
     OPTIONS="--eval '(setq debug-on-error t)'"
 fi
     
-$EMACS -q -l $MYDIR/init.el --name restaurant --title "Restaurant Chef IDE version: ($VERSION)" $OPTIONS $@
+$EMACS -q -l $MYDIR/init.el --name restaurant --title "Restaurant Chef IDE version: (v.${VERSION})" $OPTIONS $@
