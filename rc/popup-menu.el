@@ -32,7 +32,7 @@ See `popup-commands' which calls this"
        (cons "Paste/Yank [C-y]" "(yank)")
        (cons "-" "")
        (cons "Undo [C-x u]" "(undo)")
-       (cons "Redo" "(redo)")
+       (cons "Redo" "(call-interactively 'redo)")
        (cons "-" "")
        (cons "Search [C-s]" "(call-interactively 'search-forward)")
        (cons "Search files" "(call-interactively 'grep)")
