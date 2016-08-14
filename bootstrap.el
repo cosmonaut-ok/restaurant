@@ -62,6 +62,8 @@
     "popup"
     "projectile"
     "ido-ubiquitous" ;; needed for magit
+    "ido-vertical-mode"
+    "ido-better-flex"
     ;; fun
     "nyan-mode"
     ;; TODO: make button instead search this file

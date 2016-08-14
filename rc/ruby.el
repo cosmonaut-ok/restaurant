@@ -35,6 +35,17 @@
 ;; set ruby indent tabs mode
 (add-hook 'enh-ruby-mode-hook (lambda ()
 				(setf ruby-indent-tabs-mode restaurant/indent-tabs-mode)))
+
+
+;;;
+;;; bundler
+;;;
+(defun restaurant/bundler-init ()
+  (when restaurant/enable-bundler
+    (require 'bundler)))
+
+(add-hook 'enh-ruby-mode-hook #'restaurant/bundler-init)
+
 ;;;
 ;;; ruby-electric
 ;;;

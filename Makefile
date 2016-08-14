@@ -15,14 +15,15 @@ emacs:
 	@mkdir -p ${BUILD_DIR}/emacs-build
 	@mkdir -p ${BUILD_DIR}/restaurant
 	@echo "Getting emacs archive..."
-	@curl -L --progress-bar ${EMACS_URI} > ${BUILD_DIR}/${ARCHIVE_NAME}
+	@test -f ${ARCHIVE_NAME} || curl -L --progress-bar ${EMACS_URI} > ${ARCHIVE_NAME}
+	@cp ${ARCHIVE_NAME} ${BUILD_DIR}
 	@echo "Unpacking emacs archive..."
 	@tar -C ${BUILD_DIR} -xf ${BUILD_DIR}/${ARCHIVE_NAME}
 	@echo "Building emacs..."
 	@cd ${BUILD_DIR}/${SOURCE_DIR} && \
 	autoreconf -fi -I m4 ## emacs 25
 	cd ${BUILD_DIR}/${SOURCE_DIR} && \
-	./configure --prefix=/ --with-x-toolkit=gtk3 --without-pop --without-gif --without-png --without-jpeg --without-tiff --without-makeinfo && \
+	./configure --prefix=/ --with-x-toolkit=athena --without-pop --without-gif --without-png --without-jpeg --without-tiff --without-makeinfo && \
 	make && \
 	make install DESTDIR=${BUILD_DIR}/emacs-build
 	@echo "Preparing to working state..."
@@ -37,9 +38,12 @@ emacs:
 	@echo "Moving to current directory as ''emacs''..."
 	@mv ${BUILD_DIR}/emacs-build/ emacs
 
-build: emacs
+el-get: emacs
+	@echo "Getting required dependencies via el-get..."
+	@emacs/bin/emacs -Q --debug-init --script ./bootstrap.el
+
+build: el-get
 	@echo "Building restaurant..."
-	emacs/bin/emacs -Q --debug-init --script ./bootstrap.el
 	@cd scripts && ./build_all
 	@chmod 755 restaurant
 	@touch build
@@ -75,7 +79,7 @@ clean-emacs: clean-build
 
 mrproper: clean-emacs clean
 	@echo "Clearing emacs 3rt-party data dirs..."
-	@rm -rf build el-get elpa configure Gemfile.lock
+	@rm -rf build el-get elpa configure Gemfile.lock ${ARCHIVE_NAME}
 
 package: build clean-build clean
 	@echo "Building package..."
@@ -87,10 +91,10 @@ package: build clean-build clean
 	@find ${BUILD_DIR}/restaurant/ -type f -name '.gitignore' -delete
 	# TODO: add external libraries
 	@echo "Packaging..."
-	@cd ${BUILD_DIR} && tar -czpf restaurant-${RESTAURANT_VERSION}-gtk3.tar.gz restaurant
-	@cp ${BUILD_DIR}/restaurant-${RESTAURANT_VERSION}-gtk3.tar.gz .
+	@cd ${BUILD_DIR} && tar -czpf restaurant-${RESTAURANT_VERSION}-athena.tar.gz restaurant
+	@cp ${BUILD_DIR}/restaurant-${RESTAURANT_VERSION}-athena.tar.gz .
 
-release: package mrproper
+release: package clean-emacs clean
 
 help:
 	@echo "Restaurant Chef IDE v. ${RESTAURANT_VERSION}"
