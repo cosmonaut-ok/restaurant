@@ -26,3 +26,7 @@
     (global-set-key (kbd "<backtab>") 'company-complete)
     ))
 
+(defun restaurant/local-push-company-backend (backend)
+  "Add BACKEND to a buffer-local version of `company-backends'."
+  (set (make-local-variable 'company-backends)
+       (append (list backend) company-backends)))

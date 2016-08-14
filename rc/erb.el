@@ -1,4 +1,2 @@
-(require 'mmm-auto)
+(require 'eruby-mode)
 
-(mmm-add-mode-ext-class 'html-erb-mode "\\.html\\.erb\\'" 'erb)
-(mmm-add-mode-ext-class 'html-erb-mode "\\.html\\.erb\\'" 'erb)

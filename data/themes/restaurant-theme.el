@@ -159,8 +159,10 @@
  '(js2-jsdoc-value ((t (:inherit (js2-function-param)))))
 
  ;; eruby-mode (https://github.com/petere/emacs-eruby-mode)
- '(eruby-comment-face ((t (:inherit font-lock-comment-face :background "gray20"))))
- '(eruby-standard-face ((t (:background "dark slate blue"))))
+ '(eruby-standard-face ((t (:inherit (default) :box (:line-width 2 :color "dark slate blue")))))
+ '(eruby-standard-face ((t (:inherit (default) :background "gray4" :box (:line-width 2 :color "dark slate blue")))))
+ ;; '(eruby-comment-face ((t (:inherit font-lock-comment-face :background "gray20"))))
+ ;; '(eruby-standard-face ((t (:background "dark slate blue"))))
 
  ;; minimap (https://github.com/dengste/minimap)
  '(minimap-active-region-background ((t (:inherit (highlight)))))

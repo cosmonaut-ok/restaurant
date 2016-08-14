@@ -7,6 +7,10 @@
 (require 'enh-ruby-mode)
 (defalias 'ruby-mode 'enh-ruby-mode)
 
+;;;
+;;; Generic
+;;;
+
 ;; Adapted from the method used by TextMate, this library provides a command
 ;; ruby-toggle-hash-syntax which attempts to automatically convert the
 ;; selected region of ruby code between 1.8 and 1.9 hash styles.
@@ -24,8 +28,13 @@
 (eval-after-load 'ruby-mode
   '(define-key enh-ruby-mode-map (kbd "TAB") 'indent-for-tab-command))
 
+;; set ruby indent level
 (add-hook 'enh-ruby-mode-hook (lambda ()
-                            (setf ruby-indent-level restaurant/indent-level)))
+				(setf ruby-indent-level restaurant/indent-level)))
+
+;; set ruby indent tabs mode
+(add-hook 'enh-ruby-mode-hook (lambda ()
+				(setf ruby-indent-tabs-mode restaurant/indent-tabs-mode)))
 ;;;
 ;;; ruby-electric
 ;;;
@@ -82,7 +91,11 @@
       ;; integrate with company mode
       (push 'company-robe company-backends))))
 
-(add-hook 'enh-ruby-mode-hook 'restaurant/robe-init)
+(dolist (hook '(enh-ruby-mode-hook inf-ruby-mode-hook html-erb-mode-hook haml-mode))
+  (add-hook hook
+	    (lambda () (restaurant/local-push-company-backend 'company-robe))))
+
+;; (add-hook 'enh-ruby-mode-hook 'restaurant/robe-init)
 
 ;;;
 ;;; rubocop
