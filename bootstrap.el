@@ -46,6 +46,8 @@
     "ecb"
     "sr-speedbar"
     "magit"
+    "gh"
+    "magit-gh-pulls"
     "color-theme"
     "fill-column-indicator"
     "highlight-parentheses"

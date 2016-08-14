@@ -5,7 +5,7 @@
 ;;; Code:
 
 (require 'user-directories)
-(require 'redo)
+(require 'redo+)
 (require 'f)
 
 ;; add load path "data" for icons etc 
@@ -45,7 +45,9 @@
  )
 
 ;; disable EDE
-(add-hook 'emacs-startup-hook #'(lambda () (global-ede-mode 0)))
+(add-hook 'emacs-startup-hook #'(lambda ()
+				  (global-srecode-minor-mode 0)
+				  (global-ede-mode 0)))
 
 ;;;; visual mode
 (global-visual-line-mode t) ;; wrap long lines visually to several lines
