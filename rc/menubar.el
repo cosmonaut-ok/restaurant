@@ -108,3 +108,36 @@
 (define-key enh-ruby-mode-map
   [menu-bar project project-run-shell-command-in-root]
   '("Run shell command in project root directory" . projectile-run-async-shell-command-in-root))
+
+;;;
+;;; magit
+;;;
+;; add kitchen menu
+(define-key prog-mode-map
+  [menu-bar git]
+  (cons "GIT" (make-sparse-keymap "GIT")))
+
+(define-key prog-mode-map
+  [menu-bar git githup-pull-request]
+  '("Create GitHub pull request" . magit-gh-pulls-create-pull-request))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(define-key prog-mode-map
+  [menu-bar git git-separator1]
+  '("--" nil :visible))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define-key prog-mode-map
+  [menu-bar git push-to-upstream]
+  '("Push current branch to remote" . magit-push-current-to-pushremote))
+
+(define-key prog-mode-map
+  [menu-bar git commit]
+  '("Commit Changed" . magit-commit))
+
+(define-key prog-mode-map
+  [menu-bar git add-changed]
+  '("Manage Changed" . magit-diff-unstaged))
+
+
+
