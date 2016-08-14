@@ -1,3 +1,10 @@
+;;; face.el --- Restaurant customizations
+
+;;; Commentary:
+;; Restaurant customizations
+
+;;; Code:
+
 ;;;
 ;;; toplevel
 ;;;
@@ -14,25 +21,25 @@
   )
 
 (defcustom restaurant/enable-tabbar t
-  "Automatically activate code browser, when program file opens"
+  "Automatically activate code browser, when program file opens."
   :type 'boolean
   :group 'restaurant/face
   )
 
 (defcustom restaurant/familiar-copy-paste-cut t
-  "Bind familiar Control+c, Control+x and Control+v, instead emacs default keybindings"
+  "Bind familiar Control+c, Control+x and Control+v, instead emacs default keybindings."
   :type 'boolean
   :group 'restaurant/face
   )
 
 (defcustom restaurant/fill-column t
-  "Automatically activate code browser, when program file opens"
+  "Enable special highlighting of long lines."
   :type 'boolean
   :group 'restaurant/face
   )
 
 (defcustom restaurant/why-so-serious t
-  "Lets enable some fun"
+  "Lets enable some fun."
   :type 'boolean
   :group 'restaurant/face
   )
@@ -41,19 +48,19 @@
 ;;; backup
 ;;;
 (defgroup restaurant/backup nil
-  "Miscelation parameters"
+  "Backup parameters"
   :group 'restaurant
   )
 
 (defcustom restaurant/autobackup t
-  "Automatically activate code browser, when program file opens"
+  "Enable automatic file backups."
   :type 'boolean
   :group 'restaurant/backup
   )
 
-(defcustom restaurant/backup-directory t
-  "Automatically activate code browser, when program file opens"
-  :type 'boolean
+(defcustom restaurant/backup-directory (concat restaurant/user-config-directory "/backups")
+  "Enable backups." ;; FIXME: not working yet
+  :type 'directory
   :group 'restaurant/backup
   )
 
@@ -73,79 +80,73 @@
   :group 'restaurant)
 
 (defcustom restaurant/max-line-length 80
-  "Defines maximum recommended line length in program"
+  "Defines maximum recommended line length in program."
   :type 'integer
   :group 'restaurant/programming
   )
 
 (defcustom restaurant/indent-level 2
-  "Defines maximum recommended line length in program"
+  "Define number of spaces to indent code."
   :type 'integer
   :group 'restaurant/programming
   )
 
 (defcustom restaurant/indent-tabs-mode nil
-  "Defines maximum recommended line length in program"
+  "Indent code by tabs (``false`` switches to spaces)."
   :type 'boolean
   :group 'restaurant/programming
   )
 
 (defcustom restaurant/indicate-parentheses t
-  "Show pair to current parenth and highlight other parenthesis"
+  "Show pair to current parenth and highlight other parenthesis."
   :type 'boolean
   :group 'restaurant/programming
   )
 
 (defcustom restaurant/linum-mode t
-  "Defines maximum recommended line length in program"
+  "Add lines numbering."
   :type 'boolean
   :group 'restaurant/programming
   )
 
 (defcustom restaurant/require-final-newline t
-  "Defines maximum recommended line length in program"
+  "Defines maximum recommended line length in program."
   :type 'boolean
   :group 'restaurant/programming
   )
 
 (defcustom restaurant/highlight-current-line t
-  "Highlight current line"
+  "Highlight current line."
   :type 'boolean
   :group 'restaurant/programming
   )
 
 (defcustom restaurant/highlight-current-column nil
-  "Highlight current column"
+  "Highlight current column."
   :type 'boolean
   :group 'restaurant/programming
   )
 
 (defcustom restaurant/enable-hide-show-blocks t
-  "Automatically activate code browser, when program file opens"
+  "Enable possibility to hide/show code blocks, like functions, classes etc."
   :type 'boolean
   :group 'restaurant/programming
   )
 
 (defcustom restaurant/code-browser-switch-to-simple nil
-  "Automatically activate code browser, when program file opens"
-  :type 'boolean
-  :group 'restaurant/programming
-  )
-
-(defcustom restaurant/enable-file-browser nil
-  "Automatically activate code browser, when program file opens"
+  "Switch to simple directory navigaton ``false`` enables standard restaurant code browser."
   :type 'boolean
   :group 'restaurant/programming
   )
 
 (defcustom restaurant/enable-flycheck t
-  "Enable on-the-fly style checking (used with robe, rubocop and foodcritic)"
+  "Enable on-the-fly style checking (used with robe, rubocop and foodcritic)."
   :type 'boolean
   :group 'restaurant/programming
   )
 
 (defcustom restaurant/enable-flymake t
-  "Enable flymake support (on-the-fly syntax checking)"
+  "Enable flymake support (on-the-fly syntax checking)."
   :type 'boolean
   :group 'restaurant/programming
   )
@@ -159,43 +160,43 @@
 )
 
 (defcustom restaurant/enable-electric t
-  "Enable electric mode - fast block completion"
+  "Enable ruby electric (fast parenth and block completions)."
   :type 'boolean
   :group 'restaurant/ruby
   )
 
 (defcustom restaurant/enable-robe t
-  "Enable ROBE automatically, when open ruby file"
+  "Enable ROBE automatically, when open ruby file."
   :type 'boolean
   :group 'restaurant/ruby
   )
 
 (defcustom restaurant/enable-ruby-tools t
-  "Enable ROBE automatically, when open ruby file"
+  "Enable ruby tools automatically, when open ruby file."
   :type 'boolean
   :group 'restaurant/ruby
   )
 
 (defcustom restaurant/enable-ruby-refactor t
-  "Enable ROBE automatically, when open ruby file"
+  "Enable ruby refactor automatically, when open ruby file."
   :type 'boolean
   :group 'restaurant/ruby
   )
 
 (defcustom restaurant/enable-rvm t
-  "Enable ROBE automatically, when open ruby file"
+  "Use RVM (if possible)."
   :type 'boolean
   :group 'restaurant/ruby
   )
 
 (defcustom restaurant/enable-rubocop t
-  "Enable ROBE automatically, when open ruby file"
+  "Enable rubocop, when open ruby file,"
   :type 'boolean
   :group 'restaurant/ruby
   )
 
 (defcustom restaurant/enable-ri t
-  "Ruby RI documentation support (press F1 on symbol to get it)"
+  "Ruby RI documentation support (press F1 on symbol to get it)."
   :type 'boolean
   :group 'restaurant/ruby
   )
@@ -209,13 +210,13 @@
   )
 
 (defcustom restaurant/enable-chef t
-  "Enable chef extensions, when using ruby files"
+  "Enable chef extensions, when using ruby files."
   :type 'boolean
   :group 'restaurant/chef
   )
 
 (defcustom restaurant/enable-foodcritic t
-  "Enable flycheck foodcritic checker (reboot needed)"
+  "Enable flycheck foodcritic checker (reboot needed)."
   :type 'boolean
   :group 'restaurant/chef
   )
@@ -225,3 +226,25 @@
 ;;   :type 'string
 ;;   :group 'restaurant/chef
 ;;   )
+
+;;;
+;;; 3rd-party important modes
+;;;
+(defgroup restaurant/extensions nil
+  "Not Restaurant-related important ruby, chef etc. options"
+  :group 'restaurant
+  )
+
+(defgroup rspec-mode nil
+  "RSpec minor mode."
+  :group 'restaurant/extensions)
+
+(defgroup enh-ruby nil
+  "Ruby mode."
+  :group 'restaurant/extensions)
+
+(defgroup chef-mode nil
+  "Chef minor mode."
+  :group 'restaurant/extensions)
+
+;;; face.el ends here

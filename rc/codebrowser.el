@@ -15,7 +15,7 @@
    '(enlarged-compilation-window-max-height 'best) ;; best half
    '(ecb-create-layout-file (locate-user-config-file "ecb-user-layouts.el"))
    '(ecb-tip-of-the-day-file (locate-user-config-file "ecb-tip-of-day.el"))
-   '(ecb-source-path (quote (("~/sources/" "sources"))))
+   '(ecb-source-path (quote (("~/sources/" "sources") ("/" "/"))))
    
    ;; ecb-windows-width 30
    ;; ecb-fix-window-size 'width

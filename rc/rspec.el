@@ -3,5 +3,4 @@
 ;;;
 ;;; rspec
 ;;;
-(add-to-list 'auto-mode-alist '("\\/spec\\/" . ruby-mode))
-(add-to-list 'auto-mode-alist '("\\/spec\\/" . rspec-mode))
+(setq compilation-scroll-output t)

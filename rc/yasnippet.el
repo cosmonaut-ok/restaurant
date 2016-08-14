@@ -98,4 +98,9 @@
 
 (add-hook 'prog-mode-hook 'restaurant/yas-minor-mode-init)
 
+;;;; add snippets after rspec loaded
+(eval-after-load 'rspec-mode
+ '(rspec-install-snippets))
+
+
 ;;; yasnippet.el ends here

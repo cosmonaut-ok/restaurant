@@ -120,8 +120,11 @@
 (setq auto-compression-mode 1)
 
 ;;;; fill-column
-(when restaurant/fill-column
-  (setq-default fill-column restaurant/max-line-length))
+(defun restaurant/fill-column-init ()
+  (when restaurant/fill-column
+    (setq-default fill-column restaurant/max-line-length)))
+
+(add-hook 'prog-mode-hook 'restaurant/fill-column-init)
 
 ;;;; Uniquify buffers
 (require 'uniquify)
