@@ -61,6 +61,7 @@
     "yasnippet-snippets"
     "popup"
     "projectile"
+    "ido-ubiquitous" ;; needed for magit
     ;; fun
     "nyan-mode"
     ;; TODO: make button instead search this file
