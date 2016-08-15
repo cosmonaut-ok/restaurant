@@ -85,6 +85,12 @@
   :group 'restaurant/programming
   )
 
+(defcustom restaurant/highlight-too-long-lines t
+  "Highlight lines, longer than maximum recommended length as ``warning``."
+  :type 'boolean
+  :group 'restaurant/programming
+  )
+
 (defcustom restaurant/indent-level 2
   "Define number of spaces to indent code."
   :type 'integer
@@ -184,6 +190,12 @@
   )
 
 (defcustom restaurant/enable-rvm t
+  "Use RVM (if possible)."
+  :type 'boolean
+  :group 'restaurant/ruby
+  )
+
+(defcustom restaurant/enable-bundler t
   "Use RVM (if possible)."
   :type 'boolean
   :group 'restaurant/ruby

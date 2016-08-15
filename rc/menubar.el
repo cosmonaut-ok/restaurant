@@ -136,8 +136,41 @@
   '("Commit Changed" . magit-commit))
 
 (define-key prog-mode-map
+  [menu-bar git show-log-current]
+  '("Log Current Branch" . magit-log-current))
+
+(define-key prog-mode-map
   [menu-bar git add-changed]
   '("Manage Changed" . magit-diff-unstaged))
 
+(define-key prog-mode-map
+  [menu-bar git show-status]
+  '("Status" . magit-status))
 
+(define-key prog-mode-map
+  [menu-bar git]
+  (cons "GIT" (make-sparse-keymap "GIT")))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define-key magit-mode-map
+  [menu-bar github]
+  (cons "GitHub" (make-sparse-keymap "GitHub")))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define-key prog-mode-map
+  [menu-bar github add-changed]
+  '("Create pull request branch" . magit-gh-pulls-create-branch))
+
+(define-key prog-mode-map
+  [menu-bar github fetch-pr-commits]
+  '("Fetch pull request commits" . magit-gh-pulls-fetch-commits))
+
+(define-key magit-mode-map
+  [menu-bar github open-pr-in-browser]
+  '("Open PR In Web Browser" . magit-gh-pulls-open-in-browser))
+
+(define-key prog-mode-map
+  [menu-bar github show-log-current]
+  '("Reload pull request" . magit-gh-pulls-reload))

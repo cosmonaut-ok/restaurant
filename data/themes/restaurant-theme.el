@@ -101,7 +101,7 @@
  '(col-highlight ((t (:background "#040017"))))
 
  ;; ECB
- '(ecb-default-highlight-face ((t (:background "#040017"))))
+ '(ecb-default-highlight-face ((t (:background "dark slate blue"))))
 
  ;; mode-line
  '(mode-line ((t (:background "grey10" :foreground "#96CBFE"))))

@@ -20,11 +20,11 @@ fi
 
 VERSION=$($EMACS -Q --batch --script ${MYDIR}/rc/version.el --eval '(restaurant-version t)')
 
-if [ ! -z $1 ] && [ $1 == "devmode" ]; then
-    cd /tmp/
-    $EMACS -Q $MYDIR/rc/*.el &
-    shift
-    OPTIONS="--eval '(setq debug-on-error t)'"
-fi
+# if [ ! -z $1 ] && [ $1 == "devmode" ]; then
+#     cd /tmp/
+#     $EMACS -Q $MYDIR/rc/*.el &
+#     shift
+#     OPTIONS="--eval '(setq debug-on-error t)'"
+# fi
     
 $EMACS -q -l $MYDIR/init.el --name restaurant --title "Restaurant Chef IDE version: (v.${VERSION})" $OPTIONS $@

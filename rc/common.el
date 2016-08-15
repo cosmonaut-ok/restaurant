@@ -7,6 +7,7 @@
 (require 'user-directories)
 (require 'redo+)
 (require 'f)
+(require 'notify)
 
 ;; add load path "data" for icons etc 
 (add-to-list 'load-path (locate-source-file "data"))
@@ -101,14 +102,21 @@
 (display-time)
 
 ;;;; ido
+;; https://github.com/magnars/.emacs.d/blob/master/settings/setup-ido.el
 (require 'ido)
+(require 'ido-vertical-mode)
 (ido-mode 1)
+(ido-vertical-mode 1)
+(setq ido-vertical-show-count t)
+(ido-better-flex/enable)
 (setq ido-enable-flex-matching t)
+(setq ido-vertical-define-keys 'C-n-C-p-up-and-down)
 
 (global-set-key "\M-x" (lambda ()
 			 (interactive)
 			 (call-interactively (intern (ido-completing-read
 						      "M-x " (all-completions "" obarray 'commandp))))))
+
 
 ;; dired mode too
 (add-hook 'dired-mode-hook
@@ -146,9 +154,7 @@
 (defun restaurant/highlight-prog-mode-strings ()
   ;; highlight FIXME/TODO/BUG keywords
   (font-lock-add-keywords nil '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))
-  (font-lock-add-keywords nil '(("\\<\\(DONE\\):" 1 font-lock-doc-face t)))
-  ;; highlight too long lines
-  (font-lock-add-keywords nil (list (list restaurant-max-line-length 1 font-lock-warning-face t))))
+  (font-lock-add-keywords nil '(("\\<\\(DONE\\):" 1 font-lock-doc-face t))))
 
 (add-hook 'prog-mode-hook #'restaurant/highlight-prog-mode-strings)
 
@@ -176,6 +182,7 @@
   (message "Prog mode enabled. USE Shift+SPACE to show or hide blocks"))
 
 (add-hook 'prog-mode-hook 'restaurant/generic-prog-mode-init)
+
 ;; magit-gh-pulls
 (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
 ;;;
@@ -242,14 +249,24 @@
 ;;;
 ;;; fill-column-indicator
 ;;;
+(defvar restaurant-last-max-line-length restaurant/max-line-length)
+
 (defun restaurant/fill-column-indicator-init ()
   (when restaurant/fill-column
     (require 'fill-column-indicator)
     (fci-mode 1)
     (setq fci-rule-column restaurant/max-line-length)
-    ;;
-    
-    ))
+    ;; highlight too long lines
+    (when restaurant/highlight-too-long-lines
+      (let ((restaurant-max-line-length (concat "^[^\n]\\{"
+						(number-to-string restaurant/max-line-length)
+						"\\}\\(.*\\)$"))
+	    (restaurant-previous-max-line-length (concat "^[^\n]\\{"
+							 (number-to-string restaurant-last-max-line-length)
+							 "\\}\\(.*\\)$")))
+	(font-lock-remove-keywords nil (list (list (concat "^[^\n]\\{" restaurant-previous-max-line-length "\\}\\(.*\\)$") 1 font-lock-warning-face t)))
+	(font-lock-add-keywords nil (list (list restaurant-max-line-length 1 font-lock-warning-face t)))))
+      (setq restaurant-max-line-length restaurant/max-line-length)))
 
 (add-hook 'prog-mode-hook 'restaurant/fill-column-indicator-init)
 
@@ -398,7 +415,7 @@
 (defun open-console ()
   (interactive)
   (if restaurant/use-external-terminal-emulator
-      (call-process restaurant/default-terminal-emulator)
+      (call-process restaurant/terminal-emulator)
     (term "/bin/bash")))
 
 (global-set-key (kbd "<f12>") 'open-console)

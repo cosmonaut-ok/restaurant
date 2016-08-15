@@ -64,6 +64,8 @@
     "ido-ubiquitous" ;; needed for magit
     "ido-vertical-mode"
     "ido-better-flex"
+    ;; notifications support
+    "notify"
     ;; fun
     "nyan-mode"
     ;; TODO: make button instead search this file
