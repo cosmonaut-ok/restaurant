@@ -64,6 +64,7 @@
     "ido-ubiquitous" ;; needed for magit
     "ido-vertical-mode"
     "ido-better-flex"
+    "ispell-multi" ;; multiple languages spelling support
     ;; notifications support
     "notify"
     ;; fun

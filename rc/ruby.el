@@ -36,7 +36,6 @@
 (add-hook 'enh-ruby-mode-hook (lambda ()
 				(setf ruby-indent-tabs-mode restaurant/indent-tabs-mode)))
 
-
 ;;;
 ;;; bundler
 ;;;
@@ -98,15 +97,17 @@
   (when restaurant/enable-robe
     (require 'robe)
     (setq robe-turn-on-eldoc t)
-    (when (ignore-errors (robe-start))
+    (robe-mode 1)
+    (ignore-errors (robe-start))
+    ;; (when (ignore-errors (robe-start))
       ;; integrate with company mode
-      (push 'company-robe company-backends))))
+    (push 'company-robe company-backends)))
 
 (dolist (hook '(enh-ruby-mode-hook inf-ruby-mode-hook html-erb-mode-hook haml-mode))
   (add-hook hook
 	    (lambda () (restaurant/local-push-company-backend 'company-robe))))
 
-;; (add-hook 'enh-ruby-mode-hook 'restaurant/robe-init)
+(add-hook 'enh-ruby-mode-hook 'restaurant/robe-init)
 
 ;;;
 ;;; rubocop
@@ -154,4 +155,23 @@
 
 (add-hook 'enh-ruby-mode-hook 'restaurant/ri-yari-init)
 
+;;;
+;;; hide/show blocks
+;;;
+;; When folding, take these delimiters into consideration
+(add-to-list 'hs-special-modes-alist
+	     '(ruby-mode
+	       "\\(class\\|def\\|do\\|if\\|.each\\)" "\\(end\\)" "#"
+	       (lambda (arg) (ruby-end-of-block)) nil))
+
+;;;
+;;; generic init
+;;;
+(defun restaurant/ruby-generic-init ()
+  (inf-ruby-minor-mode 1)
+  (when (executable-find "pry")
+    (setq inf-ruby-default-implementation "pry"))
+  (inf-ruby))
+
+(add-hook 'enh-ruby-mode-hook #'restaurant/ruby-generic-init)
 ;;; ruby.el ends here

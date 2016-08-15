@@ -286,6 +286,16 @@
 (add-hook 'prog-mode-hook 'restaurant/hideshow-init)
 
 ;;;
+;;; hideshow
+;;;
+(defun restaurant/ispell-init ()
+  (when restaurant/enable-spell-checking
+    (flyspell-prog-mode) ;; Check strings for spelling errors
+    ))
+
+(add-hook 'prog-mode-hook 'restaurant/ispell-init)
+
+;;;
 ;;; projectile
 ;;;
 (defun restaurant/projectile-init ()
@@ -353,33 +363,6 @@
 (defun restaurant/customize ()
   (interactive)
   (customize-group 'restaurant))
-
-;; new menu items
-(define-key global-map [menu-bar restaurant]
-  (cons "Restaurant" (make-sparse-keymap "Restaurant")))
-
-(define-key global-map [menu-bar restaurant customize-restaurant]
-  (cons "Customize Restaurant" (make-sparse-keymap "Customize Restaurant")))
-
-(define-key global-map
-  [menu-bar restaurant customize-restaurant restaurant/customize]
-  '("Restaurant Customization Menu" . restaurant/customize))
-
-(define-key global-map
-  [menu-bar restaurant customize-restaurant customize-themes]
-  '("Customize Themes" . customize-themes))
-
-(define-key global-map
-  [menu-bar restaurant customize-restaurant customize]
-  '("Global Customization Menu" . customize))
-
-(define-key global-map
-  [menu-bar restaurant hide-all-blocks]
-  '("Hide all code blocks" . hs-hide-all))
-
-(define-key global-map
-  [menu-bar restaurant show-all-blocks]
-  '("Show all code blocks" . hs-show-all))
 
 ;; reload configuration
 (defun reinit ()

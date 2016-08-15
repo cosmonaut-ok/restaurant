@@ -157,6 +157,11 @@
   :group 'restaurant/programming
   )
 
+(defcustom restaurant/enable-spell-checking nil
+  "Enable spell checking in code comments."
+  :type 'boolean
+  :group 'restaurant/programming
+  )
 ;;;
 ;;; ruby
 ;;;
