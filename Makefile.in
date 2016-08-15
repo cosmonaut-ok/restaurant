@@ -46,6 +46,7 @@ build: el-get
 	@echo "Building restaurant..."
 	@cd scripts && ./build_all
 	@chmod 755 restaurant
+	@cat el-get/robe-mode/Gemfile >> Gemfile
 	@touch build
 
 bootstrap: build
@@ -79,7 +80,7 @@ clean-emacs: clean-build
 
 mrproper: clean-emacs clean
 	@echo "Clearing emacs 3rt-party data dirs..."
-	@rm -rf build el-get elpa configure Gemfile.lock ${ARCHIVE_NAME}
+	@rm -rf build el-get elpa configure Gemfile.lock ${ARCHIVE_NAME} Gemfile
 
 package: build clean-build clean
 	@echo "Building package..."

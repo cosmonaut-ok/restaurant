@@ -15,7 +15,7 @@ AC_SUBST(BUILD_OPTIONS)
 ## veriables definition
 EMACS_URI=https://github.com/emacs-mirror/emacs/archive/emacs-25.1-rc1.tar.gz
 BUILD_DIR=/tmp/restaurant-release
-RELEASE_FILES="restaurant bootstrap.el data init.el LICENSE rc README.md el-get elpa emacs share"
+RELEASE_FILES="restaurant bootstrap.el data init.el LICENSE rc README.md el-get elpa emacs share Gemfile"
 BUILD_OPTIONS="--without-pop"
 
 # Checks for programs.
@@ -71,4 +71,5 @@ if test x$MAKEINFO == "xno"; then
 fi
 
 AC_OUTPUT(Makefile)
+AC_OUTPUT(Gemfile)
 

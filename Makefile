@@ -23,7 +23,7 @@ emacs:
 	@cd ${BUILD_DIR}/${SOURCE_DIR} && \
 	autoreconf -fi -I m4 ## emacs 25
 	cd ${BUILD_DIR}/${SOURCE_DIR} && \
-	./configure --prefix=/ --with-x-toolkit=athena --without-pop --without-gif --without-png --without-jpeg --without-tiff --without-makeinfo && \
+	./configure --prefix=/ --with-x-toolkit=gtk3 --without-pop --without-gif --without-png --without-jpeg --without-tiff --without-makeinfo && \
 	make && \
 	make install DESTDIR=${BUILD_DIR}/emacs-build
 	@echo "Preparing to working state..."
@@ -91,8 +91,8 @@ package: build clean-build clean
 	@find ${BUILD_DIR}/restaurant/ -type f -name '.gitignore' -delete
 	# TODO: add external libraries
 	@echo "Packaging..."
-	@cd ${BUILD_DIR} && tar -czpf restaurant-${RESTAURANT_VERSION}-athena.tar.gz restaurant
-	@cp ${BUILD_DIR}/restaurant-${RESTAURANT_VERSION}-athena.tar.gz .
+	@cd ${BUILD_DIR} && tar -czpf restaurant-${RESTAURANT_VERSION}-gtk3.tar.gz restaurant
+	@cp ${BUILD_DIR}/restaurant-${RESTAURANT_VERSION}-gtk3.tar.gz .
 
 release: package clean-emacs clean
 
