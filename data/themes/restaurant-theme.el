@@ -88,11 +88,11 @@
  '(font-lock-string-face ((t (:foreground "#8AE234"))))
  '(font-lock-type-face ((t (:foreground "#CFCB90"))))
  '(font-lock-variable-name-face ((t (:inherit (default)))))
- '(font-lock-warning-face ((t (:background "yellow" :foreground "black" :weight bold))))
+ '(font-lock-warning-face ((t (:box (:line-width 2 :color "yellow")))))
 
  ;; flymake
- '(flymake-errline ((t (:inherit theme-roller--code-error :background "DarkRed" :foreground "black"))))
- '(flymake-warnline ((t (:inherit theme-roller--code-warning :background "yellow" :foreground "black"))))
+ '(flymake-errline ((t (:inherit (default) :box (:line-width 2 :color "Dark Red")))))
+ '(flymake-warnline ((t (:inherit (font-lock-warning-face)))))
 
  ;; hl-line
  '(hl-line ((t (:background "#130061"))))

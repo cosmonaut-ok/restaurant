@@ -96,11 +96,11 @@
 (defun restaurant/robe-init ()
   (when restaurant/enable-robe
     (require 'robe)
+    ;; (when (ignore-errors (robe-start))
+    (ignore-errors (robe-start))
     (setq robe-turn-on-eldoc t)
     (robe-mode 1)
-    (ignore-errors (robe-start))
-    ;; (when (ignore-errors (robe-start))
-      ;; integrate with company mode
+    ;; integrate with company mode
     (push 'company-robe company-backends)))
 
 (dolist (hook '(enh-ruby-mode-hook inf-ruby-mode-hook html-erb-mode-hook haml-mode))
@@ -171,7 +171,8 @@
   (inf-ruby-minor-mode 1)
   (when (executable-find "pry")
     (setq inf-ruby-default-implementation "pry"))
-  (inf-ruby))
+  (inf-ruby)
+  )
 
 (add-hook 'enh-ruby-mode-hook #'restaurant/ruby-generic-init)
 ;;; ruby.el ends here

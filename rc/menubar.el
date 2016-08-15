@@ -145,7 +145,7 @@
 
 (define-key prog-mode-map
   [menu-bar code expand]
-  (cons "Expand" (make-sparse-keymap "Expand")))
+  (cons "Expand" yas--minor-mode-menu))
 
 (define-key prog-mode-map
   [menu-bar code complete]
@@ -350,3 +350,11 @@
 (define-key prog-mode-map
   [menu-bar run shell-command-separator-2]
   '("--" nil :visible))
+
+(define-key global-map
+  [menu-bar tools ssh-session]
+  '("SSH Session" . ssh))
+
+(define-key global-map
+  [menu-bar tools elisp-console]
+  '("Interactive Scripting Console" . ielm))
