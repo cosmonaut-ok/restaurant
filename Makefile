@@ -6,6 +6,7 @@ ARCHIVE_NAME=$(shell basename ${EMACS_URI})
 SOURCE_DIR=emacs-$(shell basename ${EMACS_URI} .tar.gz)
 RUBY=$(shell which ruby)
 BUNDLE=$(shell which bundle)
+RVM=$(shell which rvm)
 RESTAURANT_VERSION=$(shell grep autoconf-anchor rc/version.el | cut -d\" -f2 | tr -d \\n)
 
 all: build clean-build clean
@@ -46,6 +47,7 @@ build: el-get
 	@echo "Building restaurant..."
 	@cd scripts && ./build_all
 	@chmod 755 restaurant
+	@cat el-get/robe-mode/Gemfile >> Gemfile
 	@touch build
 
 bootstrap: build
@@ -57,7 +59,11 @@ ifneq ($(BUNDLE),yes)
 	@echo "ERROR: there is no ruby in system. Exiting" && exit 1
 endif
 	@echo "Building restaurant starting dependencies..."
-	@cd scripts && bundle install
+	@cd bundle install
+ifeq ($(RVM),yes)
+	@echo "Generating RI documentation..."
+	@rvm docs generate
+endif
 	@touch bootstrap
 
 install: build
@@ -79,12 +85,12 @@ clean-emacs: clean-build
 
 mrproper: clean-emacs clean
 	@echo "Clearing emacs 3rt-party data dirs..."
-	@rm -rf build el-get elpa configure Gemfile.lock ${ARCHIVE_NAME}
+	@rm -rf build el-get elpa configure Gemfile.lock ${ARCHIVE_NAME} Gemfile share
 
 package: build clean-build clean
 	@echo "Building package..."
 	@mkdir -p ${BUILD_DIR}/restaurant/
-	@for i in restaurant bootstrap.el data init.el LICENSE rc README.md el-get elpa emacs share; do cp -rp $$i ${BUILD_DIR}/restaurant/; done
+	@for i in restaurant bootstrap.el data init.el LICENSE rc README.md el-get elpa emacs share Gemfile; do cp -rp $$i ${BUILD_DIR}/restaurant/; done
 	@touch ${BUILD_DIR}/restaurant/build
 	@echo "Stripping package from unneded files..."
 	@find ${BUILD_DIR}/restaurant/ -type d -name '.git' -exec rm -rf {} +

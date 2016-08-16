@@ -8,6 +8,7 @@
 (require 'redo+)
 (require 'f)
 (require 'notify)
+(require 'cl-lib)
 
 ;; add load path "data" for icons etc 
 (add-to-list 'load-path (locate-source-file "data"))
@@ -75,6 +76,19 @@
 ;; after mouse selection in X11, you can paste by `yank' in emacs
 (setq x-select-enable-primary t)
 
+;;;; Move lines/regions up/down
+(require 'drag-stuff)
+(drag-stuff-global-mode 1)
+;; Drag line
+;; To drag a line up and down. Put the cursor on that line and press <M-up> and <M-down>.
+;; Drag lines
+;; To drag several lines up and down. Select the lines you want to drag and press <M-up> and <M-down>.
+;; Drag region
+;; A region can be dragged to the left and right. Select the region you want to drag and press <M-left> and <M-right>.
+;; Drag word
+;; To drag a word. Place the cursor on the word and press <M-left> and <M-right>.
+;; For more information, see comments in drag-stuff.el.
+
 ;;;; Recently edited files in menu
 (recentf-mode 1)
 
@@ -84,6 +98,12 @@
 ;;;; Word completion customizations
 (setq dabbrev-always-check-other-buffers t)
 ;; (setq dabbrev-abbrev-char-regexp "\\sw\\|\\s_")
+
+;; move semanticDB, srecode and ede to cache
+(custom-set-variables
+ '(ede-project-placeholder-cache-file (locate-user-cache-file "restaurant-ede-projects.el"))
+ '(semanticdb-default-save-directory (locate-user-cache-file "restaurant-semanticdb"))
+ '(srecode-map-save-file (locate-user-cache-file "restaurant-srecode-map.el")))
 
 ;;;; Column & line numbers in mode bar
 (column-number-mode t)
@@ -434,4 +454,34 @@
 	    (setq ssh-directory-tracking-mode t)
 	    (shell-dirtrack-mode t)
 	    (setq dirtrackp nil)))
+
+;;;
+;;; common compilation options
+;;;
+(defvar exit-status)
+
+;; Idea from <https://gist.github.com/jwiegley/fd78e747f27a90cb67a2>.
+(defun notify-compilation-result (buffer result)
+  "Notify about the ended compilation in BUFFER.
+  This function is intended to be used in
+  `compilation-finish-functions'."
+  (with-current-buffer buffer
+    (unless (eq major-mode 'grep-mode)
+      (let ((urgency))
+	(if (= exit-status 0)
+	    (setq urgency 'normal)
+	  (setq urgency 'critical))
+	(when restaurant/notify-on-build
+	  (notify "Build"
+		  (format (concat "Buffer: %s\n"
+				  "Command: %s\n"
+				  "Result: %s")
+			  (buffer-name buffer)
+			  compile-command result)
+		  :urgency urgency
+		  :icon "restaurant"))))))
+
+(add-to-list 'compilation-finish-functions
+	     'notify-compilation-result)
+
 ;;; common.el ends here

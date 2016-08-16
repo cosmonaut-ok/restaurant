@@ -171,10 +171,64 @@
 ;;;
 ;;; Refactor
 ;;;
-
 (define-key-after prog-mode-map
   [menu-bar refactor]
   (cons "Refactor" (make-sparse-keymap "Refactor")) 'options)
+
+;;;; Ruby Refactor
+(define-key enh-ruby-mode-map
+  [menu-bar refactor ruby]
+  (cons "Ruby Refactor" (make-sparse-keymap "Ruby Refactor")))
+
+(define-key enh-ruby-mode-map
+  [menu-bar refactor ruby ruby-tools-clear-string]
+  '("Add Parameter" . ruby-refactor-add-parameter))
+
+(define-key enh-ruby-mode-map
+  [menu-bar refactor ruby ruby-tools-to-symbol]
+  '("Extract to Let" . ruby-refactor-extract-line-to-let))
+
+(define-key enh-ruby-mode-map
+  [menu-bar refactor ruby ruby-tools-to-single-quote-string]
+  '("Extract Constant" . ruby-refactor-extract-constant))
+
+(define-key enh-ruby-mode-map
+  [menu-bar refactor ruby ruby-tools-to-double-quote-string]
+  '("Extract to Method" . ruby-refactor-extract-to-method))
+
+(define-key enh-ruby-mode-map
+  [menu-bar refactor ruby ruby-tools-to-symbol]
+  '("Remove Inline Temp" . ruby-refactor-remove-inline-temp))
+
+(define-key enh-ruby-mode-map
+  [menu-bar refactor ruby ruby-tools-to-single-quote-string]
+  '("Extract Local variable" . ruby-refactor-extract-local-variable))
+
+(define-key enh-ruby-mode-map
+  [menu-bar refactor ruby ruby-tools-to-double-quote-string]
+  '("Convert Post Conditional" . ruby-refactor-convert-post-conditional))
+
+(define-key enh-ruby-mode-map
+  [menu-bar refactor ruby ruby-refactor-separator]
+  '("--" nil :visible))
+
+;;;; Ruby Tools
+(define-key prog-mode-map
+  [menu-bar refactor ruby-tools-clear-string]
+  '("Clear string" . ruby-tools-clear-string))
+
+(define-key prog-mode-map
+  [menu-bar refactor ruby-tools-to-symbol]
+  '("Convert String to Symbol" . ruby-tools-to-symbol))
+
+(define-key prog-mode-map
+  [menu-bar refactor ruby-tools-to-single-quote-string]
+  '("Double to Single Quote" . ruby-tools-to-sinble-quote-string))
+
+(define-key prog-mode-map
+  [menu-bar refactor ruby-tools-to-double-quote-string]
+  '("Single to Double Quote" . ruby-tools-to-double-quote-string))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;
@@ -366,3 +420,26 @@
 (define-key global-map
   [menu-bar tools elisp-console]
   '("Interactive Scripting Console" . ielm))
+
+;;;
+;;; rvm menu
+;;;
+(define-key enh-ruby-mode-map
+  [menu-bar tools rvm]
+  (cons "RVM" (make-sparse-keymap "RVM")))
+
+(define-key global-map
+  [menu-bar tools rvm rvm-use]
+  '("Use default ruby for this session" . rvm-use))
+
+(define-key global-map
+  [menu-bar tools rvm rvm-use]
+  '("Switch ruby and gemset version" . rvm-use))
+
+x(define-key global-map
+  [menu-bar tools rvm install-gem]
+  '("install Gem" . rvm-gem-install))
+
+(define-key global-map
+  [menu-bar tools rvm rvm-open-gem]
+  '("Open gem" . rvm-open-gem))

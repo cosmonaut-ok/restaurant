@@ -65,6 +65,7 @@
     "ido-vertical-mode"
     "ido-better-flex"
     "ispell-multi" ;; multiple languages spelling support
+    "drag-stuff" ;; move lines/regions up/down
     ;; notifications support
     "notify"
     ;; fun

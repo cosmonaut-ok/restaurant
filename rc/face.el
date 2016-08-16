@@ -27,13 +27,19 @@
   )
 
 (defcustom restaurant/familiar-copy-paste-cut t
-  "Bind familiar Control+c, Control+x and Control+v, instead emacs default keybindings."
+  "Bind familiar Control+c, Control+x and Control+v, instead Emacs default keybindings."
   :type 'boolean
   :group 'restaurant/face
   )
 
 (defcustom restaurant/fill-column t
   "Enable special highlighting of long lines."
+  :type 'boolean
+  :group 'restaurant/face
+  )
+
+(defcustom restaurant/notify-on-build t
+  "Notify on build, compile or test process finished."
   :type 'boolean
   :group 'restaurant/face
   )
