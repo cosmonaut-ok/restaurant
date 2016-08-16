@@ -22,29 +22,41 @@ See `popup-commands' which calls this"
      (choose-from-menu
       "Context menu"
       (list
-       (cons "Open Terminal here" "(open-console)")
-       (cons "-" "")
-       (cons "Open File [C-x C-f]" "(call-interactively 'find-file)")
-       (cons "Save File [C-x C-s]" "(call-interactively 'save-buffer)")
-       (cons "-" "")
        (cons "Cut [C-w]" "(call-interactively 'kill-region)")
        (cons "Copy [M-w]" "(call-interactively 'kill-ring-save)")
-       (cons "Paste/Yank [C-y]" "(yank)")
+       (cons "Paste (Yank) [C-y]" "(yank)")
+       (cons "Paste from history" "(popup-menu 'yank-menu)")
+       (cons "-" "")
+       (cons "Open Terminal here" "(open-console)")
        (cons "-" "")
        (cons "Undo [C-x u]" "(undo)")
        (cons "Redo" "(call-interactively 'redo)")
        (cons "-" "")
-       (cons "Search [C-s]" "(call-interactively 'search-forward)")
-       (cons "Search files" "(call-interactively 'grep)")
-       (cons "Word completion [M-/]"  "(call-interactively 'dabbrev-expand)")
+       (cons "Refactor N/I" "")
+       (cons "Folding N/I" "")
        (cons "-" "")
-       (cons "Open current buffer in new window [C-x 5 2]"  "(make-frame-command)")
+       (cons "Save Current File [C-x C-s]" "(call-interactively 'save-buffer)")
+       (cons "-" "")
+       (cons "Search [C-s]" "(call-interactively 'search-forward)")
+       (cons "Search [C-s-1]" (cons "zzz" "(call-interactively 'search-forward)"))
+       (cons "-" "")
+       (cons "Git N/I" "")
+       (cons "-" "")
+       (cons "Open current buffer in new frame (WM window) [C-x 5 2]"
+	     "(make-frame-command)")
        (cons "Hide current buffer [C-x 0]"  "(delete-window)")
        (cons "-" "")
        (cons "-" "")
        (cons "Close current buffer [C-x k]"  "(kill-buffer)")
        ))))))
 
+
+;; (x-popup-menu
+;;  t
+;;  '("Title"
+;;    ("Title 1" ("Item 1-1" . 11) ("Item 1-2" . 12))
+;;    ("Title 2" ("Item 2-1" . 21) ("Item 2-2" . 22))))
+
 (global-set-key [mouse-3] 'right-popup)
 
-
+;;;; popup-menu.el ends here

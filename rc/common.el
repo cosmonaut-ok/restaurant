@@ -45,6 +45,9 @@
  '(initial-frame-alist (quote ((fullscreen . maximized)))) ; start maximized
  )
 
+;; Remove trailing whitespaces
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 ;; disable EDE
 (add-hook 'emacs-startup-hook #'(lambda ()
 				  (global-srecode-minor-mode 0)
@@ -64,6 +67,13 @@
 
 (add-hook 'text-mode-hook 'restaurant/cua-mode-init)
 (add-hook 'prog-mode-hook 'restaurant/cua-mode-init)
+
+;;;; Sync linux and eamcs clipboards
+;; after copy Ctrl+c in Linux X11, you can paste by `yank' in emacs
+(setq x-select-enable-clipboard t)
+
+;; after mouse selection in X11, you can paste by `yank' in emacs
+(setq x-select-enable-primary t)
 
 ;;;; Recently edited files in menu
 (recentf-mode 1)
