@@ -427,6 +427,10 @@
   (cons "RVM" (make-sparse-keymap "RVM")))
 
 (define-key global-map
+  [menu-bar tools rvm rvm-install-rvm]
+  '("Install RVM (restart needed)" . rvm-install-rvm))
+
+(define-key global-map
   [menu-bar tools rvm rvm-use]
   '("Use default ruby for this session" . rvm-use))
 

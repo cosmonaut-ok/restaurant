@@ -107,6 +107,16 @@
 
 (add-hook 'enh-ruby-mode-hook 'restaurant/rvm-init)
 
+;; RVM installation hack
+(define-compilation-mode rvm-installation-mode "RVM installation"
+  "Installation mode for RVM."
+  (add-hook 'compilation-filter-hook 'bundler-colorize-compilation-buffer nil t))
+
+(defun rvm-install-rvm ()
+  (interactive)
+  (let ((cmd "gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 && curl -sSL https://get.rvm.io | bash"))
+  (compile cmd 'rvm-installation-mode))
+
 ;;;
 ;;; robe mode: code navigtion, documentation
 ;;;

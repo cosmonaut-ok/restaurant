@@ -184,7 +184,7 @@ little more place."
     (or (ecb-toggle-ecb-windows)
 	(call-interactively 'ecb-activate))))
 
-(global-set-key (kbd "<f9>") 'toggle-code-browser)
+(global-set-key (kbd "<f11>") 'toggle-code-browser)
 
 (add-hook 'emacs-startup-hook '(lambda ()
 				 (if restaurant/code-browser-switch-to-simple
