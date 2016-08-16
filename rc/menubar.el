@@ -14,6 +14,10 @@
 (define-key global-map [menu-bar tools shell] nil)
 (define-key global-map [menu-bar tools gdb] nil)
 (define-key global-map [menu-bar tools compile] nil)
+(define-key global-map [menu-bar tools semantic] nil)
+(define-key global-map [menu-bar tools ede] nil)
+;; (define-key global-map [menu-bar tools Projectile] nil)
+(define-key global-map [menu-bar tools separator-prog] nil)
 (define-key global-map [menu-bar tools Color\ Themes] nil)
 (define-key global-map [menu-bar tools Start\ Code\ Browser\ \(ECB\)] nil)
 ;; (define-key global-map [menu-bar options package] nil) ;; TODO: do something with this
@@ -89,6 +93,10 @@
 (define-key prog-mode-map
   [menu-bar code toggle-codebrowser]
   '("Toggle Code Browser Windows" . toggle-code-browser))
+
+;; (define-key prog-mode-map
+;;   [menu-bar code projectile]
+;;   '("Project support" . projectile-mode-map))
 
 ;; Submap
 (define-key prog-mode-map

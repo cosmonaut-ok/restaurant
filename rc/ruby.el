@@ -7,6 +7,12 @@
 (require 'enh-ruby-mode)
 (defalias 'ruby-mode 'enh-ruby-mode)
 
+;; inf-ruby and robe
+(require 'robe)
+(require 'inf-ruby)
+(inf-ruby)
+(robe-start)
+
 ;;;
 ;;; Generic
 ;;;
@@ -95,9 +101,6 @@
 ;;;
 (defun restaurant/robe-init ()
   (when restaurant/enable-robe
-    (require 'robe)
-    ;; (when (ignore-errors (robe-start))
-    (ignore-errors (robe-start))
     (setq robe-turn-on-eldoc t)
     (robe-mode 1)
     ;; integrate with company mode
@@ -171,7 +174,6 @@
   (inf-ruby-minor-mode 1)
   (when (executable-find "pry")
     (setq inf-ruby-default-implementation "pry"))
-  (inf-ruby)
   )
 
 (add-hook 'enh-ruby-mode-hook #'restaurant/ruby-generic-init)
