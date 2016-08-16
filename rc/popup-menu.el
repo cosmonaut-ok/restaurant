@@ -20,7 +20,7 @@ See `popup-commands' which calls this"
    (car
     (read-from-string
      (choose-from-menu
-      "Context menu"
+      "Appetizer"
       (list
        (cons "Cut [C-w]" "(call-interactively 'kill-region)")
        (cons "Copy [M-w]" "(call-interactively 'kill-ring-save)")
@@ -40,14 +40,12 @@ See `popup-commands' which calls this"
        (cons "Search [C-s]" "(call-interactively 'search-forward)")
        (cons "Search [C-s-1]" (cons "zzz" "(call-interactively 'search-forward)"))
        (cons "-" "")
-       (cons "Git N/I" "")
-       (cons "-" "")
-       (cons "Open current buffer in new frame (WM window) [C-x 5 2]"
+       (cons "Open buffer in new frame (WM window) [C-x 5 2]"
 	     "(make-frame-command)")
-       (cons "Hide current buffer [C-x 0]"  "(delete-window)")
+       (cons "Hide buffer [C-x 0]"  "(delete-window)")
        (cons "-" "")
        (cons "-" "")
-       (cons "Close current buffer [C-x k]"  "(kill-buffer)")
+       (cons "Close buffer [C-x k]"  "(kill-buffer)")
        ))))))
 
 

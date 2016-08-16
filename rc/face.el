@@ -206,12 +206,6 @@
   :group 'restaurant/ruby
   )
 
-(defcustom restaurant/enable-bundler t
-  "Use RVM (if possible)."
-  :type 'boolean
-  :group 'restaurant/ruby
-  )
-
 (defcustom restaurant/enable-rubocop t
   "Enable rubocop, when open ruby file,"
   :type 'boolean

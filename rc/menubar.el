@@ -20,64 +20,23 @@
 (define-key global-map [menu-bar tools separator-prog] nil)
 (define-key global-map [menu-bar tools Color\ Themes] nil)
 (define-key global-map [menu-bar tools Start\ Code\ Browser\ \(ECB\)] nil)
-;; (define-key global-map [menu-bar options package] nil) ;; TODO: do something with this
+(define-key global-map [menu-bar options package] nil) ;; TODO: do something with this
+
+(define-key global-map [menu-bar help-menu emacs-news] nil)
+(define-key global-map [menu-bar help-menu emacs-known-problems] nil)
+(define-key global-map [menu-bar help-menu send-emacs-bug-report] nil)
+(define-key global-map [menu-bar help-menu emacs-manual-bug] nil)
+(define-key global-map [menu-bar help-menu search-documentation] nil)
+(define-key global-map [menu-bar help-menu find-emacs-packages] nil)
+(define-key global-map [menu-bar help-menu extra-packages] nil)
+(define-key global-map [menu-bar help-menu external-packages] nil)
+(define-key global-map [menu-bar help-menu external-packages] nil)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define-key enh-ruby-mode-map
-  [menu-bar project]
-  (cons "Project" (make-sparse-keymap "Project")))
-
-;;;
-;;; projectile
-;;;
-(define-key enh-ruby-mode-map
-  [menu-bar project search-in-project]
-  '("Search in Current Project" . projectile-grep))
-
-(define-key enh-ruby-mode-map
-  [menu-bar project open-project-file]
-  '("Open Project File" . projectile-find-file-dwim))
-
-(define-key enh-ruby-mode-map
-  [menu-bar project project-run-shell-command-in-root]
-  '("Run shell command in project root directory" . projectile-run-async-shell-command-in-root))
-
-;;;
-;;; Restaurant legacy menu
-;;;
-(define-key global-map [menu-bar options restaurant]
-  (cons "Restaurant" (make-sparse-keymap "Restaurant")))
-
-(define-key global-map [menu-bar options restaurant customize-restaurant]
-  (cons "Customize Restaurant" (make-sparse-keymap "Customize Restaurant")))
-
 (define-key global-map
-  [menu-bar options restaurant customize-restaurant restaurant/customize]
+  [menu-bar options restaurant/customize]
   '("Restaurant Customization Menu" . restaurant/customize))
 
-(define-key global-map
-  [menu-bar options restaurant customize-restaurant customize-themes]
-  '("Customize Themes" . customize-themes))
-
-(define-key global-map
-  [menu-bar options restaurant customize-restaurant customize]
-  '("Global Customization Menu" . customize))
-
-(define-key global-map
-  [menu-bar options restaurant hide-all-blocks]
-  '("Hide all code blocks" . hs-hide-all))
-
-(define-key global-map
-  [menu-bar options restaurant show-all-blocks]
-  '("Show all code blocks" . hs-show-all))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; new menu
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (define-key-after prog-mode-map
   [menu-bar code]
   (cons "Code" (make-sparse-keymap "Code")) 'options)
@@ -93,6 +52,18 @@
 (define-key prog-mode-map
   [menu-bar code toggle-codebrowser]
   '("Toggle Code Browser Windows" . toggle-code-browser))
+
+(define-key prog-mode-map
+  [menu-bar code codebrowser-separator]
+  '("--" nil :visible))
+
+(define-key prog-mode-map
+  [menu-bar code drag-stuff-up]
+  '("Move line/Selected Up" . drag-stuff-up))
+
+(define-key prog-mode-map
+  [menu-bar code drag-stuff-down]
+  '("Move line/Selected Down" . drag-stuff-down))
 
 ;; (define-key prog-mode-map
 ;;   [menu-bar code projectile]
@@ -116,28 +87,45 @@
 ;;;
 ;; (add-hook 'chef-mode-hook #'restaurant/chef-kitchen)
 
-;; add rubocop menu
-(define-key enh-ruby-mode-map
-  [menu-bar code syntax-correction]
-  (cons "Syntax Correction" (make-sparse-keymap "Syntax Correction")))
+;; add rubocop/foodcritic menu
 
 (define-key enh-ruby-mode-map
-  [menu-bar code syntax-correction check-current-file]
-  '("Check Current File" . rubocop-check-current-file))
+  [menu-bar code inspection]
+  (cons "Inspect" (make-sparse-keymap "Inspect")))
 
 (define-key enh-ruby-mode-map
-  [menu-bar code syntax-correction check-directory]
+  [menu-bar code inspection rubocop-check-project]
+  '("Check Project" . rubocop-check-project))
+
+(define-key enh-ruby-mode-map
+  [menu-bar code inspection rubocop-check-directory]
   '("Check Directory" . rubocop-check-directory))
 
 (define-key enh-ruby-mode-map
-  [menu-bar code syntax-correction check-project]
-  '("Check Project" . rubocop-check-project))
+  [menu-bar code inspection rubocop-check-current-file]
+  '("Check Current File" . rubocop-check-current-file))
+
+(define-key prog-mode-map
+  [menu-bar code inspection rubocop-separator]
+  '("--" nil :visible))
+
+(define-key enh-ruby-mode-map
+  [menu-bar code inspection foodcritic-project]
+  '("Foodcritic Project N/I" . foodcritic-project))
+
+(define-key enh-ruby-mode-map
+  [menu-bar code inspection foodcritic-directory]
+  '("Foodcritic Directory N/I" . foodcritic-directory))
+
+(define-key enh-ruby-mode-map
+  [menu-bar code inspection foodcritic-file]
+  '("Foodcritic File N/I" . foodcritic-file))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (define-key enh-ruby-mode-map
-  [menu-bar code syntax-correction separator]
-  '("--" nil :visible))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  [menu-bar code syntax-correction]
+  (cons "Correct Syntax" (make-sparse-keymap "Correct Syntax")))
 
 (define-key enh-ruby-mode-map
   [menu-bar code syntax-correction autocorrect-current-file]
@@ -181,31 +169,31 @@
   (cons "Ruby Refactor" (make-sparse-keymap "Ruby Refactor")))
 
 (define-key enh-ruby-mode-map
-  [menu-bar refactor ruby ruby-tools-clear-string]
+  [menu-bar refactor ruby ruby-refactor-add-parameter]
   '("Add Parameter" . ruby-refactor-add-parameter))
 
 (define-key enh-ruby-mode-map
-  [menu-bar refactor ruby ruby-tools-to-symbol]
-  '("Extract to Let" . ruby-refactor-extract-line-to-let))
+  [menu-bar refactor ruby ruby-refactor-extract-to-let]
+  '("Extract to Let" . ruby-refactor-extract-to-let))
 
 (define-key enh-ruby-mode-map
-  [menu-bar refactor ruby ruby-tools-to-single-quote-string]
+  [menu-bar refactor ruby ruby-refactor-extract-constant]
   '("Extract Constant" . ruby-refactor-extract-constant))
 
 (define-key enh-ruby-mode-map
-  [menu-bar refactor ruby ruby-tools-to-double-quote-string]
+  [menu-bar refactor ruby ruby-refactor-extract-to-method]
   '("Extract to Method" . ruby-refactor-extract-to-method))
 
 (define-key enh-ruby-mode-map
-  [menu-bar refactor ruby ruby-tools-to-symbol]
+  [menu-bar refactor ruby ruby-refactor-remove-inline-temp]
   '("Remove Inline Temp" . ruby-refactor-remove-inline-temp))
 
 (define-key enh-ruby-mode-map
-  [menu-bar refactor ruby ruby-tools-to-single-quote-string]
+  [menu-bar refactor ruby ruby-refactor-extract-local-variable]
   '("Extract Local variable" . ruby-refactor-extract-local-variable))
 
 (define-key enh-ruby-mode-map
-  [menu-bar refactor ruby ruby-tools-to-double-quote-string]
+  [menu-bar refactor ruby ruby-refactor-convert-post-conditional]
   '("Convert Post Conditional" . ruby-refactor-convert-post-conditional))
 
 (define-key enh-ruby-mode-map
@@ -241,7 +229,7 @@
 ;;;
 ;;; magit
 ;;;
-;;; 
+;;;
 (define-key prog-mode-map
   [menu-bar vcs git]
   (cons "Git" (make-sparse-keymap "Git")))
@@ -396,6 +384,10 @@
   [menu-bar run gdb]
   '("Compile" . compile))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;; Tools
+;;;
 ;;;; shell command
 (define-key prog-mode-map
   [menu-bar run shell-command-separator-1]
@@ -417,14 +409,20 @@
   [menu-bar tools ssh-session]
   '("SSH Session" . ssh))
 
+;;;; ielm
 (define-key global-map
   [menu-bar tools elisp-console]
-  '("Interactive Scripting Console" . ielm))
+  '("Interactive IDE Scripting Console" . ielm))
+
+;;;; inf-ruby
+(define-key global-map
+  [menu-bar tools inf-ruby]
+  '( "Interactive Ruby Console" . inf-ruby))
 
 ;;;
 ;;; rvm menu
 ;;;
-(define-key enh-ruby-mode-map
+(define-key global-map
   [menu-bar tools rvm]
   (cons "RVM" (make-sparse-keymap "RVM")))
 
@@ -436,10 +434,77 @@
   [menu-bar tools rvm rvm-use]
   '("Switch ruby and gemset version" . rvm-use))
 
-x(define-key global-map
+(define-key global-map
   [menu-bar tools rvm install-gem]
   '("install Gem" . rvm-gem-install))
 
 (define-key global-map
   [menu-bar tools rvm rvm-open-gem]
   '("Open gem" . rvm-open-gem))
+
+;;;
+;;; bundler Menu
+;;;
+(define-key global-map
+  [menu-bar tools bundler]
+  (cons "Bundler" (make-sparse-keymap "Bundler")))
+
+(define-key global-map
+  [menu-bar tools bundler bundle-exec]
+  '("Bundle exec" . bundle-exec))
+
+(define-key global-map
+  [menu-bar tools bundler bundle-show]
+  '("Bundle show" . bundle-show))
+
+(define-key global-map
+  [menu-bar tools bundler bundle-check]
+  '("Bundle check" . bundle-check))
+
+(define-key global-map
+  [menu-bar tools bundler bundle-update]
+  '("Bundle update" . bundle-update))
+
+(define-key global-map
+  [menu-bar tools bundler bundle-version]
+  '("Bundle version" . bundle-version))
+
+(define-key global-map
+  [menu-bar tools bundler bundle-gemfile]
+  '("Bundle gemfile" . bundle-gemfile))
+
+(define-key global-map
+  [menu-bar tools bundler bundle-install]
+  '("Bundle install" . bundle-install))
+
+(define-key global-map
+  [menu-bar tools bundler bundle-console]
+  '("Bundle console" . bundle-console))
+
+(define-key global-map
+  [menu-bar tools bundler bundle-outdated]
+  '("Bundle outdated" . bundle-outdated))
+
+;;;
+;;; keyboard macros menu
+;;;
+(define-key global-map
+  [menu-bar tools kmacro]
+  (cons "keyboard Macro" (make-sparse-keymap "keyboard Macro")))
+
+;;;; Write keyboard macro
+(define-key global-map
+  [menu-bar tools kmacro kmacro-edit-macro]
+  '("Edit Keyboard Macro" . kmacro-edit-macro))
+
+(define-key global-map
+  [menu-bar tools kmacro kmacro-call-macro]
+  '("Call Keyboard Macro" . kmacro-call-macro))
+
+(define-key global-map
+  [menu-bar tools kmacro kmacro-end-macro]
+  '("End Writing Keyboard Macro" . kmacro-end-macro))
+
+(define-key global-map
+  [menu-bar tools kmacro kmacro-start-macro]
+  '("Star Writing Keyboard Macro" . kmacro-start-macro))

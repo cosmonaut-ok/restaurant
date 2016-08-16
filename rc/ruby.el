@@ -45,11 +45,22 @@
 ;;;
 ;;; bundler
 ;;;
-(defun restaurant/bundler-init ()
-  (when restaurant/enable-bundler
-    (require 'bundler)))
+(require 'bundler)
 
-(add-hook 'enh-ruby-mode-hook #'restaurant/bundler-init)
+;; small bundler hack ;-)
+(defun bundler-colorize-compilation-buffer ()
+  (toggle-read-only)
+  (ansi-color-apply-on-region compilation-filter-start (point))
+  (toggle-read-only))
+
+;; define test kitchen compilation mode
+(define-compilation-mode bundler-compilation-mode "Bundler compilation"
+  "Compilation mode for Bundler output."
+  (add-hook 'compilation-filter-hook 'bundler-colorize-compilation-buffer nil t))
+
+(defun bundle-command (cmd)
+  "Run cmd in an async buffer."
+  (compile cmd 'bundler-compilation-mode))
 
 ;;;
 ;;; ruby-electric

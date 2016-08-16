@@ -17,6 +17,11 @@
 (add-to-list 'yas/snippet-dirs (concat restaurant/source-directory "el-get/yasnippets/"))
 (add-to-list 'yas/snippet-dirs (concat restaurant/source-directory "share/rspec-mode/snippets/"))
 (add-to-list 'yas/snippet-dirs (concat restaurant/user-data-directory "/snippets/"))
+(mkdir (concat restaurant/user-data-directory "/snippets/") t)
+
+;;;; Remove yasnippet from menu
+(custom-set-variables
+ '(yas-use-menu nil))
 
 ;; (yas-global-mode 1)
 (yas/reload-all)
@@ -101,6 +106,5 @@
 ;;;; add snippets after rspec loaded
 (eval-after-load 'rspec-mode
  '(rspec-install-snippets))
-
 
 ;;; yasnippet.el ends here

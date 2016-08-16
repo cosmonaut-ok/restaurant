@@ -9,8 +9,9 @@
 (require 'f)
 (require 'notify)
 (require 'cl-lib)
+(require 'ansi-color)
 
-;; add load path "data" for icons etc 
+;; add load path "data" for icons etc
 (add-to-list 'load-path (locate-source-file "data"))
 
 ;;;
@@ -69,6 +70,9 @@
 (add-hook 'text-mode-hook 'restaurant/cua-mode-init)
 (add-hook 'prog-mode-hook 'restaurant/cua-mode-init)
 
+;;;; Enable Drag stuff
+(drag-stuff-global-mode 1)
+
 ;;;; Sync linux and eamcs clipboards
 ;; after copy Ctrl+c in Linux X11, you can paste by `yank' in emacs
 (setq x-select-enable-clipboard t)
@@ -100,6 +104,7 @@
 ;; (setq dabbrev-abbrev-char-regexp "\\sw\\|\\s_")
 
 ;; move semanticDB, srecode and ede to cache
+(mkdir restaurant/user-cache-directory t)
 (custom-set-variables
  '(ede-project-placeholder-cache-file (locate-user-cache-file "restaurant-ede-projects.el"))
  '(semanticdb-default-save-directory (locate-user-cache-file "restaurant-semanticdb"))
@@ -203,9 +208,9 @@
   ;;
   (subword-mode 1)
   (font-lock-mode 1)
-  
+
   ;; (setq indent-tabs-mode t) ;; Turn Off Tab Character
-  
+
   (local-set-key (kbd "C-c C-f") 'flash-cross)
   (local-set-key (kbd "RET") 'newline-and-indent)
 
@@ -458,7 +463,7 @@
 ;;;
 ;;; common compilation options
 ;;;
-(defvar exit-status)
+(defvar exit-status 0)
 
 ;; Idea from <https://gist.github.com/jwiegley/fd78e747f27a90cb67a2>.
 (defun notify-compilation-result (buffer result)
