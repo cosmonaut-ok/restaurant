@@ -12,7 +12,13 @@
 (defvar restaurant/source-directory (file-name-directory load-file-name))
 (defvar restaurant/list-load-components '("lib" "face" "common" "company" "ruby" "rspec" "chef" "kitchen" "bundler" "foodcritic" "rvm" "codebrowser" "markdown" "yaml" "json" "web" "erb" "fly" "yasnippet" "popup-menu"  "menubar" "toolbar" "theme" "version"))
 
-(load (concat restaurant/source-directory "rc/user-directories.el"))
+;; loading initial user-directories file
+(let ((ud-file (concat restaurant/source-directory "src/user-directories.el")))
+  (if noninteractive
+      (progn (load ud-file) (byte-compile-file ud-file))
+    (if (file-exists-p (concat ud-file "c")) ;; searching for elc files
+	(load (concat ud-file "c"))
+      (load ud-file))))
 
 (defvar restaurant/packages-installed-p (locate-source-file "build"))
 
@@ -33,9 +39,19 @@
   (write-region "" nil custom-file))
 
 ;; load rc files
-(dolist (file restaurant/list-load-components)
-  (load (locate-source-file (concat "rc" "/" file ".el"))))
-
+(if noninteractive
+    (progn
+      ;; load el
+      (dolist (file restaurant/list-load-components)
+ 	(load (locate-source-file (concat "src" "/" file ".el"))))
+      ;; byte-compile to elc
+      (dolist (file restaurant/list-load-components)
+ 	(byte-compile-file (locate-source-file (concat "src" "/" file ".el")))))
+  ;;
+  (dolist (file restaurant/list-load-components)
+    (load (or (locate-source-file (concat "src" "/" file ".elc"))
+	      (locate-source-file (concat "src" "/" file ".el"))))))
+  
 (when (file-exists-p local-file)
   (load local-file))
 

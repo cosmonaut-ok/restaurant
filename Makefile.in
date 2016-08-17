@@ -116,7 +116,10 @@ clean:
 clean-emacs: clean-build
 	@rm -rf emacs
 
-mrproper: clean-emacs clean
+clean-precompile:
+	@rm -f src/*.elc
+
+mrproper: clean-emacs clean clean-precompile
 	@echo "Clearing emacs 3rt-party data dirs..."
 	@rm -rf build el-get elpa configure Gemfile.lock ${ARCHIVE_NAME} Gemfile share restaurant
 
