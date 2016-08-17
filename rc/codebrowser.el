@@ -1,3 +1,32 @@
+;;; codebrowser.el --- make Restaurant bootstrap and early boot  -*- lexical-binding: t -*-
+
+;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
+
+;; Maintainer: cosmonaut.ok@zoho.com
+;; Keywords: internal
+;; Package: restaurant
+
+;; This file is part of Restaurant.
+
+;; Restaurant is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; Restaurant is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with Restaurant.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;; TODO
+
+;;; Code:
+
 ;;;
 ;;; ecb
 ;;;
@@ -92,7 +121,7 @@ little more place."
    '(ecb-create-layout-file (locate-user-config-file "ecb-user-layouts.el"))
    '(ecb-tip-of-the-day-file (locate-user-config-file "ecb-tip-of-day.el"))
    '(ecb-source-path (quote (("/" "Root"))))
-   
+
    ;; ecb-windows-width 30
    ;; ecb-fix-window-size 'width
    ;; ecb-history-make-buckets 'mode
@@ -108,7 +137,7 @@ little more place."
 
    ;; (defconst initial-frame-width (frame-width)
    ;;   "The width of frame will be changed ,remember the init value.")
-   
+
    ;; (add-to-list 'ecb-compilation-buffer-names '("*slime-repl sbcl*"))
    ;; ;;(add-to-list 'ecb-source-path  '("~/Git Repositories/Workspaces" "/root"))
 
@@ -187,8 +216,9 @@ little more place."
 (global-set-key (kbd "<f11>") 'toggle-code-browser)
 
 (add-hook 'emacs-startup-hook '(lambda ()
-				 (if restaurant/code-browser-switch-to-simple
-				     (sr-speedbar-open)
-				   (call-interactively 'ecb-activate))))
+				 (when (not noninteractive)
+				   (if restaurant/code-browser-switch-to-simple
+				       (sr-speedbar-open)
+				     (call-interactively 'ecb-activate)))))
 
 ;;;;; config-ecb.el ends here ---
