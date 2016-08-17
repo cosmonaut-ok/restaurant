@@ -1,4 +1,4 @@
-# Makefile.in --- autoconfiguration file  -*- Autoconf -*- -*- lexical-binding: t -*-
+# Makefile.in --- Makefile template  -*- Makefile -*-
 
 # Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 
@@ -36,7 +36,7 @@ SOURCE_DIR=emacs-$(shell basename ${EMACS_URI} .tar.gz)
 RUBY=$(shell which ruby)
 BUNDLE=$(shell which bundle)
 RVM=$(shell which rvm)
-RESTAURANT_VERSION=$(shell grep autoconf-anchor rc/version.el | cut -d\" -f2 | tr -d \\n)
+RESTAURANT_VERSION=$(shell grep autoconf-anchor src/version.el | cut -d\" -f2 | tr -d \\n)
 LOCAL_EMACS=@LOCAL_EMACS_DIR@/bin/emacs
 
 all: build clean-build clean
@@ -136,13 +136,13 @@ package: build clean-build clean
 	@cd ${BUILD_DIR} && tar -czpf restaurant-${RESTAURANT_VERSION}-@GUI_TOOLKIT@.tar.gz restaurant
 	@cp ${BUILD_DIR}/restaurant-${RESTAURANT_VERSION}-@GUI_TOOLKIT@.tar.gz .
 	# hack to change emacs icons to restaurant
-	for i in `ls @LOCAL_EMACS_DIR@/etc/images/icons/hicolor/ | grep -E [0-9]`; do convert -resize ${i} data/restaurant.svg @LOCAL_EMACS_DIR@/etc/images/icons/hicolor/${i}/apps/emacs.png; done
+	for i in `ls @LOCAL_EMACS_DIR@/etc/images/icons/hicolor/ | grep -E [0-9]`; do convert -resize $$i data/restaurant.svg @LOCAL_EMACS_DIR@/etc/images/icons/hicolor/$$i/apps/emacs.png; done
 
 release: package clean-emacs clean
 
-test:
+test: build
 	@touch /tmp/.restaurant-mock.rb
-	@./restaurant --batch mock.rb || exit 1
+	@./restaurant --batch /tmp/.restaurant-mock.rb || exit 1
 	@rm -f /tmp/.restaurant-mock.rb
 
 help:
