@@ -7,7 +7,7 @@
 (add-hook 'chef-mode-hook 'restaurant/chef-kitchen-init)
 
 ;; patch for original test-kitchen.el. It does not supports automatic login
-(defcustom test-kitchen-login-command "chef exec kitchen login"
+(defcustom test-kitchen-login-command "kitchen login"
   "The command used for converge project.")
 
 (defun test-kitchen-login ()

@@ -46,6 +46,7 @@
     "mysql_service"
     "not_if"
     "notifies"
+    "should"
     "subscribes"
     "ohai"
     "only_if"
@@ -144,5 +145,17 @@ See URL `http://acrmp.github.io/foodcritic/'."
    ;; 					(locate-dominating-file parent-dir "cookbooks"))
    ;; 				       (string= (file-name-nondirectory (buffer-file-name)) "metadata.rb"))))
    ;; 			      :next-checkers ((warnings-only . ruby-rubocop)))))
+
+;;;
+;;; foodcritic
+;;;
+(defun restaurant/foodcritic-init ()
+  (when restaurant/enable-foodcritic
+    (require 'foodcritic)
+    (foodcritic-mode 1)
+    (auto-revert-mode 1) ;; TODO: is it needed here?
+    ))
+
+(add-hook 'enh-ruby-mode-hook 'restaurant/foodcritic-init)
 
 ;;; chef.el ends here

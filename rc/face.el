@@ -264,4 +264,8 @@
   "Chef minor mode."
   :group 'restaurant/extensions)
 
+(defgroup github-notifier nil
+  "Chef minor mode."
+  :group 'restaurant/extensions)
+
 ;;; face.el ends here

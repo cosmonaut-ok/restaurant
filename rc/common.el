@@ -10,6 +10,7 @@
 (require 'notify)
 (require 'cl-lib)
 (require 'ansi-color)
+(require 'github-notifier)
 
 ;; add load path "data" for icons etc
 (add-to-list 'load-path (locate-source-file "data"))
@@ -73,6 +74,7 @@
     ;; https://www.emacswiki.org/emacs/CuaMode
     (cua-mode t)))
 
+(add-hook 'emacs-startup-hook 'restaurant/cua-mode-init)
 (add-hook 'text-mode-hook 'restaurant/cua-mode-init)
 (add-hook 'prog-mode-hook 'restaurant/cua-mode-init)
 

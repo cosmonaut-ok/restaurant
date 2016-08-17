@@ -12,6 +12,16 @@
     "f"
     "s"
     "apel"
+    ;;
+    "helm"
+    "helm-robe"
+    "helm-swoop"
+    "helm-projectile"
+    "helm-themes"
+    "helm-robe"
+    "helm-company"
+    "helm-shell"
+    "helm-shell-history"
     ;; ruby
     "enh-ruby-mode"
     "ruby-electric"
@@ -66,6 +76,7 @@
     "ido-better-flex"
     "ispell-multi" ;; multiple languages spelling support
     "drag-stuff" ;; move lines/regions up/down
+    "ssh"
     ;; notifications support
     "notify"
     ;; fun
