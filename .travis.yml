@@ -31,7 +31,9 @@ language: lisp
 
 env:
   matrix:
-    - EMACS=restaurant
+    - RESTAURANT=gtk2
+    - RESTAURANT=gtk3
+    - RESTAURANT=athena
   global:
     - SOME_TOKEN=some_value
 
@@ -41,7 +43,9 @@ env:
 
 matrix:
   allow_failures:
-    - env: EMACS=restaurant
+    - env: RESTAURANT=gtk2
+    - env: RESTAURANT=gtk3
+    - env: RESTAURANT=athena
 
 ###
 ### limit build attempts to defined branches
@@ -61,18 +65,36 @@ branches:
     - master
 #
 
+###
+### runtime initialization
+###
+### notes
+###
+### emacs24 (current stable release) is obtained from the
+### cassou PPA: http://launchpad.net/~cassou/+archive/emacs
+###
+### emacs-snapshot (trunk) is obtained from the Ubuntu Emacs Lisp PPA:
+### https://launchpad.net/~ubuntu-elisp/+archive/ppa
+### For the emacs-snapshot build, bleeding-edge versions
+### of all test dependencies are also used.
+###
+
 install:
-  - sudo apt-get -qq install realpath imagemagick autoconf automake git libgtk2.0-dev libgtk-3-dev libxaw7-dev
+  - sudo apt-get -qq install realpath imagemagick autoconf automake git
+  - if [ "$RESTAURANT" = 'gtk2' ]; then
+        sudo apt-get -qq install libgtk2.0-dev;
+    fi
+  - if [ "$RESTAURANT" = 'gtk3' ]; then
+        sudo apt-get -qq install libgtk-3-dev;
+    fi
+  - if [ "$RESTAURANT" = 'athena' ]; then
+        sudo apt-get -qq install libxaw7-dev;
+    fi
 
 script:
   - autoconf
-  - ./configure
-  - make release
-  - autoconf
-  - ./configure --with-gui=gtk2
-  - make release
-  - autoconf
-  - ./configure --with-gui=athena
+  - ./configure --with-gui=$RESTAURANT
+  - make test
   - make release
 
 ###
