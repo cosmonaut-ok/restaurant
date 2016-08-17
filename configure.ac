@@ -29,7 +29,7 @@
 
 AC_PREREQ(2.69)
 
-AC_INIT(Restaurant Chef IDE, esyscmd(grep autoconf-anchor rc/version.el | cut -d\" -f2 | tr -d \\n), cosmonaut.ok@zoho.com)
+AC_INIT(Restaurant Chef IDE, esyscmd(grep autoconf-anchor src/version.el | cut -d\" -f2 | tr -d \\n), cosmonaut.ok@zoho.com)
 
 AC_SUBST(EMACS_URI)
 AC_SUBST(BUILD_DIR)
@@ -42,7 +42,7 @@ AC_SUBST(BUILD_OPTIONS)
 ## veriables definition
 EMACS_URI=https://github.com/emacs-mirror/emacs/archive/emacs-25.1-rc1.tar.gz
 BUILD_DIR=/tmp/restaurant-release
-RELEASE_FILES="restaurant bootstrap.el data init.el LICENSE rc README.md el-get elpa emacs share Gemfile"
+RELEASE_FILES="restaurant bootstrap.el data init.el LICENSE src README.md el-get elpa emacs share Gemfile"
 BUILD_OPTIONS="--without-pop"
 LOCAL_EMACS_DIR="emacs"
 
