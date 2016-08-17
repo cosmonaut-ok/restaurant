@@ -99,3 +99,4 @@ build
 *.tar.gz
 Makefile
 restaurant
+*.elc
