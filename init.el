@@ -39,5 +39,5 @@
 (when (file-exists-p local-file)
   (load local-file))
 
-(message "Welltome to the Restaurant.")
+(message "Wellcome to the Restaurant. Please, choose your dishes from menu. Right click for Appetizer")
 ;;; init.el ends here

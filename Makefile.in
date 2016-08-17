@@ -8,6 +8,7 @@ RUBY=$(shell which ruby)
 BUNDLE=$(shell which bundle)
 RVM=$(shell which rvm)
 RESTAURANT_VERSION=$(shell grep autoconf-anchor rc/version.el | cut -d\" -f2 | tr -d \\n)
+LOCAL_EMACS=@LOCAL_EMACS_DIR@/bin/emacs
 
 all: build clean-build clean
 
@@ -29,7 +30,7 @@ emacs:
 	make install DESTDIR=${BUILD_DIR}/emacs-build
 	@echo "Preparing to working state..."
 	@cp -r ${BUILD_DIR}/${SOURCE_DIR}/lib-src/ ${BUILD_DIR}/emacs-build/lib-src/
-	@mv -f ${BUILD_DIR}/emacs-build/share/emacs/25.1/* ${BUILD_DIR}/emacs-build/
+	@mv -f ${BUILD_DIR}/emacs-build/share/@LOCAL_EMACS_DIR@/25.1/* ${BUILD_DIR}/emacs-build/
 	@mv -f ${BUILD_DIR}/emacs-build/share/man/ ${BUILD_DIR}/emacs-build/
 	@mv -f ${BUILD_DIR}/emacs-build/share/info/ ${BUILD_DIR}/emacs-build/
 	@echo "Stripping from unneded files..."
@@ -41,11 +42,14 @@ emacs:
 
 el-get: emacs
 	@echo "Getting required dependencies via el-get..."
-	@emacs/bin/emacs -Q --debug-init --script ./bootstrap.el
+	@${LOCAL_EMACS} -Q --debug-init --script ./bootstrap.el
 
-build: el-get
+share: emacs
+	echo "Building shared libraries..."
+	cd scripts && EMACS=../${LOCAL_EMACS} ./install_all -v
+
+build: el-get share
 	@echo "Building restaurant..."
-	@cd scripts && ./build_all
 	@chmod 755 restaurant
 	@cat el-get/robe-mode/Gemfile >> Gemfile
 	@touch build
@@ -85,7 +89,7 @@ clean-emacs: clean-build
 
 mrproper: clean-emacs clean
 	@echo "Clearing emacs 3rt-party data dirs..."
-	@rm -rf build el-get elpa configure Gemfile.lock ${ARCHIVE_NAME} Gemfile share
+	@rm -rf build el-get elpa configure Gemfile.lock ${ARCHIVE_NAME} Gemfile share restaurant
 
 package: build clean-build clean
 	@echo "Building package..."
@@ -100,9 +104,14 @@ package: build clean-build clean
 	@cd ${BUILD_DIR} && tar -czpf restaurant-${RESTAURANT_VERSION}-@GUI_TOOLKIT@.tar.gz restaurant
 	@cp ${BUILD_DIR}/restaurant-${RESTAURANT_VERSION}-@GUI_TOOLKIT@.tar.gz .
 	# hack to change emacs icons to restaurant
-	@for i in `ls emacs/etc/images/icons/hicolor/ | grep -E [0-9]`; do convert -resize ${i} data/restaurant.svg emacs/etc/images/icons/hicolor/${i}/apps/emacs.png; done
+	@for i in `ls @LOCAL_EMACS_DIR@/etc/images/icons/hicolor/ | grep -E [0-9]`; do convert -resize ${i} data/restaurant.svg @LOCAL_EMACS_DIR@/etc/images/icons/hicolor/${i}/apps/emacs.png; done
 
 release: package clean-emacs clean
+
+test:
+	@touch /tmp/.restaurant-mock.rb
+	@./restaurant --batch mock.rb || exit 1
+	@rm -f /tmp/.restaurant-mock.rb
 
 help:
 	@echo "Restaurant Chef IDE v. ${RESTAURANT_VERSION}"

@@ -8,17 +8,13 @@ BUNDLER_URL="https://raw.githubusercontent.com/tobiassvn/bundler.el/master/bundl
 
 function pkg_install
 {
-    _PWD=`pwd`
-    cd $TMP
-    get_url_with_name rspec-mode.zip $RSPEC_MODE_URL rspec-mode.zip
-    get_url_with_name eruby-mode.el $ERUBY_URL eruby-mode.el
-    get_url_with_name bundler.el $BUNDLER_URL bundler.el
-    mkdir $DST/eruby-mode $DST/rspec-mode
-    cp eruby-mode.el $DST/eruby-mode
-    unzip rspec-mode.zip
-    cp -r rspec-mode-master/* $DST/rspec-mode
-    cd $_PWD
-    $RM -rf $TMP
+    get_url_with_name rspec-mode.zip $RSPEC_MODE_URL
+    get_url_with_name eruby-mode.el $ERUBY_URL
+    get_url_with_name bundler.el $BUNDLER_URL
+    extract rspec-mode.zip
+    copy_to_local eruby-mode.el ruby
+    copy_to_local bundler.el ruby
+    copy_to_local "rspec-mode-master/*" rspec-mode
 }
 
 

@@ -7,10 +7,10 @@ MYDIR=$(dirname $ME)
 
 if [ ! -z $EMACS ]; then
     :
-elif [ -x $MYDIR/emacs/bin/emacs ]; then
-    export EMACS=$MYDIR/emacs/bin/emacs
-    export EMACSDATA=$MYDIR/emacs/etc/
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MYDIR/emacs/lib/
+elif [ -x $MYDIR/@LOCAL_EMACS_DIR@/bin/emacs ]; then
+    export EMACS=$MYDIR/@LOCAL_EMACS_DIR@/bin/emacs
+    export EMACSDATA=$MYDIR/@LOCAL_EMACS_DIR@/etc/
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MYDIR/@LOCAL_EMACS_DIR@/lib/
 elif [ ! -z `which emacs` ]; then
     export EMACS=`which emacs`
 else

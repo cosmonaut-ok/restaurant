@@ -10,6 +10,7 @@ AC_SUBST(BUILD_DIR)
 AC_SUBST(GUI_TOOLKIT)
 AC_SUBST(RELEASE_FILES)
 AC_SUBST(EMACS)
+AC_SUBST(LOCAL_EMACS_DIR)
 AC_SUBST(BUILD_OPTIONS)
 
 ## veriables definition
@@ -17,6 +18,7 @@ EMACS_URI=https://github.com/emacs-mirror/emacs/archive/emacs-25.1-rc1.tar.gz
 BUILD_DIR=/tmp/restaurant-release
 RELEASE_FILES="restaurant bootstrap.el data init.el LICENSE rc README.md el-get elpa emacs share Gemfile"
 BUILD_OPTIONS="--without-pop"
+LOCAL_EMACS_DIR="emacs"
 
 # Checks for programs.
 AC_ARG_WITH(gui,      [  --with-gui=TOOLKIT      use gtk2, gtk3, motif, athena, no (default gtk3)], GUI_TOOLKIT=$withval, GUI_TOOLKIT="gtk3")
@@ -72,4 +74,5 @@ fi
 
 AC_OUTPUT(Makefile)
 AC_OUTPUT(Gemfile)
-
+AC_OUTPUT([restaurant], [chmod +x restaurant])
+# AC_CONFIG_FILES([restaurant], [chmod +x ./restaurant])
