@@ -140,9 +140,9 @@ package: build clean-build clean
 
 release: package clean-emacs clean
 
-test:
+test: build
 	@touch /tmp/.restaurant-mock.rb
-	@./restaurant --batch mock.rb || exit 1
+	@./restaurant --batch /tmp/.restaurant-mock.rb || exit 1
 	@rm -f /tmp/.restaurant-mock.rb
 
 help:
