@@ -97,3 +97,4 @@ config.status
 configure
 build
 *.tar.gz
+Makefile
