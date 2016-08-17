@@ -110,16 +110,16 @@
   '("--" nil :visible))
 
 (define-key enh-ruby-mode-map
-  [menu-bar code inspection foodcritic-project]
-  '("Foodcritic Project N/I" . foodcritic-project))
+  [menu-bar code inspection foodcritic-check-project]
+  '("Foodcritic Project" . foodcritic-check-project))
 
 (define-key enh-ruby-mode-map
-  [menu-bar code inspection foodcritic-directory]
-  '("Foodcritic Directory N/I" . foodcritic-directory))
+  [menu-bar code inspection foodcritic-check-directory]
+  '("Foodcritic Directory" . foodcritic-check-directory))
 
 (define-key enh-ruby-mode-map
-  [menu-bar code inspection foodcritic-file]
-  '("Foodcritic File N/I" . foodcritic-file))
+  [menu-bar code inspection foodcritic-check-current-file]
+  '("Foodcritic File" . foodcritic-check-current-file))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

@@ -35,3 +35,10 @@ user@host$ sudo ./bootstrap.sh install --global # global installation
 user@host$ . ~/.profile # only for local installation
 user@host$ restaurant # Enjoy
 ```
+
+### Build requirements
+* autotools
+* gcc (to build emacs)
+* imagemagik (convert command)
+
+### Requirements
