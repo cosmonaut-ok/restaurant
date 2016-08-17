@@ -6,13 +6,8 @@ YAS_COMPANY_URL="https://raw.githubusercontent.com/company-mode/company-mode/mas
 
 function pkg_install
 {
-    _PWD=`pwd`
-    cd $TMP
-    get_url_with_name company-yasnippet.el $YAS_COMPANY_URL company-yasnippet.el
-    mkdir $DST/company-yasnippet
-    cp company-yasnippet.el $DST/company-yasnippet
-    cd $_PWD
-    $RM -rf $TMP
+    get_url_with_name company-yasnippet.el $YAS_COMPANY_URL
+    copy_to_local company-yasnippet.el company-yasnippet
 }
 
 

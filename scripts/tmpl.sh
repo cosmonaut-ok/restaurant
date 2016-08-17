@@ -2,17 +2,13 @@
 
 . config.in
 
-PAREDIT_URL="http://mumble.net/~campbell/emacs/paredit.el"
+PAREDIT_URL="http://mumble.net/~campbell/emacs/paredit.el.gz"
 
 function pkg_install
 {
-    PWD=`pwd`
-    cd $TMP
-    get_url_with_name paredit.el $PAREDIT_URL paredit.el
-    mkdir -p $DST/paredit
-    cp paredit.el $DST/paredit
-    cd $PWD
-    $RM -rf $TMP
+    get_url_with_name paredit.el.gz $PAREDIT_URL
+    extract paredit.el.gz
+    copy_to_local paredit.el paredit
 }
 
 

@@ -10,23 +10,18 @@ BERKS_URL="https://raw.githubusercontent.com/restaurant-ide/berkshelf.el/master/
 FOODCRITIC_URL="https://raw.githubusercontent.com/restaurant-ide/foodcritic.el/master/foodcritic.el"
 function pkg_install
 {
-    _PWD=`pwd`
-    cd $TMP
-    get_url_with_name chef.el $CHEF_URL chef.el
-    get_url_with_name chef-mode.el $CHEF_MODE_URL chef-mode.el
-    get_url_with_name test-kitchen.el $KITCHEN_URL test-kitchen.el
-    get_url_with_name knife.el $KNIFE_URL knife.el
-    get_url_with_name berkshelf.el $BERKS_URL berkshelf.el
-    get_url_with_name foodcritic.el $FOODCRITIC_URL foodcritic.el
-    mkdir $DST/chef
-    cp chef.el $DST/chef
-    cp chef-mode.el $DST/chef
-    cp test-kitchen.el $DST/chef
-    cp knife.el $DST/chef
-    cp berkshelf.el $DST/chef
-    cp foodcritic.el $DST/chef
-    cd $_PWD
-    $RM -rf $TMP
+    get_url_with_name chef.el $CHEF_URL
+    get_url_with_name chef-mode.el $CHEF_MODE_URL
+    get_url_with_name test-kitchen.el $KITCHEN_URL
+    get_url_with_name knife.el $KNIFE_URL
+    get_url_with_name berkshelf.el $BERKS_URL
+    get_url_with_name foodcritic.el $FOODCRITIC_URL
+    copy_to_local chef.el chef
+    copy_to_local chef-mode.el chef
+    copy_to_local test-kitchen.el chef
+    copy_to_local knife.el chef
+    copy_to_local berkshelf.el chef
+    copy_to_local foodcritic.el chef
 }
 
 
