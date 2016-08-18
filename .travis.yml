@@ -43,8 +43,6 @@ env:
 
 matrix:
   allow_failures:
-    - env: RESTAURANT=gtk2
-    - env: RESTAURANT=gtk3
     - env: RESTAURANT=athena
 
 ###
