@@ -66,11 +66,6 @@
 ;; Remove trailing whitespaces
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-;; disable EDE
-(add-hook 'emacs-startup-hook #'(lambda ()
-				  (global-srecode-minor-mode 0)
-				  (global-ede-mode 0)))
-
 ;;;; visual mode
 (global-visual-line-mode t) ;; wrap long lines visually to several lines
 ;; Remove visual line from buffer

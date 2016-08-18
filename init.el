@@ -33,6 +33,11 @@
       user-emacs-directory restaurant/user-config-directory
       custom-file (locate-user-config-file "restaurant.el")
       local-file (locate-user-config-file "restaurant.el"))
+;; move semanticDB, srecode and ede to cache
+(custom-set-variables
+ '(ede-project-placeholder-cache-file (locate-user-cache-file "restaurant-ede-projects.el"))
+ '(semanticdb-default-save-directory (locate-user-cache-file "restaurant-semanticdb"))
+ '(srecode-map-save-file (locate-user-cache-file "restaurant-srecode-map.el")))
 
 ;; create custom file if it does not exists
 (unless (file-exists-p custom-file)
