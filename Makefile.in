@@ -54,6 +54,7 @@ emacs:
 	@echo "Preparing emacs archive..."
 	@for i in `ls ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/ | grep -E [0-9]`; do rm -f ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/$$i/apps/emacs.png; done
 	@for i in `ls ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/ | grep -E [0-9]`; do convert -resize $$i data/restaurant.svg ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/$$i/apps/emacs.png; done
+	@cp data/restaurant.svg ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/scalable/apps/emacs.svg
 	@echo "Building emacs..."
 	@cd ${BUILD_DIR}/${SOURCE_DIR} && \
 	autoreconf -fi -I m4 ## emacs 25
