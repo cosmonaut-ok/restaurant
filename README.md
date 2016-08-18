@@ -42,3 +42,4 @@ user@host$ restaurant # Enjoy
 * imagemagik (convert command)
 
 ### Requirements
+
