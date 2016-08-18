@@ -38,7 +38,7 @@
 (add-to-list 'yas/snippet-dirs (concat restaurant/source-directory "/data/snippets/"))
 (add-to-list 'yas/snippet-dirs (concat restaurant/source-directory "el-get/yasnippet-snippets/"))
 (add-to-list 'yas/snippet-dirs (concat restaurant/source-directory "el-get/yasnippets/"))
-(add-to-list 'yas/snippet-dirs (concat restaurant/source-directory "share/rspec-mode/snippets/"))
+(add-to-list 'yas/snippet-dirs (concat restaurant/source-directory "lib/rspec-mode/snippets/"))
 (add-to-list 'yas/snippet-dirs (concat restaurant/user-data-directory "/snippets/"))
 (mkdir (concat restaurant/user-data-directory "/snippets/") t)
 
