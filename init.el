@@ -49,8 +49,9 @@
  	(byte-compile-file (locate-source-file (concat "src" "/" file ".el")))))
   ;;
   (dolist (file restaurant/list-load-components)
-    (load (or (locate-source-file (concat "src" "/" file ".elc"))
-	      (locate-source-file (concat "src" "/" file ".el"))))))
+    (if (file-exists-p (locate-source-file (concat "src" "/" file ".elc")))
+	(load (locate-source-file (concat "src" "/" file ".elc")))
+      (load (locate-source-file (concat "src" "/" file ".el"))))))
   
 (when (file-exists-p local-file)
   (load local-file))
