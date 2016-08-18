@@ -10,10 +10,10 @@
   (warn "WARNING! There is no ruby in system. Extended ruby/chef features are not supported"))
 
 (defvar restaurant/source-directory (file-name-directory load-file-name))
-(defvar restaurant/list-load-components '("lib" "face" "common" "company" "ruby" "rspec" "chef" "kitchen" "bundler" "foodcritic" "rvm" "codebrowser" "markdown" "yaml" "json" "web" "erb" "fly" "yasnippet" "popup-menu"  "menubar" "toolbar" "theme" "version"))
+(defvar restaurant/list-load-components '("lib" "custom" "common" "company" "ruby" "rspec" "chef" "kitchen" "bundler" "foodcritic" "rvm" "codebrowser" "markdown" "yaml" "json" "web" "erb" "fly" "yasnippet" "popup-menu"  "menubar" "toolbar" "theme" "version"))
 
 ;; loading initial user-directories file
-(let ((ud-file (concat restaurant/source-directory "src/user-directories.el")))
+(let ((ud-file (concat restaurant/source-directory "src/restaurant-user-directories.el")))
   (if noninteractive
       (progn (load ud-file) (byte-compile-file ud-file))
     (if (file-exists-p (concat ud-file "c")) ;; searching for elc files
@@ -44,22 +44,21 @@
   (write-region "" nil custom-file))
 
 ;; load rc files
-(if noninteractive
-    (progn
-      ;; load el
-      (dolist (file restaurant/list-load-components)
- 	(load (locate-source-file (concat "src" "/" file ".el"))))
-      ;; byte-compile to elc
-      (dolist (file restaurant/list-load-components)
- 	(byte-compile-file (locate-source-file (concat "src" "/" file ".el")))))
-  ;;
-  (dolist (file restaurant/list-load-components)
-    (if (file-exists-p (locate-source-file (concat "src" "/" file ".elc")))
-	(load (locate-source-file (concat "src" "/" file ".elc")))
-      (load (locate-source-file (concat "src" "/" file ".el"))))))
+(dolist (file restaurant/list-load-components)
+  (let* ((base (locate-source-file (concat "src" "/restaurant-" file)))
+	 (elc-file (concat base ".elc"))
+	 (el-file (concat base ".el")))
+    (if noninteractive
+	(progn
+	  (load el-file)
+	  (byte-compile-file el-file))
+      (if (file-exists-p elc-file)
+	  (load elc-file)
+	(load el-file)))))
   
 (when (file-exists-p local-file)
   (load local-file))
 
-(message "Wellcome to the Restaurant. Please, choose your dishes from menu. Right click for Appetizer")
+(when (not noninteractive)
+  (message "Wellcome to the Restaurant. Please, choose your dishes from menu. Right click for Appetizer"))
 ;;; init.el ends here

@@ -29,7 +29,7 @@
 
 AC_PREREQ(2.69)
 
-AC_INIT(Restaurant Chef IDE, esyscmd(grep autoconf-anchor src/version.el | cut -d\" -f2 | tr -d \\n), cosmonaut.ok@zoho.com)
+AC_INIT(Restaurant Chef IDE, esyscmd(grep autoconf-anchor src/restaurant-version.el | cut -d\" -f2 | tr -d \\n), cosmonaut.ok@zoho.com)
 
 AC_SUBST(EMACS_URI)
 AC_SUBST(BUILD_DIR)
@@ -38,6 +38,7 @@ AC_SUBST(RELEASE_FILES)
 AC_SUBST(EMACS)
 AC_SUBST(LOCAL_EMACS_DIR)
 AC_SUBST(BUILD_OPTIONS)
+AC_SUBST(BYTE_COMPILE_P)
 
 ## veriables definition
 EMACS_URI=https://github.com/emacs-mirror/emacs/archive/emacs-25.1-rc1.tar.gz
@@ -55,6 +56,7 @@ AC_ARG_WITH(jpeg,     [  --with-jpeg             build emacs with/without jped s
 AC_ARG_WITH(tiff,     [  --with-tiff             build emacs with/without tiff support (default no)], TIFF=$withval, TIFF="no")
 AC_ARG_WITH(makeinfo,     [  --with-makeinfo         build emacs with/without makeinfo additional information (default no)], MAKEINFO=$withval, MAKEINFO="no")
 # AC_ARG_WITH(xml2,     [  --without-xml2             build emacs with/without xml2 support (default no)], ECL_PATH=$withval, XML2="auto")
+AC_ARG_ENABLE(byte-compile, [  --enable-byte-compile  Enables Restaurant bute compilation (experimental, default: disabled)], [ BYTE_COMPILE_P=yes ])
 
 # check for makeinfo
 AC_CHECK_PROG(GIT,git,yes,no)

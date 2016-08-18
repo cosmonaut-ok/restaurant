@@ -84,13 +84,17 @@ lib: emacs
 	@cd scripts && for i in `ls *.sh | grep -v tmpl.sh`; do \
 		/bin/bash $$i install -v; \
 	done
+ifeq (@BYTE_COMPILE_P@, yes)
 	@for i in `find lib -type f -name '*.el'`; do \
 		EMACSDATA=${CURRENT_DIR}/@LOCAL_EMACS_DIR@/etc/ ${LOCAL_EMACS} -Q -batch --eval "(byte-compile-file \"$$i\")"; \
 	done
+endif
 
 build: el-get lib
 	@echo "Building restaurant..."
-	@chmod 755 restaurant
+ifeq (@BYTE_COMPILE_P@, yes)
+	@EMACSDATA=${CURRENT_DIR}/@LOCAL_EMACS_DIR@/etc/ ${LOCAL_EMACS} -Q -batch --script ./init.el
+endif
 	@cat el-get/robe-mode/Gemfile >> Gemfile
 	@touch build
 
@@ -128,7 +132,9 @@ clean-emacs: clean-build
 	@rm -rf emacs
 
 clean-precompile:
+	@echo "Cleaning precompiled elc files..."
 	@rm -f src/*.elc
+	@find lib -type f -name '*.elc' -delete
 
 mrproper: clean-emacs clean clean-precompile
 	@echo "Clearing emacs 3rt-party data dirs..."
