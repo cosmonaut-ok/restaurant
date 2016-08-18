@@ -23,7 +23,7 @@
 
 (defvar restaurant/packages-installed-p (locate-source-file "build"))
 
-(load (locate-source-file "bootstrap.el"))
+(load (locate-source-file "src/bootstrap.el"))
 (require 'el-get)
 (el-get)
 

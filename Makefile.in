@@ -77,7 +77,7 @@ emacs:
 
 el-get: emacs
 	@echo "Getting required dependencies via el-get..."
-	@EMACSDATA=${CURRENT_DIR}/@LOCAL_EMACS_DIR@/etc/ ${LOCAL_EMACS} -Q --debug-init --script ./bootstrap.el
+	@EMACSDATA=${CURRENT_DIR}/@LOCAL_EMACS_DIR@/etc/ ${LOCAL_EMACS} -Q --debug-init --script ./src/bootstrap.el
 
 lib: emacs
 	@echo "Building 3rd party libraries..."
