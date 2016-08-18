@@ -18,6 +18,11 @@ else
     exit 1
 fi
 
+if [ ! -z "$1" ] && [ "$1" = '-d' ]; then
+    OPTIONS="$OPTIONS --debug-init --eval '(toggle-debug-on-error)'"
+    shift
+fi
+
 VERSION=$($EMACS -Q --batch --script ${MYDIR}/src/restaurant-version.el --eval '(restaurant-version t)')
     
-$EMACS -q -l $MYDIR/init.el --name restaurant --title "Restaurant Chef IDE version: (v.${VERSION})" $OPTIONS $@
+$EMACS -q -l $MYDIR/src/restaurant.el --name restaurant --title "Restaurant Chef IDE version: (v.${VERSION})" $OPTIONS $@

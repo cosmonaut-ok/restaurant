@@ -43,7 +43,7 @@ AC_SUBST(BYTE_COMPILE_P)
 ## veriables definition
 EMACS_URI=https://github.com/emacs-mirror/emacs/archive/emacs-25.1-rc1.tar.gz
 BUILD_DIR=/tmp/restaurant-release
-RELEASE_FILES="restaurant bootstrap.el data init.el LICENSE src README.md el-get elpa emacs share Gemfile"
+RELEASE_FILES="restaurant bootstrap.el data LICENSE src README.md el-get elpa emacs lib Gemfile"
 BUILD_OPTIONS="--without-pop"
 LOCAL_EMACS_DIR="emacs"
 
