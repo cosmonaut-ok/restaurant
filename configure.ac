@@ -1,4 +1,4 @@
-# configure.ac --- autoconfiguration file  -*- Autoconf -*- -*- lexical-binding: t -*-
+# configure.ac --- autoconfiguration file  -*- Autoconf -*-
 
 # Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 
