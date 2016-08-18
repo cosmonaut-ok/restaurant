@@ -3,7 +3,7 @@
 [ ! -f ./config.in ] && exit 1
 . ./config.in
 
-DIR=$(dirname $(dirname $ME))/share
+DIR=$(dirname $(dirname $ME))/lib
 
 mkdir -p $DIR
 
