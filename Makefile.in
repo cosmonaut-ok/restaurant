@@ -78,8 +78,14 @@ el-get: emacs
 	@EMACSDATA=@LOCAL_EMACS_DIR@/etc/ ${LOCAL_EMACS} -Q --debug-init --script ./bootstrap.el
 
 lib: emacs
-	echo "Building 3rd party libraries..."
-	cd scripts && EMACSDATA=../@LOCAL_EMACS_DIR@/etc/ EMACS=../${LOCAL_EMACS} ./install_all -v
+	@echo "Building 3rd party libraries..."
+	@mkdir lib
+	@cd scripts && for i in `ls *.sh | grep -v tmpl.sh`; do \
+		/bin/bash $$i install -v; \
+	done
+	@for i in `find lib -type f -name '*.el'`; do \
+		EMACSDATA=@LOCAL_EMACS_DIR@/etc/ ${LOCAL_EMACS} -Q -batch --eval "(byte-compile-file \"$$i\")"; \
+	done
 
 build: el-get lib
 	@echo "Building restaurant..."
