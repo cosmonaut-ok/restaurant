@@ -18,6 +18,6 @@ else
     exit 1
 fi
 
-VERSION=$($EMACS -Q --batch --script ${MYDIR}/src/version.el --eval '(restaurant-version t)')
+VERSION=$($EMACS -Q --batch --script ${MYDIR}/src/restaurant-version.el --eval '(restaurant-version t)')
     
 $EMACS -q -l $MYDIR/init.el --name restaurant --title "Restaurant Chef IDE version: (v.${VERSION})" $OPTIONS $@
