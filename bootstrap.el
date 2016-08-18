@@ -173,15 +173,14 @@
   (init-el-get-packages)
   (write-region "" nil restaurant/packages-installed-p))
 
-;;; Add local projects
-(let ((default-directory (concat restaurant/source-directory "share/")))
-  (when (not (file-directory-p default-directory))
-    (make-directory default-directory))
-  (setq load-path
-        (append
-         (let ((load-path (copy-sequence load-path))) ;; Shadow
-           (normal-top-level-add-subdirs-to-load-path))
-         load-path)))
+;;; Add 3rd party projects
+(let ((default-directory (concat restaurant/source-directory "lib/")))
+  (when (file-directory-p default-directory)
+    (setq load-path
+	  (append
+	   (let ((load-path (copy-sequence load-path))) ;; Shadow
+	     (normal-top-level-add-subdirs-to-load-path))
+	   load-path))))
 
 ;;; Waiting for installation completed
 (when (and (not (null (process-list))) restaurant/do-bootstrap)

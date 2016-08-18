@@ -3,7 +3,7 @@
 WGET=`which wget` 
 TMP="$(mktemp -d /tmp/.inst_el.XXX)"
 ME=`readlink -f $0`
-DST="$(dirname $(dirname $ME))/share/"
+DST="$(dirname $(dirname $ME))/lib/"
 TAR=`which tar`
 UZIP=`which unzip`
 RM=`which rm`
