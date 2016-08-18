@@ -50,6 +50,7 @@ emacs:
 	@cp ${ARCHIVE_NAME} ${BUILD_DIR}
 	@echo "Unpacking emacs archive..."
 	@tar -C ${BUILD_DIR} -xf ${BUILD_DIR}/${ARCHIVE_NAME}
+	@echo "Preparing emacs archive..."
 	@for i in `ls ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/ | grep -E [0-9]`; do rm -f ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/$$i/apps/emacs.png; done
 	@for i in `ls ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/ | grep -E [0-9]`; do convert -resize $$i data/restaurant.svg ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/$$i/apps/emacs.png; done
 	@echo "Building emacs..."
