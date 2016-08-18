@@ -136,7 +136,7 @@ package: build clean-build clean
 	@cd ${BUILD_DIR} && tar -czpf restaurant-${RESTAURANT_VERSION}-@GUI_TOOLKIT@.tar.gz restaurant
 	@cp ${BUILD_DIR}/restaurant-${RESTAURANT_VERSION}-@GUI_TOOLKIT@.tar.gz .
 	# hack to change emacs icons to restaurant
-	for i in `ls @LOCAL_EMACS_DIR@/etc/images/icons/hicolor/ | grep -E [0-9]`; do convert -resize $$i data/restaurant.svg @LOCAL_EMACS_DIR@/etc/images/icons/hicolor/${i}/apps/emacs.png; done
+	for i in `ls @LOCAL_EMACS_DIR@/etc/images/icons/hicolor/ | grep -E [0-9]`; do convert -resize $$i data/restaurant.svg @LOCAL_EMACS_DIR@/etc/images/icons/hicolor/$$i/apps/emacs.png; done
 
 release: package clean-emacs clean
 
