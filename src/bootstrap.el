@@ -27,7 +27,8 @@
 
 ;;; Code:
 
-(defvar restaurant/source-directory (file-name-directory load-file-name))
+;; (defvar restaurant/source-directory (file-name-directory load-file-name))
+(defvar restaurant/source-directory (file-name-directory (directory-file-name (file-name-directory load-file-name))))
 (defvar restaurant/packages-installed-p (concat restaurant/source-directory "build"))
 (defvar restaurant/elget-user-recipes-path (concat restaurant/source-directory "el-get-user/recipes"))
 (defvar restaurant/do-bootstrap t)
