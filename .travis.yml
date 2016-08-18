@@ -80,7 +80,7 @@ branches:
 ###
 
 install:
-  - sudo apt-get -qq install realpath imagemagick autoconf automake git
+  - sudo apt-get -qq install realpath imagemagick autoconf automake git libdbus-1-dev
   - if [ "$RESTAURANT" = 'gtk2' ]; then
         sudo apt-get -qq install libgtk2.0-dev;
     fi
