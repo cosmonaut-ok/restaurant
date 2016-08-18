@@ -38,6 +38,7 @@ BUNDLE=$(shell which bundle)
 RVM=$(shell which rvm)
 RESTAURANT_VERSION=$(shell grep autoconf-anchor src/version.el | cut -d\" -f2 | tr -d \\n)
 LOCAL_EMACS=@LOCAL_EMACS_DIR@/bin/emacs
+CURRENT_DIR=$(shell pwd)
 
 all: build clean-build clean
 
@@ -75,7 +76,7 @@ emacs:
 
 el-get: emacs
 	@echo "Getting required dependencies via el-get..."
-	@EMACSDATA=@LOCAL_EMACS_DIR@/etc/ ${LOCAL_EMACS} -Q --debug-init --script ./bootstrap.el
+	@EMACSDATA=${CURRENT_DIR}/@LOCAL_EMACS_DIR@/etc/ ${LOCAL_EMACS} -Q --debug-init --script ./bootstrap.el
 
 lib: emacs
 	@echo "Building 3rd party libraries..."
@@ -84,7 +85,7 @@ lib: emacs
 		/bin/bash $$i install -v; \
 	done
 	@for i in `find lib -type f -name '*.el'`; do \
-		EMACSDATA=@LOCAL_EMACS_DIR@/etc/ ${LOCAL_EMACS} -Q -batch --eval "(byte-compile-file \"$$i\")"; \
+		EMACSDATA=${CURRENT_DIR}/@LOCAL_EMACS_DIR@/etc/ ${LOCAL_EMACS} -Q -batch --eval "(byte-compile-file \"$$i\")"; \
 	done
 
 build: el-get lib
