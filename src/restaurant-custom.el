@@ -35,6 +35,21 @@
   :group 'emacs)
 
 ;;;
+;;; system
+;;;
+(defgroup restaurant/system nil
+  "Color schemas, fonts etc"
+  :group 'restaurant
+  )
+
+
+(defcustom restaurant/enable-verbose nil
+  "Enable verbose loading."
+  :type 'boolean
+  :group 'restaurant/system
+  )
+
+;;;
 ;;; face
 ;;;
 (defgroup restaurant/face nil
@@ -91,14 +106,6 @@
   :type 'directory
   :group 'restaurant/backup
   )
-
-;;;
-;;; misc
-;;;
-;; (defgroup restaurant/misc nil
-;;   "Miscelation parameters"
-;;   :group 'restaurant
-;;   )
 
 ;;;
 ;;; programming mode
@@ -260,34 +267,44 @@
   :group 'restaurant/chef
   )
 
-;; (defcustom restaurant/test-kitchen-verbose-level "info"
-;;   "Set test kitchen debug level (not implemented yet)"
-;;   :type 'string
-;;   :group 'restaurant/chef
-;;   )
-
 ;;;
 ;;; 3rd-party important modes
 ;;;
-(defgroup restaurant/extensions nil
+(defgroup restaurant/misc nil
   "Not Restaurant-related important ruby, chef etc. options"
   :group 'restaurant
   )
 
 (defgroup rspec-mode nil
   "RSpec minor mode."
-  :group 'restaurant/extensions)
+  :group 'restaurant/misc)
 
 (defgroup enh-ruby nil
   "Ruby mode."
-  :group 'restaurant/extensions)
+  :group 'restaurant/misc)
 
 (defgroup chef-mode nil
   "Chef minor mode."
-  :group 'restaurant/extensions)
+  :group 'restaurant/misc)
 
 (defgroup github-notifier nil
   "Chef minor mode."
-  :group 'restaurant/extensions)
+  :group 'restaurant/misc)
 
-;;; face.el ends here
+;; add button open terminal here
+(defcustom restaurant/terminal-emulator (get-terminal-emulator)
+  "Default terminal emulator."
+  :type 'string
+  :group 'restaurant/system)
+
+(defcustom restaurant/use-external-terminal-emulator nil
+  "User external terminal emulator, instead of standard restaurant's shell."
+  :type 'boolean
+  :group 'restaurant/system)
+
+(defcustom restaurant/check-parens-before-save nil
+  "Check if all parens are paired before file saving."
+  :type 'boolean
+  :group 'restaurant/system)
+
+;;; restaurant-custom.el ends here

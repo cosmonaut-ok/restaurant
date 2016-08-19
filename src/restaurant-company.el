@@ -1,4 +1,4 @@
-;;; company.el --- TODO:  -*- lexical-binding: t -*-
+;;; restaurant-company.el --- TODO:  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 
@@ -33,17 +33,17 @@
 (require 'company)
 (require 'company-quickhelp)
 
-
-;; (add-hook 'after-init-hook 'global-company-mode)
-
-(add-hook 'prog-mode-hook #'(lambda () (company-mode 1)))
-
-(setq company-idle-delay 0
-      company-auto-complete t
-      company-minimum-prefix-length 3
-      company-dabbrev-downcase nil
-      company-dabbrev-ignore-case t
-      company-dabbrev-code-ignore-case t)
+(custom-set-variables
+ '(company-idle-delay 0.5)
+ '(company-auto-complete t)
+ '(company-minimum-prefix-length 3)
+ '(company-dabbrev-downcase nil)
+ '(company-dabbrev-ignore-case nil)
+ '(company-dabbrev-code-ignore-case nil)
+ '(company-tooltip-limit 20) ; bigger popup window
+ '(company-tooltip-align-annotations 't) ; align annotations to the right tooltip border
+ '(company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
+ )
 
 (define-key company-active-map (kbd "C-n") #'company-select-next)
 (define-key company-active-map (kbd "C-p") #'company-select-previous)
@@ -59,3 +59,23 @@
   "Add BACKEND to a buffer-local version of `company-backends'."
   (set (make-local-variable 'company-backends)
        (append (list backend) company-backends)))
+
+;; (add-hook 'after-init-hook 'global-company-mode)
+(defhooklet restaurant/company prog-mode t
+  (company-mode 1))
+
+;;;; TODO: it's experimental feature
+(defun company-predictive (command &optional arg &rest ignored)
+  "This is experimental predictive MODE for company-mode."
+  (case command
+    (prefix (let* ((text (downcase (word-at-point))))
+              (set-text-properties 0 (length text) nil text)
+              text))
+    (candidates (predictive-complete arg))))
+
+(restaurant/local-push-company-backend 'company-predictive)
+
+;;
+(restaurant/local-push-company-backend 'company-files)
+
+;;; restaurant-company.el ends here

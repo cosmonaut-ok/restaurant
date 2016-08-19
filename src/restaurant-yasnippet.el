@@ -27,10 +27,9 @@
 
 ;;; Code:
 
-
-(require 'popup)
-
 (require 'yasnippet)
+(require 'company-yasnippet)
+
 ;; (require 'yasnippets)
 
 (yas/initialize)
@@ -38,9 +37,11 @@
 (add-to-list 'yas/snippet-dirs (concat restaurant/source-directory "/data/snippets/"))
 (add-to-list 'yas/snippet-dirs (concat restaurant/source-directory "el-get/yasnippet-snippets/"))
 (add-to-list 'yas/snippet-dirs (concat restaurant/source-directory "el-get/yasnippets/"))
+(add-to-list 'yas/snippet-dirs (concat restaurant/source-directory "el-get/yasnippet/snippets/"))
 (add-to-list 'yas/snippet-dirs (concat restaurant/source-directory "lib/rspec-mode/snippets/"))
-(add-to-list 'yas/snippet-dirs (concat restaurant/user-data-directory "/snippets/"))
-(mkdir (concat restaurant/user-data-directory "/snippets/") t)
+
+(when (file-directory-p (concat restaurant/user-data-directory "/snippets/"))
+  (add-to-list 'yas/snippet-dirs (concat restaurant/user-data-directory "/snippets/")))
 
 ;;;; Remove yasnippet from menu
 (custom-set-variables
@@ -53,10 +54,9 @@
 (define-key yas-minor-mode-map (kbd "<C-M-tab>") 'yas-ido-expand)
 (define-key yas-minor-mode-map (kbd "<tab>") nil)
 (global-set-key (kbd "<C-tab>") 'company-yasnippet)
-;; (add-to-list 'auto-mode-alist '("/snippets/" . snippet-mode))
 
-(add-hook 'snippet-mode-hook (lambda ()
-                               (font-lock-mode 1)))
+(defhooklet restaurant/snippet-font-lock snippet-mode t
+  (font-lock-mode 1))
 
 ;; add some shotcuts in popup menu mode
 (define-key popup-menu-keymap (kbd "M-n") 'popup-next)
@@ -84,7 +84,7 @@
 
 ;; Completing point by some yasnippet key
 (defun yas-ido-expand ()
-  "Lets you select (and expand) a yasnippet key"
+  "Let you select (and expand) a yasnippet key."
   (interactive)
   (let ((original-point (point)))
     (while (and
@@ -105,14 +105,6 @@
 	(insert key)
 	(yas-expand)))))
 
-(eval-after-load 'rspec-mode
-  '(rspec-install-snippets))
-
-;; yas-chef-mode
-(add-hook 'chef-mode-hook
-	  #'(lambda ()
-	      (yas-activate-extra-mode 'chef-mode)))
-
 ;; do not activate yas in term
 (add-hook 'term-mode-hook (lambda()
 			    (setq yas-dont-activate t)))
@@ -120,14 +112,7 @@
 ;;;
 ;;; yas-minor-mode
 ;;;
-(defun restaurant/yas-minor-mode-init ()
-  (yas-minor-mode-on)
-  )
-
-(add-hook 'prog-mode-hook 'restaurant/yas-minor-mode-init)
-
-;;;; add snippets after rspec loaded
-(eval-after-load 'rspec-mode
- '(rspec-install-snippets))
+(defhooklet restaurant/yas-minor-mode prog-mode
+  (yas-minor-mode-on))
 
 ;;; yasnippet.el ends here

@@ -11,7 +11,12 @@
 
 (defvar restaurant/source-directory (file-name-directory (directory-file-name (file-name-directory load-file-name))))
 
-(defvar restaurant/list-load-components '("lib" "custom" "common" "company" "ruby" "rspec" "chef" "kitchen" "bundler" "foodcritic" "rvm" "codebrowser" "markdown" "yaml" "json" "web" "erb" "fly" "yasnippet" "popup-menu"  "menubar" "toolbar" "theme" "version"))
+(defvar restaurant/list-load-components
+  '("lib" "custom" "common" "git" "yasnippet" "company"
+    "ruby" "rspec" "chef" "kitchen" "bundler"
+    "foodcritic" "rvm" "codebrowser" "markdown"
+    "yaml" "json" "web" "erb" "fly" "popup-menu"
+    "menubar" "toolbar" "theme" "version"))
 
 ;; loading initial user-directories file
 (let ((ud-file (concat restaurant/source-directory "src/restaurant-user-directories.el")))
@@ -56,7 +61,7 @@
       (if (file-exists-p elc-file)
 	  (load elc-file)
 	(load el-file)))))
-  
+
 (when (file-exists-p local-file)
   (load local-file))
 

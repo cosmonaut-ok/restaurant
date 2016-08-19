@@ -1,4 +1,4 @@
-;;; fly.el --- TODO:  -*- lexical-binding: t -*-
+;;; restaurant-fly.el --- TODO:  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 
@@ -30,13 +30,12 @@
 ;;;
 ;;; flycheck
 ;;;
-(defun restaurant/flycheck-init ()
-  (when restaurant/enable-flycheck
-    (require 'flycheck)
-    (require 'flycheck-pos-tip)
-    (flycheck-mode 1)
-    (flycheck-pos-tip-mode 1)
-    (setq flycheck-check-syntax-automatically '(save mode-enabled))))
+(defhooklet restaurant/flycheck prog-mode restaurant/enable-flycheck
+  (require 'flycheck)
+  (require 'flycheck-pos-tip)
+  (flycheck-mode 1)
+  (flycheck-pos-tip-mode 1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled)))
 
 (eval-after-load 'flycheck
   '(custom-set-variables
@@ -44,15 +43,15 @@
 
 (defun flycheck-print-current-checker (args)
   "Print checker for current buffer.
-   ARGS is dummy"
+   ARGS is dummy."
   (interactive "P")
   (print (flycheck-get-checker-for-buffer)))
 
-(add-hook 'prog-mode-hook 'restaurant/flycheck-init)
+;;;
+;;; flymake
+;;;
+(defhooklet restaurant/flymake prog-mode restaurant/enable-flymake
+  (require 'flymake)
+  (flymake-mode 1))
 
-(defun restaurant/flymake-init ()
-  (when restaurant/enable-flymake
-    (require 'flymake)
-    (flymake-mode 1)))
-
-(add-hook 'prog-mode-hook 'restaurant/flymake-init)
+;;; restaurant-fly.el ends here

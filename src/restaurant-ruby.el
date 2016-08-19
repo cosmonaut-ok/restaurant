@@ -34,7 +34,7 @@
 ;;; Code:
 
 (require 'enh-ruby-mode)
-(defalias 'ruby-mode 'enh-ruby-mode)
+;; (defalias 'ruby-mode 'enh-ruby-mode)
 
 ;; inf-ruby and robe
 (require 'robe)
@@ -57,156 +57,119 @@
                "\\.rjs\\'" "\\.irbrc\\'" "\\.pryrc\\'" "\\.builder\\'" "\\.ru\\'"
                "\\.gemspec\\'" "Gemfile\\'")
 
-;; TODO: add it to restaurant/init function
-(setf ruby-indent-level restaurant/indent-level)
-
 (eval-after-load 'ruby-mode
   '(define-key enh-ruby-mode-map (kbd "TAB") 'indent-for-tab-command))
 
-;; set ruby indent level
-(add-hook 'enh-ruby-mode-hook (lambda ()
-                                (setf ruby-indent-level restaurant/indent-level)))
 
-;; set ruby indent tabs mode
-(add-hook 'enh-ruby-mode-hook (lambda ()
-                                (setf ruby-indent-tabs-mode restaurant/indent-tabs-mode)))
-
-;;;
-;;; bundler
-;;;
-(require 'bundler)
-
-;; small bundler hack ;-)
-(defun bundler-colorize-compilation-buffer ()
-  (toggle-read-only)
-  (ansi-color-apply-on-region compilation-filter-start (point))
-  (toggle-read-only))
-
-;; define test kitchen compilation mode
-(define-compilation-mode bundler-compilation-mode "Bundler compilation"
-  "Compilation mode for Bundler output."
-  (add-hook 'compilation-filter-hook 'bundler-colorize-compilation-buffer nil t))
-
-(defun bundle-command (cmd)
-  "Run cmd in an async buffer."
-  (compile cmd 'bundler-compilation-mode))
+(defhooklet restaurant/ruby-indent enh-ruby-mode t
+  (custom-set-variables
+   ;; set ruby indent level
+   '(ruby-indent-level restaurant/indent-level)
+   ;; set ruby indent tabs mode
+   '(ruby-indent-tabs-mode restaurant/indent-tabs-mode)))
 
 ;;;
 ;;; ruby-electric
 ;;;
-(defun restaurant/ruby-electric-init ()
-  (when restaurant/enable-electric
-    (require 'ruby-electric)
-    (ruby-electric-mode t)))
-
-(add-hook 'enh-ruby-mode-hook #'restaurant/ruby-electric-init)
+(defhooklet restaurant/ruby-electric enh-ruby-mode restaurant/enable-electric
+  (require 'ruby-electric)
+  (ruby-electric-mode t))
 
 ;;;
 ;;; ruby-tools
 ;;;
-(defun restaurant/ruby-tools-init ()
-  (when restaurant/enable-ruby-tools
-    (require 'ruby-tools)
-    (ruby-tools-mode 1)))
-
-(add-hook 'enh-ruby-mode-hook 'restaurant/ruby-tools-init)
+(defhooklet restaurant/ruby-tools enh-ruby-mode restaurant/enable-ruby-tools
+  (require 'ruby-tools)
+  (ruby-tools-mode 1))
 
 ;;;
 ;;; ruby-refactor
 ;;;
-(defun restaurant/ruby-refactor-init ()
-  (when restaurant/enable-ruby-refactor
-    (require 'ruby-refactor)
-    (ruby-refactor-mode 1)))
-
-(add-hook 'enh-ruby-mode-hook 'restaurant/ruby-refactor-init)
-
-;;;
-;;; rvm
-;;;
-(defun restaurant/rvm-init ()
-  (when restaurant/enable-rvm
-    ;; (rvm-use-default)
-    (require 'rvm)
-    ;; connect rvm+robe
-    (when restaurant/enable-robe
-      (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
-        (rvm-activate-corresponding-ruby)))
-    ))
-
-(add-hook 'enh-ruby-mode-hook 'restaurant/rvm-init)
-
-;; RVM installation hack
-(define-compilation-mode rvm-installation-mode "RVM installation"
-  "Installation mode for RVM."
-  (add-hook 'compilation-filter-hook 'bundler-colorize-compilation-buffer nil t))
-
-(defun rvm-install-rvm ()
-  (interactive)
-  (let ((cmd "gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 && curl -sSL https://get.rvm.io | bash"))
-  (compile cmd 'rvm-installation-mode)))
+(defhooklet restaurant/ruby-refactor enh-ruby-mode restaurant/enable-ruby-refactor
+  (require 'ruby-refactor)
+  (ruby-refactor-mode-launch))
 
 ;;;
 ;;; robe mode: code navigtion, documentation
 ;;;
-(defun restaurant/robe-init ()
-  (when restaurant/enable-robe
-    (setq robe-turn-on-eldoc t)
-    (robe-mode 1)
-    ;; integrate with company mode
-    (push 'company-robe company-backends)))
+(defhooklet restaurant/robe-ruby enh-ruby-mode restaurant/enable-robe
+  (custom-set-variables
+   '(robe-turn-on-eldoc t))
+  (robe-mode 1)
+  ;; integrate with company mode
+  (require 'company-robe)
+  (restaurant/local-push-company-backend 'company-robe))
 
-(dolist (hook '(enh-ruby-mode-hook inf-ruby-mode-hook html-erb-mode-hook haml-mode))
-  (add-hook hook
-            (lambda () (restaurant/local-push-company-backend 'company-robe))))
+(defhooklet restaurant/robe-inf-ruby inf-ruby-mode restaurant/enable-robe
+  (custom-set-variables
+   '(robe-turn-on-eldoc t))
+  (robe-mode 1)
+  ;; integrate with company mode
+  (require 'company-robe)
+  (restaurant/local-push-company-backend 'company-robe))
 
-(add-hook 'enh-ruby-mode-hook 'restaurant/robe-init)
+(defhooklet restaurant/robe-erb html-erb-mode restaurant/enable-robe
+  (custom-set-variables
+   '(robe-turn-on-eldoc t))
+  (robe-mode 1)
+  ;; integrate with company mode
+  (require 'company-robe)
+  (restaurant/local-push-company-backend 'company-robe))
+
+;;;
+;;; inf-ruby-mode
+;;;
+(defhooklet restaurant/inf-ruby enh-ruby-mode t
+  (inf-ruby-minor-mode t)
+  (require 'company-inf-ruby)
+  (restaurant/local-push-company-backend 'company-inf-ruby))
+
+(defhooklet restaurant/inf-ruby-inf inf-ruby-mode t
+  (inf-ruby-minor-mode t)
+  (require 'company-inf-ruby)
+  (restaurant/local-push-company-backend 'company-inf-ruby))
+
+(defhooklet restaurant/inf-ruby-erb html-erb-mode t
+  (inf-ruby-minor-mode t)
+  (require 'company-inf-ruby)
+  (restaurant/local-push-company-backend 'company-inf-ruby))
+
+(defhooklet restaurant/inf-ruby-with-debugging-development compilation-filter t
+  (inf-ruby-auto-enter))
 
 ;;;
 ;;; rubocop
 ;;;
-(defun restaurant/rubocop-init ()
-  (when restaurant/enable-rubocop
-    (require 'rubocop)
-    (rubocop-mode 1)
-    (auto-revert-mode 1) ;; TODO: is it needed here?
-    ))
-
-(add-hook 'enh-ruby-mode-hook 'restaurant/rubocop-init)
+(defhooklet restaurant/rubocop enh-ruby-mode restaurant/enable-rubocop
+  (require 'rubocop)
+  (rubocop-mode 1)
+  (auto-revert-mode 1) ;; TODO: is it needed here?
+  )
 
 ;;;
 ;;; flycheck
 ;;;
-(defun restaurant/flycheck-ruby-init ()
-  (when restaurant/enable-flycheck
-    ;; (require 'flycheck) already activated in prog-mode
-    (flycheck-mode 1)
-    (setq-default flycheck-check-syntax-automatically '(save mode-enabled))))
+(defhooklet restaurant/flycheck-ruby restaurant/enable-flycheck
+  ;; (require 'flycheck) already activated in prog-mode
+  (flycheck-mode 1)
+  (setq-default flycheck-check-syntax-automatically '(save mode-enabled)))
 
-(add-hook 'enh-ruby-mode-hook 'restaurant/flycheck-ruby-init)
 ;;;
 ;;; flymake
 ;;;
-(defun restaurant/flymake-ruby-init ()
-  (when restaurant/enable-flymake
-    ;; (require 'flymake) already activated in prog-mode
-    (require 'flymake-ruby)
-    (flymake-ruby-load) ;; FIXME: not loading automatically
-    (flymake-mode 1)))
-
-(add-hook 'enh-ruby-mode-hook 'restaurant/flymake-ruby-init)
+(defhooklet restaurant/flymake-ruby enh-ruby-mode restaurant/enable-flymake
+  ;; (require 'flymake) already activated in prog-mode
+  (require 'flymake-ruby)
+  (flymake-ruby-load) ;; FIXME: not loading automatically
+  (flymake-mode 1))
 
 ;;;
 ;;; ri
 ;;;
-(defun restaurant/ri-yari-init ()
-  (when restaurant/enable-ri
-    (require 'yari)
-    (defalias 'ri 'yari)
-    (local-set-key [f1] 'yari)
-    ))
-
-(add-hook 'enh-ruby-mode-hook 'restaurant/ri-yari-init)
+(defhooklet restaurant/ri-yari enh-ruby-mode restaurant/enable-ri
+  (require 'yari)
+  (defalias 'ri 'yari)
+  (local-set-key [f1] 'yari-helm))
 
 ;;;
 ;;; generic init
@@ -217,24 +180,29 @@
                "\\(class\\|def\\|do\\|if\\|.each\\)" "\\(end\\)" "#"
                (lambda (arg) (ruby-end-of-block)) nil))
 
-(defun restaurant/ruby-generic-init ()
+(defhooklet restaurant/ruby-generic enh-ruby-mode t
   (inf-ruby-minor-mode 1)
   (when (executable-find "pry")
-    (setq inf-ruby-default-implementation "pry"))
-  )
-
-(add-hook 'enh-ruby-mode-hook #'restaurant/ruby-generic-init)
+    (setq inf-ruby-default-implementation "pry")))
 
 ;;;
 ;;; ruby-block-mode
 ;;;
-(defun restaurant/ruby-block-init ()
+(defhooklet restaurant/ruby-block enh-ruby-mode t
   (require 'ruby-block)
   (custom-set-variables
    '(ruby-block-delay 0)
-   '(ruby-block-highlight-toggle t)
-  ))
+   '(ruby-block-highlight-toggle t)))
 
-(add-hook 'enh-ruby-mode-hook #'restaurant/ruby-block-init)
+;;;
+;;; RVM form enh-ruby-mode
+;;;
+(defhooklet restaurant/ruby-rvm enh-ruby-mode restaurant/enable-rvm
+  (rvm-use-default)
+  (require 'rvm)
+  ;; connect rvm+robe
+  (when restaurant/enable-robe
+    (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
+      (rvm-activate-corresponding-ruby))))
 
 ;;; ruby.el ends here

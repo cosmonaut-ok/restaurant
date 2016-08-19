@@ -29,6 +29,9 @@
 
 (require 'yaml-mode)
 
-(add-hook 'yaml-mode-hook
-	  (lambda ()
-	    (define-key yaml-mode-map (kbd "RET") 'newline-and-indent)))
+(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+
+(defhooklet restaurant/yaml-mode yaml-mode t
+  (define-key yaml-mode-map (kbd "RET") 'newline-and-indent))
+
+;;; restaurant-yaml.el ends here

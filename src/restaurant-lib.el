@@ -95,3 +95,20 @@
 			  compile-command result)
 		  :urgency urgency
 		  :icon "restaurant"))))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defmacro verbose-message (&rest message)
+  "Print MESSAGE only in verbose mode."
+  `(when restaurant/enable-verbose (message ,@message)))
+
+(defmacro defhooklet (name mode condition &rest body)
+  "This is the test NAME, MODE, CONDITION, BODY."
+  `(add-hook ',(intern (concat (symbol-name mode) "-hook"))
+	     #'(lambda ()
+			(when ,condition
+			  (verbose-message "Launching ``%s'' hooklet on ``%s'' mode" ',name ',mode)
+			  ,@body))))
+
+;;; restaurant-lib.el ends here

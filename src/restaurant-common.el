@@ -1,4 +1,4 @@
-;;; common.el --- TODO:  -*- lexical-binding: t -*-
+;;; restaurant-common.el --- TODO:  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 
@@ -28,12 +28,15 @@
 ;;; Code:
 
 (require 'user-directories)
+(require 'cl-lib)
 (require 'redo+)
 (require 'f)
 (require 'notify)
 (require 'cl-lib)
 (require 'ansi-color)
-(require 'github-notifier)
+;; (require 'github-notifier)
+(require 'popup)
+(require 'ssh)
 
 ;; add load path "data" for icons etc
 (add-to-list 'load-path (locate-source-file "data"))
@@ -63,9 +66,6 @@
  '(initial-frame-alist (quote ((fullscreen . maximized)))) ; start maximized
  )
 
-;; Remove trailing whitespaces
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-
 ;;;; visual mode
 (global-visual-line-mode t) ;; wrap long lines visually to several lines
 ;; Remove visual line from buffer
@@ -73,14 +73,15 @@
                                    (visual-line-mode -1)))
 
 ;;;; enable cua mode
-(defun restaurant/cua-mode-init ()
-  (when restaurant/familiar-copy-paste-cut
-    ;; https://www.emacswiki.org/emacs/CuaMode
-    (cua-mode t)))
+(defhooklet restaurant/cua-mode emacs-startup restaurant/familiar-copy-paste-cut
+  ;; https://www.emacswiki.org/emacs/CuaMode
+  (cua-mode t))
 
-(add-hook 'emacs-startup-hook 'restaurant/cua-mode-init)
-(add-hook 'text-mode-hook 'restaurant/cua-mode-init)
-(add-hook 'prog-mode-hook 'restaurant/cua-mode-init)
+(defhooklet restaurant/cua-mode test-mode restaurant/familiar-copy-paste-cut
+  (cua-mode t))
+
+(defhooklet restaurant/cua-mode prog-mode restaurant/familiar-copy-paste-cut
+  (cua-mode t))
 
 ;;;; Enable Drag stuff
 (drag-stuff-global-mode 1)
@@ -175,11 +176,11 @@
 (setq auto-compression-mode 1)
 
 ;;;; fill-column
-(defun restaurant/fill-column-init ()
+(defun restaurant/fill-column ()
   (when restaurant/fill-column
     (setq-default fill-column restaurant/max-line-length)))
 
-(add-hook 'prog-mode-hook 'restaurant/fill-column-init)
+(add-hook 'prog-mode-hook 'restaurant/fill-column)
 
 ;;;; Uniquify buffers
 (require 'uniquify)
@@ -193,17 +194,8 @@
 ;;;
 
 (defvar restaurant-max-line-length (concat "^[^\n]\\{"
-                                         (number-to-string restaurant/max-line-length)
-                                         "\\}\\(.*\\)$"))
-;;;
-;;; highlight important strings
-;;;
-(defun restaurant/highlight-prog-mode-strings ()
-  ;; highlight FIXME/TODO/BUG keywords
-  (font-lock-add-keywords nil '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))
-  (font-lock-add-keywords nil '(("\\<\\(DONE\\):" 1 font-lock-doc-face t))))
-
-(add-hook 'prog-mode-hook #'restaurant/highlight-prog-mode-strings)
+					   (number-to-string restaurant/max-line-length)
+					   "\\}\\(.*\\)$"))
 
 ;;;
 ;;; activate generic options
@@ -211,7 +203,11 @@
 (require 'magit)
 (require 'magit-gh-pulls)
 
-(defun restaurant/generic-prog-mode-init ()
+(defhooklet restaurant/generic-prog-mode-improvements prog-mode t
+  ;; highlight FIXME/TODO/BUG keywords
+  (font-lock-add-keywords nil '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))
+  (font-lock-add-keywords nil '(("\\<\\(DONE\\):" 1 font-lock-doc-face t)))
+  ;; auto-fill mode
   (auto-fill-mode -1)
   ;; projectile
   (require 'projectile)
@@ -220,175 +216,152 @@
   ;;
   (subword-mode 1)
   (font-lock-mode 1)
-
-  ;; (setq indent-tabs-mode t) ;; Turn Off Tab Character
+  ;; Drag and move selcted
+  (drag-stuff-mode 1)
 
   (local-set-key (kbd "C-c C-f") 'flash-cross)
   (local-set-key (kbd "RET") 'newline-and-indent)
 
   (message "Prog mode enabled. USE Shift+SPACE to show or hide blocks"))
 
-(add-hook 'prog-mode-hook 'restaurant/generic-prog-mode-init)
+;; Remove trailing whitespaces
+(defhooklet restaurant/delete-trailing-whitespaces before-save t
+  (delete-trailing-whitespace 1))
+
+;;
+(when (and restaurant/check-parens-before-save buffer-file-name)
+  (add-hook 'before-save-hook
+	    'check-parens
+	    nil t))
 
 ;; magit-gh-pulls
 (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
 ;;;
 ;;; indicate paren
 ;;;
-(defun restaurant/parenth-init ()
-  (when restaurant/indicate-parentheses
-    (require 'paren)
-    (require 'highlight-parentheses)
-    ;; show pait to current parenth
-    (show-paren-mode 1)
-    (setq show-paren-delay 0)
-    ;; indicate other parentheses
-    (highlight-parentheses-mode 1)
-    ;; 'parenthesis of 'expression highlight just parens/highlight entire expression
-    (setq show-paren-style 'parenthesis)
-    ))
-
-(add-hook 'prog-mode-hook 'restaurant/parenth-init)
+(defhooklet restaurant/parenth-management prog-mode restaurant/indicate-parentheses
+  (require 'paren)
+  (require 'highlight-parentheses)
+  ;; show pait to current parenth
+  (show-paren-mode 1)
+  (setq show-paren-delay 0)
+  ;; indicate other parentheses
+  (highlight-parentheses-mode 1)
+  ;; 'parenthesis of 'expression highlight just parens/highlight entire expression
+  (setq show-paren-style 'parenthesis))
 
 ;;;
 ;;; linum
 ;;;
-(defun restaurant/linum-init ()
-  (when restaurant/linum-mode
+(defhooklet restaurant/linum prog-mode restaurant/linum-mode
     (require 'linum)
-    (linum-mode 1)
-    ))
-
-(add-hook 'prog-mode-hook 'restaurant/linum-init)
+    (linum-mode 1))
 
 ;;;
 ;;; highlight-current-column
 ;;;
-(defun restaurant/highlight-current-column-init ()
-  (when restaurant/highlight-current-column
-    (require 'col-highlight)
-    (column-highlight-mode 1)
-    ))
-
-(add-hook 'prog-mode-hook 'restaurant/highlight-current-column-init)
+(defhooklet restaurant/highlight-current-column prog-mode restaurant/highlight-current-column
+  (require 'col-highlight)
+  (column-highlight-mode 1))
 
 ;;;
 ;;; highlight-current-line
 ;;;
-(defun restaurant/hl-line-init ()
-  (when restaurant/highlight-current-line
-    (require 'hl-line)
-    (hl-line-mode 1)
-    ))
-
-(add-hook 'prog-mode-hook 'restaurant/hl-line-init)
+(defhooklet restaurant/hl-line prog-mode restaurant/highlight-current-line
+    (require 'hl-line+)
+    (hl-line-mode 1))
 
 ;;;
 ;;; nyan
 ;;;
-(defun restaurant/nyan-init ()
-  (when restaurant/why-so-serious
-    (nyan-mode 1)
-    ))
-
-(add-hook 'prog-mode-hook 'restaurant/nyan-init)
+(defhooklet restaurant/nyan prog-mode restaurant/why-so-serious
+    (nyan-mode 1))
 
 ;;;
 ;;; fill-column-indicator
 ;;;
 (defvar restaurant-last-max-line-length restaurant/max-line-length)
 
-(defun restaurant/fill-column-indicator-init ()
-  (when restaurant/fill-column
-    (require 'fill-column-indicator)
-    (fci-mode 1)
-    (setq fci-rule-column restaurant/max-line-length)
-    ;; highlight too long lines
-    (when restaurant/highlight-too-long-lines
-      (let ((restaurant-max-line-length (concat "^[^\n]\\{"
-						(number-to-string restaurant/max-line-length)
-						"\\}\\(.*\\)$"))
-	    (restaurant-previous-max-line-length (concat "^[^\n]\\{"
-							 (number-to-string restaurant-last-max-line-length)
-							 "\\}\\(.*\\)$")))
-	(font-lock-remove-keywords nil (list (list (concat "^[^\n]\\{" restaurant-previous-max-line-length "\\}\\(.*\\)$") 1 font-lock-warning-face t)))
-	(font-lock-add-keywords nil (list (list restaurant-max-line-length 1 font-lock-warning-face t)))))
-      (setq restaurant-max-line-length restaurant/max-line-length)))
-
-(add-hook 'prog-mode-hook 'restaurant/fill-column-indicator-init)
+(defhooklet restaurant/fill-column-indicator prog-mode restaurant/fill-column
+  (require 'fill-column-indicator)
+  (fci-mode 1)
+  (setq fci-rule-column restaurant/max-line-length)
+  ;; highlight too long lines
+  (when restaurant/highlight-too-long-lines
+    (let ((restaurant-max-line-length (concat "^[^\n]\\{"
+					      (number-to-string restaurant/max-line-length)
+					      "\\}\\(.*\\)$"))
+	  (restaurant-previous-max-line-length (concat "^[^\n]\\{"
+						       (number-to-string restaurant-last-max-line-length)
+						       "\\}\\(.*\\)$")))
+      (font-lock-remove-keywords nil (list (list (concat "^[^\n]\\{" restaurant-previous-max-line-length "\\}\\(.*\\)$") 1 font-lock-warning-face t)))
+      (font-lock-add-keywords nil (list (list restaurant-max-line-length 1 font-lock-warning-face t)))))
+  (setq restaurant-max-line-length restaurant/max-line-length))
 
 ;;;
 ;;; hideshow
 ;;;
-(defun restaurant/hideshow-init ()
-  (when restaurant/enable-hide-show-blocks
-    (require 'hideshow)
-    (require 'hideshowvis)
-    (hs-minor-mode 1)
-    (hideshowvis-enable)
-    (hideshowvis-symbols)
-    (hs-hide-initial-comment-block)
-    (local-set-key (kbd "S-SPC") 'hs-toggle-hiding)))
-
-(add-hook 'prog-mode-hook 'restaurant/hideshow-init)
+(defhooklet restaurant/hideshow prog-mode restaurant/enable-hide-show-blocks
+  (require 'hideshow)
+  (require 'hideshowvis)
+  (hs-minor-mode 1)
+  (hideshowvis-enable)
+  (hideshowvis-symbols)
+  (hs-hide-initial-comment-block)
+  (local-set-key (kbd "S-SPC") 'hs-toggle-hiding))
 
 ;;;
 ;;; ispell
 ;;;
-(defun restaurant/ispell-init ()
-  (when restaurant/enable-spell-checking
-    (flyspell-prog-mode) ;; Check strings for spelling errors
-    ))
-
-(add-hook 'prog-mode-hook 'restaurant/ispell-init)
+;; (defhooklet restaurant/ispell prog-mode restaurant/enable-spell-checking
+;;   (flyspell-prog-mode)) ;; Check strings for spelling errors
 
 ;;;
 ;;; projectile
 ;;;
-(defun restaurant/projectile-init ()
+(defhooklet restaurant/projectile prog-mode t
   (require 'projectile)
-  (projectile-mode 1)
-  )
-
-(add-hook 'prog-mode-hook 'restaurant/projectile-init)
+  (projectile-mode 1))
 
 ;;;
 ;;; require-final-newline
 ;;;
-(defun restaurant/require-final-newline-init ()
-  (when restaurant/require-final-newline
-    (setq require-final-newline 1)))
-
-(add-hook 'prog-mode-hook 'restaurant/require-final-newline-init)
+(defhooklet restaurant/require-final-newline prog-mode restaurant/require-final-newline
+  (setq require-final-newline 1))
 
 ;;;
 ;;; indent-level
 ;;;
-(defun restaurant/indent-level-init ()
-  (setq standard-indent restaurant/indent-level)
-  )
+(defhooklet restaurant/indent-level prog-mode t
+  (custom-set-variables
+   '(standard-indent restaurant/indent-level)))
 
-(add-hook 'prog-mode-hook 'restaurant/indent-level-init)
+;;;
+;;; ssh
+;;;
+(defhooklet restaurant/ssh ssh-mode t
+  (setq ssh-directory-tracking-mode t)
+  (shell-dirtrack-mode t)
+  (setq dirtrackp nil))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;; common compilation options
+;;;
 
-(define-key global-map
-  [menu-bar restaurant reinit]
-  '("Reload Restaurant configuration" . reinit))
+;;;; Notify result from compilation buffer
+(add-to-list 'compilation-finish-functions
+	     'notify-compilation-result)
 
+;;;
+;;; helm-swoop
+;;;
+(require 'helm-swoop)
+(global-set-key (kbd "C-M-S") 'helm-swoop)
 
-;; add button open terminal here
-(defcustom restaurant/terminal-emulator (get-terminal-emulator)
-  "Default terminal emulator"
-  :type 'string
-  :group 'restaurant/system)
-
-(defcustom restaurant/use-external-terminal-emulator nil
-  "User external terminal emulator, instead of emacs shell"
-  :type 'boolean
-  :group 'restaurant/system)
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; set key to open-console
 (global-set-key (kbd "<f12>") 'open-console)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;
 ;;; initialize package
@@ -402,22 +375,4 @@
 
 (package-initialize)
 
-;;;
-;;; ssh
-;;;
-(require 'ssh)
-(add-hook 'ssh-mode-hook
-	  (lambda ()
-	    (setq ssh-directory-tracking-mode t)
-	    (shell-dirtrack-mode t)
-	    (setq dirtrackp nil)))
-
-;;;
-;;; common compilation options
-;;;
-
-;;;; Notify result from compilation buffer
-(add-to-list 'compilation-finish-functions
-	     'notify-compilation-result)
-
-;;; common.el ends here
+;;; restaurant-common.el ends here

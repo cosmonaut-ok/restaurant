@@ -1,4 +1,4 @@
-;;; menubar.el --- TODO:  -*- lexical-binding: t -*-
+;;; restaurant-menubar.el --- TODO:  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 
@@ -61,10 +61,6 @@
 (define-key global-map [menu-bar help-menu external-packages] nil)
 (define-key global-map [menu-bar help-menu external-packages] nil)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(define-key global-map
-  [menu-bar options restaurant/customize]
-  '("Restaurant Customization Menu" . restaurant/customize))
 
 (define-key-after prog-mode-map
   [menu-bar code]
@@ -330,7 +326,16 @@
 
 (define-key global-map
   [menu-bar options color-themes]
-  '("Color Themes" . color-theme-select))
+  '("Color Themes" . customize-themes))
+
+(define-key global-map
+  [menu-bar options restaurant/customize]
+  '("Restaurant Customization Menu" . restaurant/customize))
+
+;;;; reinit Restaurant
+(define-key global-map
+  [menu-bar options restaurant-reinit]
+  '("Reload Restaurant configuration" . reinit))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -541,3 +546,5 @@
 (define-key global-map
   [menu-bar tools kmacro kmacro-start-macro]
   '("Star Writing Keyboard Macro" . kmacro-start-macro))
+
+;;; restaurant-menubar.el ends here

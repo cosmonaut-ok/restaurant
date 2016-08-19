@@ -1,4 +1,4 @@
-;;; json.el --- TODO:  -*- lexical-binding: t -*-
+;;; restaurant-json.el --- TODO:  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 
@@ -28,3 +28,9 @@
 ;;; Code:
 
 (require 'json-mode)
+(require 'json-reformat)
+(require 'json-snatcher)
+
+;; TODO: make json-reformat-region by C-M-q
+
+;;; restaurant-json.el ends here
