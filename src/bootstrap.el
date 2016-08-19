@@ -29,7 +29,7 @@
 
 ;; (defvar restaurant/source-directory (file-name-directory load-file-name))
 (defvar restaurant/source-directory (file-name-directory (directory-file-name (file-name-directory load-file-name))))
-(defvar restaurant/packages-installed-p (concat restaurant/source-directory "build"))
+(defvar restaurant/packages-installed-p (concat restaurant/source-directory "el-get"))
 (defvar restaurant/elget-user-recipes-path (concat restaurant/source-directory "el-get-user/recipes"))
 (defvar restaurant/do-bootstrap t)
 
@@ -57,6 +57,7 @@
     "ruby-electric"
     "ruby-hash-syntax"
     "robe-mode"
+    "ruby-block"
     ;; "helm-robe"
     "ruby-tools"
     "ruby-refactor"
@@ -178,10 +179,10 @@
 (let ((default-directory (concat restaurant/source-directory "lib/")))
   (when (file-directory-p default-directory)
     (setq load-path
-	  (append
-	   (let ((load-path (copy-sequence load-path))) ;; Shadow
-	     (normal-top-level-add-subdirs-to-load-path))
-	   load-path))))
+          (append
+           (let ((load-path (copy-sequence load-path))) ;; Shadow
+             (normal-top-level-add-subdirs-to-load-path))
+           load-path))))
 
 ;;; Waiting for installation completed
 (when (and (not (null (process-list))) restaurant/do-bootstrap)
