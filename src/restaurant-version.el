@@ -33,3 +33,5 @@
     (if short
 	(princ version)
       (princ (concat "Restaurant Chef IDE version: " version ".\nBuild with Emacs version:\n" (emacs-version) "\n")))))
+
+;;; restaurant-version.el ends here

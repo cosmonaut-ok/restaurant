@@ -42,6 +42,11 @@
     "f"
     "s"
     "apel"
+    "cl-lib"
+    "dash"
+    "deferred"
+    "emacs-async"
+    "ht"
     ;;
     "helm"
     "helm-robe"
@@ -49,16 +54,15 @@
     "helm-projectile"
     "helm-themes"
     "helm-robe"
-    "helm-company"
-    "helm-shell"
-    "helm-shell-history"
+    ;; "helm-company"
+    ;; "helm-shell"
+    ;; "helm-shell-history"
     ;; ruby
     "enh-ruby-mode"
     "ruby-electric"
     "ruby-hash-syntax"
     "robe-mode"
     "ruby-block"
-    ;; "helm-robe"
     "ruby-tools"
     "ruby-refactor"
     "rubocop"
@@ -79,15 +83,17 @@
     "yaml-mode"
     ;; json
     "json-mode"
+    "json-reformat"
     ;; xml
     ;; web
     "web-mode"
+    "web-completion-data"
     "mmm-mode"
     ;; other
     "ecb"
     "sr-speedbar"
     "magit"
-    "gh"
+    ;; "gh" ;; it's early library
     "magit-gh-pulls"
     "color-theme"
     "fill-column-indicator"
@@ -103,9 +109,11 @@
     "popup"
     "projectile"
     "ido-ubiquitous" ;; needed for magit
+    "ido-hacks"
     "ido-vertical-mode"
     "ido-better-flex"
-    "ispell-multi" ;; multiple languages spelling support
+    "ido-yes-or-no"
+    ;; "ispell-multi" ;; multiple languages spelling support
     "drag-stuff" ;; move lines/regions up/down
     "ssh"
     ;; notifications support

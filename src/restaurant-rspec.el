@@ -36,4 +36,8 @@
  '(compilation-scroll-output t)
  '(rspec-command-options ""))
 
-(rspec-install-snippets)
+;;;; add snippets after rspec loaded
+(eval-after-load 'rspec-mode
+ '(rspec-install-snippets))
+
+;;; restaurant-rspec.el ends here

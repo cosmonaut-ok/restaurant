@@ -30,10 +30,9 @@
 ;;;
 ;;; test-kitchen
 ;;;
-(defun restaurant/chef-kitchen-init ()
-  (require 'test-kitchen))
 
-(add-hook 'chef-mode-hook 'restaurant/chef-kitchen-init)
+(defhooklet restaurant/chef-kitchen chef-mode
+  (require 'test-kitchen))
 
 ;; patch for original test-kitchen.el. It does not supports automatic login
 (defcustom test-kitchen-login-command "kitchen login"

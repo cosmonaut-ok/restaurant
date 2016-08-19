@@ -40,3 +40,5 @@
 (tool-bar-add-item "one" 'delete-other-windows 'leave-only-current-window)
 ;;
 (define-key-after (default-value 'tool-bar-map) [separator-12] menu-bar-separator)
+
+;;; restaurant-toolbar.el ends here

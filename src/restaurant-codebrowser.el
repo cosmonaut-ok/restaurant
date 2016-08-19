@@ -31,36 +31,41 @@
 ;;; ecb
 ;;;
 (when (not restaurant/code-browser-switch-to-simple)
+
   (require 'ecb)
+
+  (defadvice ecb-activate (after ecb-activate-after activate)
+    "Redraw layout after activation of ecb."
+    (ecb-redraw-layout))
 
   ;;;; defining standard layouts
   (ecb-layout-define "restaurant-3-1" left-right
-		     "This function creates the following layout: 
- 
-   -------------------------------------------------------------- 
-   |              |                               |             | 
-   |  Methods     |                               | Directories | 
-   |              |                               |             | 
-   |              |                               |             | 
-   |              |                               |             | 
-   |              |                               |             | 
-   |              |                               |             | 
-   |--------------|             Edit              |             | 
-   |              |                               |             | 
-   |  Sources     |                               |             | 
-   |              |                               |             | 
-   |--------------|                               |             | 
-   |              |                               |             | 
-   |  History     |                               |             | 
-   |              |                               |             | 
-   -------------------------------------------------------------- 
-   |                                                            | 
-   |                    Compilation                             | 
-   |                                                            | 
-   -------------------------------------------------------------- 
- 
-If you have not set a compilation-window in `ecb-compile-window-height' then 
-the layout contains no persistent compilation window and the other windows get a 
+		     "This function creates the following layout:
+
+   --------------------------------------------------------------
+   |              |                               |             |
+   |  Methods     |                               | Directories |
+   |              |                               |             |
+   |              |                               |             |
+   |              |                               |             |
+   |              |                               |             |
+   |              |                               |             |
+   |--------------|             Edit              |             |
+   |              |                               |             |
+   |  Sources     |                               |             |
+   |              |                               |             |
+   |--------------|                               |             |
+   |              |                               |             |
+   |  History     |                               |             |
+   |              |                               |             |
+   --------------------------------------------------------------
+   |                                                            |
+   |                    Compilation                             |
+   |                                                            |
+   --------------------------------------------------------------
+
+If you have not set a compilation-window in `ecb-compile-window-height' then
+the layout contains no persistent compilation window and the other windows get a
 little more place."
 		     (ecb-set-methods-buffer)
 		     (ecb-split-ver 0.4)
@@ -72,38 +77,38 @@ little more place."
 		     (select-window (previous-window (selected-window) 0)))
 
   (ecb-layout-define "restaurant-2-2" left-right
-		     "This function creates the following layout: 
- 
-   -------------------------------------------------------------- 
-   |              |                               |             | 
-   |  Methods     |                               | Directories | 
-   |              |                               |             | 
-   |              |                               |             | 
-   |              |                               |             | 
-   |              |                               |             | 
-   |              |                               |             | 
-   |--------------|             Edit              |-------------| 
-   |              |                               |             | 
-   |  History     |                               |  Sources    | 
-   |              |                               |             | 
-   |              |                               |             | 
-   |              |                               |             | 
-   |              |                               |             | 
-   |              |                               |             | 
-   -------------------------------------------------------------- 
-   |                                                            | 
-   |                    Compilation                             | 
-   |                                                            | 
-   -------------------------------------------------------------- 
- 
-If you have not set a compilation-window in `ecb-compile-window-height' then 
-the layout contains no persistent compilation window and the other windows get a 
+		     "This function creates the following layout:
+
+   --------------------------------------------------------------
+   |              |                               |             |
+   |  Methods     |                               | Directories |
+   |              |                               |             |
+   |              |                               |             |
+   |              |                               |             |
+   |              |                               |             |
+   |              |                               |             |
+   |--------------|             Edit              |-------------|
+   |              |                               |             |
+   |  History     |                               |  Sources    |
+   |              |                               |             |
+   |              |                               |             |
+   |              |                               |             |
+   |              |                               |             |
+   |              |                               |             |
+   --------------------------------------------------------------
+   |                                                            |
+   |                    Compilation                             |
+   |                                                            |
+   --------------------------------------------------------------
+
+If you have not set a compilation-window in `ecb-compile-window-height' then
+the layout contains no persistent compilation window and the other windows get a
 little more place."
 		     (ecb-set-methods-buffer)
 		     (ecb-split-ver 0.5)
-		     (ecb-set-history-buffer) 
+		     (ecb-set-history-buffer)
 		     (select-window (next-window (next-window)))
-		     (ecb-set-directories-buffer) 
+		     (ecb-set-directories-buffer)
 		     (ecb-split-ver 0.66)
 		     (ecb-set-sources-buffer)
 		     (select-window (previous-window (previous-window (selected-window) 0) 0)))
@@ -117,7 +122,7 @@ little more place."
    '(ecb-compile-window-height 0.15)
    '(ecb-compile-window-width 'edit-window)
    '(ecb-compile-window-temporally-enlarge 'after-selection) ;; after-display after-selection both nil
-   '(enlarged-compilation-window-max-height 'half) ;; best half
+   '(ecb-enlarged-compilation-window-max-height 0.6) ;; best, half, number
    '(ecb-create-layout-file (locate-user-config-file "ecb-user-layouts.el"))
    '(ecb-tip-of-the-day-file (locate-user-config-file "ecb-tip-of-day.el"))
    '(ecb-source-path (quote (("/" "Root"))))
@@ -135,12 +140,6 @@ little more place."
    ;; 				;; ecb-create-layout-frame-width 110
    ;; 				))
 
-   ;; (defconst initial-frame-width (frame-width)
-   ;;   "The width of frame will be changed ,remember the init value.")
-
-   ;; (add-to-list 'ecb-compilation-buffer-names '("*slime-repl sbcl*"))
-   ;; ;;(add-to-list 'ecb-source-path  '("~/Git Repositories/Workspaces" "/root"))
-
    ;; (add-hook 'ecb-show-ecb-windows-before-hook
    ;;           'ecb-enlarge-frame-width-before-show)
    ;; (add-hook 'ecb-hide-ecb-windows-before-hook
@@ -150,18 +149,6 @@ little more place."
    ;; (add-hook 'ecb-activate-before-layout-draw-hook
    ;;           'ecb-enlarge-frame-width-before-activate)
 
-   ;; (defun frame-horizontal-maximized-p ()
-   ;;   "Test current frame wheather be maxmized by test the frame width and height equal to the screen resolution"
-   ;;   (interactive)
-   ;;   (equal (frame-pixel-width) (display-pixel-width)))
-
-   ;; (defun ecb-enlarge-frame-width-before-show ()
-   ;;   "Enlarge frame width before ecb shows layout."
-   ;;   (if (and (ecb-windows-all-hidden)
-   ;;            (<= (+ (frame-pixel-width) (* (frame-char-width)
-   ;;                                          (+ ecb-windows-width 2)))
-   ;;                (display-pixel-width)))
-   ;;       (set-frame-width (selected-frame) (+ (frame-width) (+ ecb-windows-width 2)))))
    ;; (defun ecb-shrink-frame-width-before-hide ()
    ;;   "Shrink frame width before ecb hide layout."
    ;;   (if (and (not (ecb-windows-all-hidden))
@@ -185,12 +172,10 @@ little more place."
    ;;                                              (+ ecb-windows-width 2)))
    ;;                    (display-pixel-width)))
    ;;       (set-frame-width (selected-frame) (+ (frame-width) (+ ecb-windows-width 2))))))
+   )
 
-   ;; (defadvice ecb-activate (after ecb-activate-after activate)
-   ;;   "Redraw layout after activation of ecb."
-   ;;   (ecb-redraw-layout))
-   ;; (call-interactively 'ecb-activate)
-   ))
+  (global-set-key (kbd "S-<f12>") 'ecb-toggle-compile-window)
+  )
 
 ;; (setq ecb-create-layout-file (locate-user-config-file "ecb-user-layouts.el"))
 
@@ -214,6 +199,7 @@ little more place."
 	(call-interactively 'ecb-activate))))
 
 (global-set-key (kbd "<f11>") 'toggle-code-browser)
+
 
 (add-hook 'emacs-startup-hook '(lambda ()
 				 (when (not noninteractive)
