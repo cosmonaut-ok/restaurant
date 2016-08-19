@@ -139,7 +139,7 @@ clean-precompile:
 
 mrproper: clean-emacs clean clean-precompile
 	@echo "Clearing emacs 3rt-party data dirs..."
-	@rm -rf build el-get elpa configure Makefile Gemfile.lock ${ARCHIVE_NAME} Gemfile lib restaurant
+	@rm -rf build el-get elpa configure Makefile Gemfile.lock ${ARCHIVE_NAME} Gemfile lib restaurant build
 
 package: build clean-build clean
 	@echo "Building package..."

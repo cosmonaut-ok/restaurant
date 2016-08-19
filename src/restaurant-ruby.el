@@ -65,11 +65,11 @@
 
 ;; set ruby indent level
 (add-hook 'enh-ruby-mode-hook (lambda ()
-				(setf ruby-indent-level restaurant/indent-level)))
+                                (setf ruby-indent-level restaurant/indent-level)))
 
 ;; set ruby indent tabs mode
 (add-hook 'enh-ruby-mode-hook (lambda ()
-				(setf ruby-indent-tabs-mode restaurant/indent-tabs-mode)))
+                                (setf ruby-indent-tabs-mode restaurant/indent-tabs-mode)))
 
 ;;;
 ;;; bundler
@@ -131,7 +131,7 @@
     ;; connect rvm+robe
     (when restaurant/enable-robe
       (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
-	(rvm-activate-corresponding-ruby)))
+        (rvm-activate-corresponding-ruby)))
     ))
 
 (add-hook 'enh-ruby-mode-hook 'restaurant/rvm-init)
@@ -158,7 +158,7 @@
 
 (dolist (hook '(enh-ruby-mode-hook inf-ruby-mode-hook html-erb-mode-hook haml-mode))
   (add-hook hook
-	    (lambda () (restaurant/local-push-company-backend 'company-robe))))
+            (lambda () (restaurant/local-push-company-backend 'company-robe))))
 
 (add-hook 'enh-ruby-mode-hook 'restaurant/robe-init)
 
@@ -213,9 +213,9 @@
 ;;;
 ;; When folding, take these delimiters into consideration
 (add-to-list 'hs-special-modes-alist
-	     '(ruby-mode
-	       "\\(class\\|def\\|do\\|if\\|.each\\)" "\\(end\\)" "#"
-	       (lambda (arg) (ruby-end-of-block)) nil))
+             '(ruby-mode
+               "\\(class\\|def\\|do\\|if\\|.each\\)" "\\(end\\)" "#"
+               (lambda (arg) (ruby-end-of-block)) nil))
 
 (defun restaurant/ruby-generic-init ()
   (inf-ruby-minor-mode 1)
@@ -224,4 +224,17 @@
   )
 
 (add-hook 'enh-ruby-mode-hook #'restaurant/ruby-generic-init)
+
+;;;
+;;; ruby-block-mode
+;;;
+(defun restaurant/ruby-block-init ()
+  (require 'ruby-block)
+  (custom-set-variables
+   '(ruby-block-delay 0)
+   '(ruby-block-highlight-toggle t)
+  ))
+
+(add-hook 'enh-ruby-mode-hook #'restaurant/ruby-block-init)
+
 ;;; ruby.el ends here
