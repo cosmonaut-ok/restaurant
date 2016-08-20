@@ -58,7 +58,7 @@ else
 	@tar -C ${BUILD_DIR} -xf ${BUILD_DIR}/${ARCHIVE_NAME}
 	@echo "Preparing emacs archive..."
 	@for i in `ls ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/ | grep -E [0-9]`; do rm -f ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/$$i/apps/emacs.png; done
-	@for i in `ls ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/ | grep -E [0-9]`; do convert -resize $$i data/icons/restaurant.svg ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/$$i/apps/emacs.png; done
+	@for i in `ls ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/ | grep -E [0-9]`; do convert -resize $$i ${CURRENT_DIR}/data/icons/restaurant.svg ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/$$i/apps/emacs.png; done
 	@cp data/icons/restaurant.svg ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/scalable/apps/emacs.svg
 	@echo "Building emacs..."
 	@cd ${BUILD_DIR}/${SOURCE_DIR} && \
@@ -109,6 +109,8 @@ build: el-get lib
 ifeq (@BYTE_COMPILE_P@, yes)
 	@EMACSDATA=${CURRENT_DIR}/@LOCAL_EMACS_DIR@/etc/ LD_LIBRARY_PATH=${LDLIB} ${LOCAL_EMACS} -Q -batch --script ./init.el
 endif
+	@convert -alpha off -resize 48x48 +level-colors yellow,green ${CURRENT_DIR}/data/icons/restaurant.svg ${CURRENT_DIR}/data/icons/status-ok.png
+	@convert -alpha off -resize 48x48 +level-colors yellow,red ${CURRENT_DIR}/data/icons/restaurant.svg ${CURRENT_DIR}/data/icons/status-fail.png
 	@touch build
 
 bootstrap: build
@@ -152,6 +154,7 @@ clean-precompile:
 mrproper: clean-emacs clean clean-precompile
 	@echo "Clearing emacs 3rt-party data dirs..."
 	@rm -rf build el-get elpa configure Makefile Gemfile.lock ${ARCHIVE_NAME} Gemfile lib restaurant build
+	@rm -f ${CURRENT_DIR}/data/icons/status-ok.png ${CURRENT_DIR}/data/icons/status-fail.png
 
 package: build clean-build clean
 	@echo "Building package..."

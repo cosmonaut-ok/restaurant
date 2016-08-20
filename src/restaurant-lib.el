@@ -80,33 +80,34 @@
 	 ((= n 0) nil)
 	 (t (cons (car list) (get-first-n-list-elements (- n 1) (cdr list))))))
 
-(defvar exit-status 0)
-;; Idea from <https://gist.github.com/jwiegley/fd78e747f27a90cb67a2>.
-(defun notify-compilation-result (buffer result)
+(defun notify-compilation-result (buffer result &rest rest)
   "Notify about the ended compilation in BUFFER.
   This function is intended to be used in
   `compilation-finish-functions'."
   (with-current-buffer buffer
     (unless (eq major-mode 'grep-mode)
-      (let ((urgency))
-	(if (= exit-status 0)
-	    (setq urgency 'normal)
-	  (setq urgency 'critical))
+      (let ((urgency) (status))
+	(if (string-match "^finished" result)
+	    (progn
+	      (setq urgency 'normal)
+	      (setq status "ok"))
+	  (progn
+	    (setq urgency 'critical)
+	    (setq status "fail")))
 	(when restaurant/notify-on-build
-	  (notify "Build"
-		  (format (concat "Buffer: %s\n"
-				  "Command: %s\n"
-				  "Result: %s")
-			  ;;;
-			  (buffer-name buffer)
-			  ;;;
+	  (notify (concat "Build: " (buffer-name buffer))
+		  (format (concat "Command: %s\n"
+				  "Result: %s"
+				  )
+			  ;;
 			  (concat (get-first-n-list-elements
-				   20 (string-to-list compile-command)) "...")
-			  ;;;
+				   25 (string-to-list compile-command)) "...")
+			  ;;
 			  result
 			  )
 		  :urgency urgency
-		  :icon "restaurant"))))))
+		  :icon (locate-source-file
+			 (concat "data/icons/status-" status ".png"))))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
