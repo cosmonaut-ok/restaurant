@@ -39,7 +39,6 @@
 (defvar *el-get-packages-list*
   '(
     ;; libraries and frameworks
-    ;; "helm"
     "f"
     "s"
     "apel"
@@ -48,16 +47,6 @@
     "deferred"
     "emacs-async"
     "ht"
-    ;;
-    "helm"
-    "helm-robe"
-    "helm-swoop"
-    "helm-projectile"
-    "helm-themes"
-    "helm-robe"
-    ;; "helm-company"
-    ;; "helm-shell"
-    ;; "helm-shell-history"
     ;; ruby
     "enh-ruby-mode"
     "ruby-electric"
@@ -106,29 +95,20 @@
     "yasnippet"
     "yasnippets"
     ;; "yasnippet-snippets" ;; yasnippet/snippets are the same
-    ;; "popup"
     "projectile"
     "ido-ubiquitous" ;; needed for magit
     "ido-hacks"
     "ido-vertical-mode"
     "ido-better-flex"
-    ;; "ispell-multi" ;; multiple languages spelling support
     "drag-stuff" ;; move lines/regions up/down
     "ssh"
     ;; notifications support
     "notify"
     ;; fun
     "nyan-mode"
-    ;; TODO: make button instead search this file
-    ;; "helm-swoop"
     ;; themes
     "color-theme"
-    ;; "color-theme-zenburn"
     "solarized-emacs"
-    ;; "birds-of-paradise-plus-theme"
-    ;; "color-theme-sanityinc"
-    ;; "dream-theme"
-    ;; "leuven-theme"
     ))
 
 (defun init-elget-user-recipes ()

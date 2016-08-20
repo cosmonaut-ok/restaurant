@@ -169,7 +169,7 @@
 (defhooklet restaurant/ri-yari enh-ruby-mode restaurant/enable-ri
   (require 'yari)
   (defalias 'ri 'yari)
-  (local-set-key [f1] 'yari-helm))
+  (local-set-key [f1] 'yari))
 
 ;;;
 ;;; generic init
