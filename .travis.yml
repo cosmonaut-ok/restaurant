@@ -31,9 +31,9 @@ language: lisp
 
 env:
   matrix:
-    - RESTAURANT=gtk2
-    - RESTAURANT=gtk3
-    - RESTAURANT=athena
+    - RESTAURANT=build
+    - RESTAURANT=test
+    - RESTAURANT=release
   global:
     - SOME_TOKEN=some_value
 
@@ -43,7 +43,7 @@ env:
 
 matrix:
   allow_failures:
-    - env: RESTAURANT=athena
+    - env: RESTAURANT=test
 
 ###
 ### limit build attempts to defined branches
@@ -78,22 +78,17 @@ branches:
 ###
 
 install:
-  - sudo apt-get -qq install realpath imagemagick autoconf automake git libdbus-1-dev xdg-user-dirs
-  - if [ "$RESTAURANT" = 'gtk2' ]; then
-        sudo apt-get -qq install libgtk2.0-dev;
-    fi
-  - if [ "$RESTAURANT" = 'gtk3' ]; then
-        sudo apt-get -qq install libgtk-3-dev;
-    fi
-  - if [ "$RESTAURANT" = 'athena' ]; then
-        sudo apt-get -qq install libxaw7-dev;
-    fi
+  - sudo apt-get -qq install realpath imagemagick autoconf automake git libdbus-1-dev xdg-user-dirs wget ruby ruby-bundler
 
 script:
   - autoconf
-  - ./configure --with-gui=$RESTAURANT
-  - make test
-  - make release
+  - ./configure --enable-static
+  - make el-get
+  - bundle install --verbose
+  - make $RESTAURANT
+  - if [ $RESTAURANT == "build" ]; then
+       ./restaurant --batch
+    fi
 
 ###
 ### settings

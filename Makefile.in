@@ -39,10 +39,15 @@ RVM=$(shell which rvm)
 RESTAURANT_VERSION=$(shell grep autoconf-anchor src/restaurant-version.el | cut -d\" -f2 | tr -d \\n)
 LOCAL_EMACS=@LOCAL_EMACS_DIR@/bin/emacs
 CURRENT_DIR=$(shell pwd)
+LDLIB=$LD_LIBRARY_PATH:${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/
 
 all: build clean-build clean
 
 emacs:
+ifeq (@STATIC@, yes)
+	@echo "Static build enabled. Getting Emacs precompiled binaries..."
+	@wget -qO- https://github.com/restaurant-ide/restaurant/releases/download/v0.1.2/emacs-restaurant.tar.gz | tar xz
+else
 	@echo "Making temporary working directory ${BUILD_DIR}"
 	@mkdir -p ${BUILD_DIR}/emacs-build
 	@mkdir -p ${BUILD_DIR}/restaurant
@@ -53,8 +58,8 @@ emacs:
 	@tar -C ${BUILD_DIR} -xf ${BUILD_DIR}/${ARCHIVE_NAME}
 	@echo "Preparing emacs archive..."
 	@for i in `ls ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/ | grep -E [0-9]`; do rm -f ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/$$i/apps/emacs.png; done
-	@for i in `ls ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/ | grep -E [0-9]`; do convert -resize $$i data/restaurant.svg ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/$$i/apps/emacs.png; done
-	@cp data/restaurant.svg ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/scalable/apps/emacs.svg
+	@for i in `ls ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/ | grep -E [0-9]`; do convert -resize $$i data/icons/restaurant.svg ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/$$i/apps/emacs.png; done
+	@cp data/icons/restaurant.svg ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/scalable/apps/emacs.svg
 	@echo "Building emacs..."
 	@cd ${BUILD_DIR}/${SOURCE_DIR} && \
 	autoreconf -fi -I m4 ## emacs 25
@@ -74,11 +79,18 @@ emacs:
 	@echo "Moving to current directory as ''emacs''..."
 	@mv ${BUILD_DIR}/emacs-build/ emacs
 	@rm -f @LOCAL_EMACS_DIR@/etc/images/splash.png
+endif
 
 el-get: emacs
+ifeq (@STATIC@, yes)
+	@echo "Static build enabled. Getting prepared el-get libraries..."
+	@wget -qO- https://github.com/restaurant-ide/restaurant/releases/download/v0.1.2/el-get-packages.tar.gz | tar xz
+else
 	@echo "Getting required dependencies via el-get..."
-	@EMACSDATA=${CURRENT_DIR}/@LOCAL_EMACS_DIR@/etc/ ${LOCAL_EMACS} -Q --debug-init --script ./src/bootstrap.el
+	@EMACSDATA=${CURRENT_DIR}/@LOCAL_EMACS_DIR@/etc/ LD_LIBRARY_PATH=${LDLIB} ${LOCAL_EMACS} -Q --debug-init --script ./src/bootstrap.el
 	@cd ${CURRENT_DIR}/el-get/yasnippets && ln -s ruby-mode enh-ruby-mode
+endif
+	@cat el-get/robe-mode/Gemfile >> Gemfile
 
 lib: emacs
 	@echo "Building 3rd party libraries..."
@@ -88,16 +100,15 @@ lib: emacs
 	done
 ifeq (@BYTE_COMPILE_P@, yes)
 	@for i in `find lib -type f -name '*.el'`; do \
-		EMACSDATA=${CURRENT_DIR}/@LOCAL_EMACS_DIR@/etc/ ${LOCAL_EMACS} -Q -batch --eval "(byte-compile-file \"$$i\")"; \
+		EMACSDATA=${CURRENT_DIR}/@LOCAL_EMACS_DIR@/etc/ LD_LIBRARY_PATH=${LDLIB} ${LOCAL_EMACS} -Q -batch --eval "(byte-compile-file \"$$i\")"; \
 	done
 endif
 
 build: el-get lib
 	@echo "Building restaurant..."
 ifeq (@BYTE_COMPILE_P@, yes)
-	@EMACSDATA=${CURRENT_DIR}/@LOCAL_EMACS_DIR@/etc/ ${LOCAL_EMACS} -Q -batch --script ./init.el
+	@EMACSDATA=${CURRENT_DIR}/@LOCAL_EMACS_DIR@/etc/ LD_LIBRARY_PATH=${LDLIB} ${LOCAL_EMACS} -Q -batch --script ./init.el
 endif
-	@cat el-get/robe-mode/Gemfile >> Gemfile
 	@touch build
 
 bootstrap: build
@@ -136,7 +147,7 @@ clean-emacs: clean-build
 clean-precompile:
 	@echo "Cleaning precompiled elc files..."
 	@rm -f src/*.elc
-	@find lib -type f -name '*.elc' -delete
+	@[ -d lib ] && find lib -type f -name '*.elc' -delete || return 0
 
 mrproper: clean-emacs clean clean-precompile
 	@echo "Clearing emacs 3rt-party data dirs..."
@@ -170,6 +181,11 @@ test: build
 	@touch /tmp/.restaurant-mock.rb
 	@./restaurant --batch /tmp/.restaurant-mock.rb || exit 1
 	@rm -f /tmp/.restaurant-mock.rb
+
+libdeps:
+	@mkdir -p ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/
+	@cp -H /usr/lib/x86_64-linux-gnu/libgnutls-deb0.so.28 ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/
+	@cp -H /usr/lib/x86_64-linux-gnu/libhogweed.so.2 ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/
 
 help:
 	@echo "Restaurant Chef IDE v. ${RESTAURANT_VERSION}"
