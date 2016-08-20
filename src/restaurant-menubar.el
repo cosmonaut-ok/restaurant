@@ -225,6 +225,7 @@
   [menu-bar refactor ruby ruby-refactor-separator]
   '("--" nil :visible))
 
+(require 'ruby-tools)
 ;;;; Ruby Tools
 (define-key prog-mode-map
   [menu-bar refactor ruby-tools-clear-string]
@@ -236,11 +237,16 @@
 
 (define-key prog-mode-map
   [menu-bar refactor ruby-tools-to-single-quote-string]
-  '("Double to Single Quote" . ruby-tools-to-sinble-quote-string))
+  '("Double to Single Quote" . ruby-tools-to-single-quote-string))
 
 (define-key prog-mode-map
   [menu-bar refactor ruby-tools-to-double-quote-string]
   '("Single to Double Quote" . ruby-tools-to-double-quote-string))
+
+;;;; Ruby hash syntax
+(define-key enh-ruby-mode-map
+  [menu-bar refactor ruby-toggle-hash-syntax]
+  '("Switch between old and new ruby hashtable syntax" . ruby-toggle-hash-syntax))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
