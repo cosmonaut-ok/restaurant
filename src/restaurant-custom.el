@@ -1,4 +1,4 @@
-;;; face.el --- Restaurant customizations  -*- lexical-binding: t -*-
+;;; restaurant-custom.el --- Restaurant customizations  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 
@@ -77,6 +77,12 @@
 
 (defcustom restaurant/notify-on-build t
   "Notify on build, compile or test process finished."
+  :type 'boolean
+  :group 'restaurant/face
+  )
+
+(defcustom restaurant/enable-github-flavored-preview nil
+  "Enable markdown preview, generated with github (requires internet connection). Experimental!"
   :type 'boolean
   :group 'restaurant/face
   )

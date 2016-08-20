@@ -27,19 +27,15 @@
 
 ;;; Code:
 
-(require 'user-directories)
 (require 'cl-lib)
+(require 'user-directories)
 (require 'redo+)
 (require 'f)
 (require 'notify)
-(require 'cl-lib)
 (require 'ansi-color)
 ;; (require 'github-notifier)
 (require 'popup)
 (require 'ssh)
-
-;; add load path "data" for icons etc
-(add-to-list 'load-path (locate-source-file "data"))
 
 ;;;
 ;;; Global config

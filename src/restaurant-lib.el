@@ -30,6 +30,7 @@
 ;;;
 ;;; restaurant speciall functions
 ;;;
+(require 'cl-lib)
 
 (defun restaurant/customize ()
   (interactive)
@@ -110,5 +111,25 @@
 			(when ,condition
 			  (verbose-message "Launching ``%s'' hooklet on ``%s'' mode" ',name ',mode)
 			  ,@body))))
+
+(defun restaurant/enable-verbose-messages ()
+  (interactive)
+  (custom-set-variables
+   '(restaurant/enable-verbose t)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun find-sublist-by-fist-element (name map)
+  (cond ((null map) nil)
+	((eq name (caar map))
+	 (car map))
+	(t (find-tool-bar-item-by-name name (cdr map)))))
+
+(cl-defun tool-bar-delete-item (name &optional (map tool-bar-map))
+  (let ((item (find-sublist-by-fist-element name (cdr map))))
+    (delete item map)))
+
+(defmacro tool-bar-add-item-for-mode (icon def key mode &rest rest)
+  `(tool-bar-add-item ,icon ,def ,key :active-modes '(,mode) ,@rest))
 
 ;;; restaurant-lib.el ends here
