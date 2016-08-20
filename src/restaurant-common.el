@@ -34,7 +34,7 @@
 (require 'notify)
 (require 'ansi-color)
 ;; (require 'github-notifier)
-(require 'popup)
+;; (require 'popup)
 (require 'ssh)
 
 ;;;
