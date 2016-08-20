@@ -78,6 +78,7 @@ emacs:
 el-get: emacs
 	@echo "Getting required dependencies via el-get..."
 	@EMACSDATA=${CURRENT_DIR}/@LOCAL_EMACS_DIR@/etc/ ${LOCAL_EMACS} -Q --debug-init --script ./src/bootstrap.el
+	@cd ${CURRENT_DIR}/el-get/yasnippets && ln -s ruby-mode enh-ruby-mode
 
 lib: emacs
 	@echo "Building 3rd party libraries..."
@@ -149,6 +150,14 @@ package: build clean-build clean
 	@echo "Stripping package from unneded files..."
 	@find ${BUILD_DIR}/restaurant/ -type d -name '.git' -exec rm -rf {} +
 	@find ${BUILD_DIR}/restaurant/ -type f -name '.gitignore' -delete
+	# optimizing size
+	rm -rf ${BUILD_DIR}/restaurant/el-get/ecb/html
+	rm -rf ${BUILD_DIR}/restaurant/el-get/ecb/html-help
+	rm -rf ${BUILD_DIR}/restaurant/el-get/cedet/doc
+	rm -rf ${BUILD_DIR}/restaurant/el-get/cedet/tests
+	rm -rf ${BUILD_DIR}/restaurant/el-get/magit/Documentation/
+	rm -rf ${BUILD_DIR}/restaurant/el-get/color-theme/color-theme*tar.gz
+	# TODO: move needed snippets to own directory
 	# TODO: add external libraries
 	@echo "Packaging..."
 	@cd ${BUILD_DIR} && tar -czpf restaurant-${RESTAURANT_VERSION}-@GUI_TOOLKIT@.tar.gz restaurant

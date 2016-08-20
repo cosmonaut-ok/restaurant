@@ -94,8 +94,7 @@
     "sr-speedbar"
     "magit"
     ;; "gh" ;; it's early library
-    "magit-gh-pulls"
-    "color-theme"
+    ;; "magit-gh-pulls" moved to scripts
     "fill-column-indicator"
     "highlight-parentheses"
     "col-highlight"
@@ -105,14 +104,13 @@
     "tabbar"
     "yasnippet"
     "yasnippets"
-    "yasnippet-snippets"
+    ;; "yasnippet-snippets" ;; yasnippet/snippets are the same
     "popup"
     "projectile"
     "ido-ubiquitous" ;; needed for magit
     "ido-hacks"
     "ido-vertical-mode"
     "ido-better-flex"
-    "ido-yes-or-no"
     ;; "ispell-multi" ;; multiple languages spelling support
     "drag-stuff" ;; move lines/regions up/down
     "ssh"
@@ -123,12 +121,13 @@
     ;; TODO: make button instead search this file
     ;; "helm-swoop"
     ;; themes
-    "color-theme-zenburn"
-    "solarized-emacs"
-    "birds-of-paradise-plus-theme"
-    "color-theme-sanityinc"
-    "dream-theme"
-    "leuven-theme"
+    "color-theme"
+    ;; "color-theme-zenburn"
+    ;; "solarized-emacs"
+    ;; "birds-of-paradise-plus-theme"
+    ;; "color-theme-sanityinc"
+    ;; "dream-theme"
+    ;; "leuven-theme"
     ))
 
 (defun init-elget-user-recipes ()
