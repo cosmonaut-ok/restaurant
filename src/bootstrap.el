@@ -123,7 +123,7 @@
     ;; themes
     "color-theme"
     ;; "color-theme-zenburn"
-    ;; "solarized-emacs"
+    "solarized-emacs"
     ;; "birds-of-paradise-plus-theme"
     ;; "color-theme-sanityinc"
     ;; "dream-theme"
