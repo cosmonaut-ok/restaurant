@@ -75,6 +75,11 @@
 ;;; common compilation options
 ;;;
 
+(defun get-first-n-list-elements (n list)
+  (cond ((null list) nil)
+	 ((= n 0) nil)
+	 (t (cons (car list) (get-first-n-list-elements (- n 1) (cdr list))))))
+
 (defvar exit-status 0)
 ;; Idea from <https://gist.github.com/jwiegley/fd78e747f27a90cb67a2>.
 (defun notify-compilation-result (buffer result)
@@ -92,11 +97,16 @@
 		  (format (concat "Buffer: %s\n"
 				  "Command: %s\n"
 				  "Result: %s")
+			  ;;;
 			  (buffer-name buffer)
-			  compile-command result)
+			  ;;;
+			  (concat (get-first-n-list-elements
+				   20 (string-to-list compile-command)) "...")
+			  ;;;
+			  result
+			  )
 		  :urgency urgency
 		  :icon "restaurant"))))))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
