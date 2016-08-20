@@ -27,8 +27,9 @@
 
 ;;; Code:
 
+(require 'foodcritic)
+
 (defhooklet restaurant/foodcritic-init enh-ruby-mode restaurant/enable-foodcritic
-  (require 'foodcritic)
   (foodcritic-mode 1)
   (auto-revert-mode 1)) ;; TODO: is it needed here?
 

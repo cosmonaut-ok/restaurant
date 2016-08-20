@@ -33,6 +33,10 @@
 (add-auto-mode 'markdown-mode
                "\\.md\\'" "\\.markdown\\'")
 
+;; Google-flavored markdown
+(add-auto-mode 'gfm-mode
+	       "README\\.md\\'")
+
 (defhooklet restaurant/markdown markdown-mode t
   ;; The Markdown files I write using IA Writer use newlines to separate
   ;; paragraphs. That's why I need Visual Line Mode. I also need to
@@ -40,5 +44,12 @@
   ;; newlines.
   (local-set-key (kbd "M-q") 'ignore)
   (visual-line-mode t))
+
+(defhooklet restaurant/githubize-markdown markdown-mode restaurant/enable-github-flavored-preview
+  (custom-set-variables
+   '(setq markdown-command (concat restaurant/source-directory "scripts/markdown-flavor.rb"))))
+
+(defhooklet restaurant/markdown-preview markdown-mode t
+  (markdown-preview-mode t))
 
 ;;; restaurant-markdown.el ends here

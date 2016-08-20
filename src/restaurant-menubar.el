@@ -553,4 +553,46 @@
   [menu-bar tools kmacro kmacro-start-macro]
   '("Star Writing Keyboard Macro" . kmacro-start-macro))
 
+;;;
+;;; JSON
+;;;
+(define-key json-mode-map
+  [menu-bar code json-separator-1]
+  '("--" nil :visible))
+
+(define-key json-mode-map
+  [menu-bar code json-reformat]
+  '("Pretty format JSON file" . json-reformat-region))
+
+(define-key json-mode-map
+  [menu-bar code json-snatcher]
+  '("JSON Print Path" . jsons-print-path))
+
+;;;
+;;; Merkdown
+;;;
+(define-key markdown-mode-map
+  [menu-bar markdown-tools]
+  (cons "Markdown Tools" (make-sparse-keymap "Markdown Tools")))
+
+(define-key markdown-mode-map
+  [menu-bar markdown-tools markdown-preview]
+  '("Preview Markdown file" . markdown-preview-open-browser))
+
+(define-key markdown-mode-map
+  [menu-bar markdown-tools markdown-toc]
+  '("Generate Table of Contents" . markdown-toc-generate-toc))
+
+(define-key gfm-mode-map
+  [menu-bar markdown-tools]
+  (cons "Markdown Tools" (make-sparse-keymap "Markdown Tools")))
+
+(define-key gfm-mode-map
+  [menu-bar markdown-tools markdown-preview]
+  '("Preview Markdown file" . markdown-preview-open-browser))
+
+(define-key gfm-mode-map
+  [menu-bar markdown-tools markdown-toc]
+  '("Generate Table of Contents" . markdown-toc-generate-toc))
+
 ;;; restaurant-menubar.el ends here

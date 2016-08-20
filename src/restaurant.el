@@ -12,7 +12,7 @@
 (defvar restaurant/source-directory (file-name-directory (directory-file-name (file-name-directory load-file-name))))
 
 (defvar restaurant/list-load-components
-  '("lib" "custom" "common" "git" "yasnippet" "company"
+  '("lib" "custom" "common" "tabbar" "git" "yasnippet" "company"
     "ruby" "rspec" "chef" "kitchen" "bundler"
     "foodcritic" "rvm" "codebrowser" "markdown"
     "yaml" "json" "web" "erb" "fly" "popup-menu"

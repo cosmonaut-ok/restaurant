@@ -28,6 +28,10 @@
 ;;; Code:
 
 ;; add
+
+;; add load path "data" for icons etc
+(add-to-list 'load-path (locate-source-file "data/icons"))
+
 (define-key-after (default-value 'tool-bar-map) [separator-10] menu-bar-separator)
 ;;
 (tool-bar-add-item "terminal" 'open-console 'open-terminal-here)

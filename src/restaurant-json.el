@@ -31,6 +31,13 @@
 (require 'json-reformat)
 (require 'json-snatcher)
 
-;; TODO: make json-reformat-region by C-M-q
+(add-auto-mode 'markdown-mode
+               "\\.json\\'")
+
+(defhooklet restaurant/json json-mode t
+  (custom-set-variables
+   '(json-reformat:indent-width restaurant/indent-level))
+  (local-set-key (kbd "C-M-q") 'json-reformat-region)
+  (local-set-key (kbd "C-c C-g") 'jsons-print-path))
 
 ;;; restaurant-json.el ends here

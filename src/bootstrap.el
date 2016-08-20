@@ -32,6 +32,7 @@
 (defvar restaurant/packages-installed-p (concat restaurant/source-directory "el-get"))
 (defvar restaurant/elget-user-recipes-path (concat restaurant/source-directory "el-get-user/recipes"))
 (defvar restaurant/do-bootstrap t)
+(defvar restaurant/el-get-force-reinit nil)
 
 (setq user-emacs-directory restaurant/source-directory)
 
@@ -93,7 +94,7 @@
     "ecb"
     "sr-speedbar"
     "magit"
-    ;; "gh" ;; it's early library
+    "gh" ;; needed for magit-gh-pulls
     ;; "magit-gh-pulls" moved to scripts
     "fill-column-indicator"
     "highlight-parentheses"
@@ -105,7 +106,7 @@
     "yasnippet"
     "yasnippets"
     ;; "yasnippet-snippets" ;; yasnippet/snippets are the same
-    "popup"
+    ;; "popup"
     "projectile"
     "ido-ubiquitous" ;; needed for magit
     "ido-hacks"
@@ -176,11 +177,13 @@
 (add-to-list 'el-get-recipe-path restaurant/elget-user-recipes-path)
 
 ;;; install package and el-get packages
-(unless (file-exists-p restaurant/packages-installed-p)
+(unless (and (file-directory-p restaurant/packages-installed-p)
+	     (not restaurant/el-get-force-reinit))
   ;; el-get initialization
   ;; (init-elget-user-recipes)
+  (message "Getting el-get packages...")
   (init-el-get-packages)
-  (write-region "" nil restaurant/packages-installed-p))
+  (message "Getting el-get packages...[ DONE ]"))
 
 ;;; Add 3rd party projects
 (let ((default-directory (concat restaurant/source-directory "lib/")))
