@@ -1,4 +1,4 @@
-;;; restaurant-theme.el --- An Emacs port of the Atom Dark theme from Atom.io.
+;;; restaurant-atomic-theme.el --- An Emacs port of the Atom Dark theme from Atom.io.
 ;;
 ;;
 ;; Author: Jeremy Whitlock <jwhitlock@apache.org
@@ -29,26 +29,12 @@
 ;;
 ;;; Code
 
-(deftheme restaurant
+(deftheme restaurant-atomic
   "Atom Dark - An Emacs port of the Atom Dark theme from Atom.io.")
-
-(custom-theme-set-variables
- 'restaurant
- '(fci-rule-column nil)
- '(fill-column restaurant/max-line-length)
- 
- ;; backups
- '(backup-directory-alist (quote ((".*" . "~/.emacs.d/backups")))) ;; hardcode it temporary
- '(delete-old-versions t)
- '(make-backup-files t)
-
- ;; ecb
- '(ecb-source-path (quote (("~/sources/" "sources")))) ;; hardcode it temporary
- )
 
 ;; Testing
 (custom-theme-set-faces
- 'restaurant
+ 'restaurant-atomic
 
  ;; Basic
  '(button ((t (:inherit (link)))))
@@ -192,8 +178,8 @@
  '(whitespace-trailing ((t (:inherit (trailing-whitespace)))))
  )
 
-(defvar restaurant-theme-force-faces-for-mode t
-  "If t, restaurant-theme will use Face Remapping to alter the theme faces for
+(defvar restaurant-atomic-theme-force-faces-for-mode t
+  "If t, restaurant-atomic-theme will use Face Remapping to alter the theme faces for
 the current buffer based on its mode in an attempt to mimick the Atom Dark
 Theme from Atom.io as best as possible.
 
@@ -215,11 +201,11 @@ Current modes, and their faces, impacted by this variable:
 ;;   http://www.gnu.org/software/emacs/manual/html_node/elisp/Face-Remapping.html
 ;;
 ;; Of course, this might be confusing to some when in one mode they see keywords highlighted in one face and in another
-;; mode they see a different face.  That being said, you can set the `restaurant-theme-force-faces-for-mode` variable to
+;; mode they see a different face.  That being said, you can set the `restaurant-atomic-theme-force-faces-for-mode` variable to
 ;; `nil` to disable this feature.
-(defun restaurant-theme-change-faces-for-mode ()
+(defun restaurant-atomic-theme-change-faces-for-mode ()
   (interactive)
-  (and (eq restaurant-theme-force-faces-for-mode t)
+  (and (eq restaurant-atomic-theme-force-faces-for-mode t)
        (cond
         ((member major-mode '(conf-mode conf-javaprop-mode html-mode yaml-mode))
          (face-remap-add-relative 'font-lock-variable-name-face '(:inherit (font-lock-keyword-face))))
@@ -230,7 +216,7 @@ Current modes, and their faces, impacted by this variable:
         ((member major-mode '(javascript-mode js2-mode))
          (face-remap-add-relative 'font-lock-doc-face '(:inherit (font-lock-comment-face)))))))
 
-(add-hook 'after-change-major-mode-hook 'restaurant-theme-change-faces-for-mode)
+(add-hook 'after-change-major-mode-hook 'restaurant-atomic-theme-change-faces-for-mode)
 
 ;;;###autoload
 (and load-file-name
@@ -238,6 +224,6 @@ Current modes, and their faces, impacted by this variable:
      (add-to-list 'custom-theme-load-path
                   (file-name-as-directory (file-name-directory load-file-name))))
 
-(provide-theme 'restaurant)
+(provide-theme 'restaurant-atomic)
 
-;;; restaurant-theme.el ends here
+;;; restaurant-atomic-theme.el ends here

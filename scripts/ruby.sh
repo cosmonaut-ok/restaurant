@@ -9,7 +9,6 @@ function pkg_install
 {
     get_url_with_name rspec-mode.zip $RSPEC_MODE_URL
     get_url_with_name eruby-mode.el $ERUBY_URL
-    get_url_with_name bundler.el $BUNDLER_URL
     extract rspec-mode.zip
     copy_to_local eruby-mode.el ruby
     copy_to_local "rspec-mode-master/*" rspec-mode
