@@ -33,82 +33,101 @@
 
 ;;; Code:
 
-(require 'enh-ruby-mode)
-;; (defalias 'ruby-mode 'enh-ruby-mode)
-
-;; inf-ruby and robe
-(require 'robe)
-(require 'inf-ruby)
-(inf-ruby)
-(robe-start)
-
 ;;;
 ;;; Generic
 ;;;
+
+(require 'enh-ruby-mode)
+(require 'ruby-mode)
+
+;; inf-ruby and robe
+
+(defvar restaurant/ruby-present-p nil)
+(if (and
+     (executable-find "which ruby")
+     (executable-find "which irb"))
+    (progn
+      (require 'robe)
+      (require 'inf-ruby)
+      (inf-ruby)
+      (robe-start)
+      (custom-set-variables '(restaurant/ruby-present-p t)))
+  (warn "``Ruby'' and/or ``irb'' are not installed in your system. Install it via RVM (Menu -> Tools -> RVM) or in your preferred way, else only restricted ruby support available"))
+
+;; (defalias 'ruby-mode 'enh-ruby-mode)
 
 ;; Adapted from the method used by TextMate, this library provides a command
 ;; ruby-toggle-hash-syntax which attempts to automatically convert the
 ;; selected region of ruby code between 1.8 and 1.9 hash styles.
 (require 'ruby-hash-syntax)
 
-;; add auto-modes
-(add-auto-mode 'enh-ruby-mode
-               "Rakefile\\'" "\\.rake\\'" "\\.rxml\\'" "\\/spec\\/" "\\.rb\\'"
-               "\\.rjs\\'" "\\.irbrc\\'" "\\.pryrc\\'" "\\.builder\\'" "\\.ru\\'"
-               "\\.gemspec\\'" "Gemfile\\'")
+(if restaurant/ruby-present-p
+    ;; add auto-modes
+    (add-auto-mode 'enh-ruby-mode
+		   "Rakefile\\'" "\\.rake\\'" "\\.rxml\\'" "\\/spec\\/" "\\.rb\\'"
+		   "\\.rjs\\'" "\\.irbrc\\'" "\\.pryrc\\'" "\\.builder\\'" "\\.ru\\'"
+		   "\\.gemspec\\'" "Gemfile\\'")
+  (add-auto-mode 'ruby-mode
+		 "Rakefile\\'" "\\.rake\\'" "\\.rxml\\'" "\\/spec\\/" "\\.rb\\'"
+		 "\\.rjs\\'" "\\.irbrc\\'" "\\.pryrc\\'" "\\.builder\\'" "\\.ru\\'"
+		 "\\.gemspec\\'" "Gemfile\\'")
+  )
 
 (eval-after-load 'ruby-mode
-  '(define-key enh-ruby-mode-map (kbd "TAB") 'indent-for-tab-command))
+  '(define-key ruby-mode-map (kbd "TAB") 'indent-for-tab-command))
 
+(when restaurant/ruby-present-p
+  (eval-after-load 'enh-ruby-mode
+    '(define-key enh-ruby-mode-map (kbd "TAB") 'indent-for-tab-command)))
 
-(defhooklet restaurant/ruby-indent enh-ruby-mode t
+(defhooklet restaurant/ruby-indent (enh-ruby-mode ruby-mode) t
   (custom-set-variables
    ;; set ruby indent level
    '(ruby-indent-level restaurant/indent-level)
    ;; set ruby indent tabs mode
    '(ruby-indent-tabs-mode restaurant/indent-tabs-mode)))
 
+;;;; When folding, take these delimiters into consideration
+(add-to-list 'hs-special-modes-alist
+             '(ruby-mode
+               "\\(class\\|def\\|do\\|if\\|.each\\)" "\\(end\\)" "#"
+               (lambda (arg) (ruby-end-of-block)) nil))
+
+(add-to-list 'hs-special-modes-alist
+             '(enh-ruby-mode
+               "\\(class\\|def\\|do\\|if\\|.each\\)" "\\(end\\)" "#"
+               (lambda (arg) (ruby-end-of-block)) nil))
+
+(defhooklet restaurant/ruby-generic enh-ruby-mode t
+  (inf-ruby-minor-mode 1)
+  (when (executable-find "pry")
+    (setq inf-ruby-default-implementation "pry")))
+
 ;;;
 ;;; ruby-electric
 ;;;
-(defhooklet restaurant/ruby-electric enh-ruby-mode restaurant/enable-electric
+(defhooklet restaurant/ruby-electric (enh-ruby-mode ruby-mode) restaurant/enable-electric
   (require 'ruby-electric)
   (ruby-electric-mode t))
 
 ;;;
 ;;; ruby-tools
 ;;;
-(defhooklet restaurant/ruby-tools enh-ruby-mode restaurant/enable-ruby-tools
+(defhooklet restaurant/ruby-tools (enh-ruby-mode ruby-mode) restaurant/enable-ruby-tools
   (require 'ruby-tools)
   (ruby-tools-mode 1))
 
 ;;;
 ;;; ruby-refactor
 ;;;
-(defhooklet restaurant/ruby-refactor enh-ruby-mode restaurant/enable-ruby-refactor
+(defhooklet restaurant/ruby-refactor (enh-ruby-mode ruby-mode) restaurant/enable-ruby-refactor
   (require 'ruby-refactor)
   (ruby-refactor-mode-launch))
 
 ;;;
 ;;; robe mode: code navigtion, documentation
 ;;;
-(defhooklet restaurant/robe-ruby enh-ruby-mode restaurant/enable-robe
-  (custom-set-variables
-   '(robe-turn-on-eldoc t))
-  (robe-mode 1)
-  ;; integrate with company mode
-  (require 'company-robe)
-  (restaurant/local-push-company-backend 'company-robe))
-
-(defhooklet restaurant/robe-inf-ruby inf-ruby-mode restaurant/enable-robe
-  (custom-set-variables
-   '(robe-turn-on-eldoc t))
-  (robe-mode 1)
-  ;; integrate with company mode
-  (require 'company-robe)
-  (restaurant/local-push-company-backend 'company-robe))
-
-(defhooklet restaurant/robe-erb html-erb-mode restaurant/enable-robe
+(defhooklet restaurant/robe-ruby (enh-ruby-mode inf-ruby-mode html-erb-mode) restaurant/enable-robe
   (custom-set-variables
    '(robe-turn-on-eldoc t))
   (robe-mode 1)
@@ -119,17 +138,7 @@
 ;;;
 ;;; inf-ruby-mode
 ;;;
-(defhooklet restaurant/inf-ruby enh-ruby-mode t
-  (inf-ruby-minor-mode t)
-  (require 'company-inf-ruby)
-  (restaurant/local-push-company-backend 'company-inf-ruby))
-
-(defhooklet restaurant/inf-ruby-inf inf-ruby-mode t
-  (inf-ruby-minor-mode t)
-  (require 'company-inf-ruby)
-  (restaurant/local-push-company-backend 'company-inf-ruby))
-
-(defhooklet restaurant/inf-ruby-erb html-erb-mode t
+(defhooklet restaurant/inf-ruby (enh-ruby-mode inf-ruby-mode html-erb-mode) t
   (inf-ruby-minor-mode t)
   (require 'company-inf-ruby)
   (restaurant/local-push-company-backend 'company-inf-ruby))
@@ -172,23 +181,9 @@
   (local-set-key [f1] 'yari))
 
 ;;;
-;;; generic init
-;;;
-;; When folding, take these delimiters into consideration
-(add-to-list 'hs-special-modes-alist
-             '(ruby-mode
-               "\\(class\\|def\\|do\\|if\\|.each\\)" "\\(end\\)" "#"
-               (lambda (arg) (ruby-end-of-block)) nil))
-
-(defhooklet restaurant/ruby-generic enh-ruby-mode t
-  (inf-ruby-minor-mode 1)
-  (when (executable-find "pry")
-    (setq inf-ruby-default-implementation "pry")))
-
-;;;
 ;;; ruby-block-mode
 ;;;
-(defhooklet restaurant/ruby-block enh-ruby-mode t
+(defhooklet restaurant/ruby-block (enh-ruby-mode ruby-mode) t
   (require 'ruby-block)
   (custom-set-variables
    '(ruby-block-delay 0)

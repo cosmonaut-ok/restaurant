@@ -117,11 +117,21 @@
 
 (defmacro defhooklet (name mode condition &rest body)
   "This is the test NAME, MODE, CONDITION, BODY."
-  `(add-hook ',(intern (concat (symbol-name mode) "-hook"))
-	     #'(lambda ()
+  (cond ((null mode) nil)
+	((atom mode)
+	 `(add-hook ',(intern (concat (symbol-name mode) "-hook"))
+		    #'(lambda ()
 			(when ,condition
 			  (verbose-message "Launching ``%s'' hooklet on ``%s'' mode" ',name ',mode)
 			  ,@body))))
+	(t
+	 `(progn
+	    (add-hook ',(intern (concat (symbol-name (car mode)) "-hook"))
+		    #'(lambda ()
+			(when ,condition
+			  (verbose-message "Launching ``%s'' hooklet on ``%s'' mode" ',name ',(car mode))
+			  ,@body)))
+	    (defhooklet ,name ,(cdr mode) ,condition ,body)))))
 
 (defun restaurant/enable-verbose-messages ()
   (interactive)
