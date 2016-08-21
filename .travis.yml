@@ -84,7 +84,6 @@ script:
   - autoconf
   - ./configure --enable-static
   - make el-get
-  - bundle install --verbose
   - make $RESTAURANT
   - if [ $RESTAURANT == "build" ]; then
        ./restaurant --batch
