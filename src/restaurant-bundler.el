@@ -29,6 +29,8 @@
 
 (require 'bundler)
 
+(defvar restaurant/use-bundler t) ;; TODO: convert to defcustom
+
 ;; small bundler hack ;-)
 (defun bundler-colorize-compilation-buffer ()
   "Colorize bundler compile buffer output."

@@ -48,6 +48,7 @@
     "emacs-async"
     "ht"
     ;; ruby
+    "ruby-mode"
     "enh-ruby-mode"
     "ruby-electric"
     "ruby-hash-syntax"

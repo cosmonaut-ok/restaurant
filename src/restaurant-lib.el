@@ -31,6 +31,7 @@
 ;;; restaurant speciall functions
 ;;;
 (require 'cl-lib)
+(require 'url)
 
 (defun restaurant/customize ()
   (interactive)
@@ -152,5 +153,31 @@
 
 (defmacro tool-bar-add-item-for-mode (icon def key mode &rest rest)
   `(tool-bar-add-item ,icon ,def ,key :active-modes '(,mode) ,@rest))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun download-file (url &optional download-name)
+  (interactive "sEnter download URL:\nFEnter destination filename:")
+  (let ((url (if (or
+		  (string-match "^http://" url)
+		  (string-match "^https://" url)
+		  (string-match "^ftp" url))
+		 url
+	       (concat "http://" url))))
+  (let ((download-buffer (url-retrieve-synchronously url)))
+    (save-excursion
+      (set-buffer download-buffer)
+      ;; we may have to trim the http response
+      (goto-char (point-min))
+      (re-search-forward "^$" nil 'move)
+      (forward-char)
+      (delete-region (point-min) (point))
+      (write-file download-name)))))
+
+(defun gpg-install-key (key)
+  (if (executable-find "gpg")
+      (let ((cmd (concat "gpg --keyserver hkp://keys.gnupg.net --recv-keys " key)))
+	(call-process-shell-command cmd))
+    (error "There is no ``gpg'' binary installed in system. Can not continue")))
+
 
 ;;; restaurant-lib.el ends here

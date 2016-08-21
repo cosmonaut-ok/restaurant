@@ -551,7 +551,7 @@
 
 (define-key global-map
   [menu-bar tools kmacro kmacro-start-macro]
-  '("Star Writing Keyboard Macro" . kmacro-start-macro))
+  '("Start Writing Keyboard Macro" . kmacro-start-macro))
 
 ;;;
 ;;; JSON

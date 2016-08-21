@@ -28,37 +28,35 @@
 ;;; Code:
 
 (require 'rvm)
-
+(require 'url)
 ;; RVM installation hack
+(defvar rvm-installation-url "https://get.rvm.io/")
+
+(defvar rvm-installation-key "409B6B1796C275462A1703113804BB82D39DC0E3")
+
+(defun rvm-colorize-compilation-buffer ()
+  "Colorize RVM compile buffer output."
+  (toggle-read-only)
+  (ansi-color-apply-on-region compilation-filter-start (point))
+  (toggle-read-only))
+
 (define-compilation-mode rvm-installation-mode "RVM installation"
   "Installation mode for RVM."
-  (add-hook 'compilation-filter-hook 'bundler-colorize-compilation-buffer nil t))
+  (add-hook 'compilation-filter-hook 'rvm-colorize-compilation-buffer nil t))
 
-(defun rvm-install-rvm ()
-  (interactive)
-  (let ((cmd "gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 && curl -sSL https://get.rvm.io | bash"))
-    (compile cmd 'rvm-installation-mode)))
-
-
-
-
-;;; loads URL in buffer and execute command there
-(defun get-exec-url (&optional url download-dir download-name)
-  (let ((download-buffer (url-retrieve-synchronously url)))
-    (with-current-buffer download-buffer
-      (save-excursion
-	(set-buffer download-buffer)
-	;; we may have to trim the http response
-	(goto-char (point-min))
-	(re-search-forward "^$" nil 'move)
-	(forward-char)
-	(delete-region (point-min) (point))
-	;; execute shell command
-	(shell-command-on-region (point-min) (point-max) "/bin/bash" t)))))
-
-
-
-
-
+(defun rvm-install-rvm (ruby)
+  (interactive "sWhich ruby do you want to install?: ")
+  (let ((installator (locate-user-cache-file ".rvm.sh")))
+    (progn (gpg-install-key rvm-installation-key)
+	   (download-file rvm-installation-url installator)
+	   (compile (concat
+		     "/bin/bash "
+		     installator
+		     " stable"
+		     " --ruby="
+		     ruby
+		     " --auto-dotfiles"
+		     (when restaurant/use-bundler
+		       " --gems=bundler"))))))
 
 ;;; restaurant-rvm.el ends here

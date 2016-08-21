@@ -161,41 +161,36 @@
 			 (call-interactively (intern (ido-completing-read
 						      "M-x " (all-completions "" obarray 'commandp))))))
 
-
-;; dired mode too
-(add-hook 'dired-mode-hook
-	  '(lambda ()
-	     (set (make-local-variable 'ido-enable-replace-completing-read) nil)))
-
-(defvar ido-enable-replace-completing-read t
-  "If t, use ido-completing-read instead of completing-read if possible.
+;;;; TODO: temporary disabled during some emacs bug
+;; (defvar ido-enable-replace-completing-read t
+;;   "If t, use ido-completing-read instead of completing-read if possible.
     
-    Set it to nil using let in around-advice for functions where the
-    original completing-read is required.  For example, if a function
-    foo absolutely must use the original completing-read, define some
-    advice like this:
+;;     Set it to nil using let in around-advice for functions where the
+;;     original completing-read is required.  For example, if a function
+;;     foo absolutely must use the original completing-read, define some
+;;     advice like this:
     
-    (defadvice foo (around original-completing-read-only activate)
-      (let (ido-enable-replace-completing-read) ad-do-it))")
+;;     (defadvice foo (around original-completing-read-only activate)
+;;       (let (ido-enable-replace-completing-read) ad-do-it))")
 
-;; Replace completing-read wherever possible, unless directed otherwise
-(defadvice completing-read
-    (around use-ido-when-possible activate)
-  (if (or (not ido-enable-replace-completing-read) ; Manual override disable ido
-	  (and (boundp 'ido-cur-list)
-	       ido-cur-list)) ; Avoid infinite loop from ido calling this
-      ad-do-it
-    (let ((allcomp (all-completions "" collection predicate)))
-      (if allcomp
-	  (setq ad-return-value
-		(ido-completing-read prompt
-				     allcomp
-				     nil require-match initial-input hist def))
-	ad-do-it))))
+;; ;; Replace completing-read wherever possible, unless directed otherwise
+;; (defadvice completing-read
+;;     (around use-ido-when-possible activate)
+;;   (if (or (not ido-enable-replace-completing-read) ; Manual override disable ido
+;; 	  (and (boundp 'ido-cur-list)
+;; 	       ido-cur-list)) ; Avoid infinite loop from ido calling this
+;;       ad-do-it
+;;     (let ((allcomp (all-completions "" collection predicate)))
+;;       (if allcomp
+;; 	  (setq ad-return-value
+;; 		(ido-completing-read prompt
+;; 				     allcomp
+;; 				     nil require-match initial-input hist def))
+;; 	ad-do-it))))
 
-;; I found ido-completing-read to interfere when using dired mode buffers (e.g., renaming files). To turn it off
-(add-hook 'dired-mode-hook
-	  '(lambda () (setq ido-enable-replace-completing-read nil)))
+;; ;; I found ido-completing-read to interfere when using dired mode buffers (e.g., renaming files). To turn it off
+;; (add-hook 'dired-mode-hook
+;; 	  '(lambda () (setq ido-enable-replace-completing-read nil)))
 
 ;;;; If we read a compressed file, uncompress it on the fly:
 ;;;; (this works with .tar.gz and .tgz file as well)

@@ -44,13 +44,17 @@
 
 (defvar restaurant/ruby-present-p nil)
 (if (and
-     (executable-find "which ruby")
-     (executable-find "which irb"))
+     (executable-find "ruby")
+     (or (executable-find "irb")
+	 (executable-find "pry")))
     (progn
       (require 'robe)
       (require 'inf-ruby)
+      (when (executable-find "pry")
+	(setq inf-ruby-default-implementation "pry"))
       (inf-ruby)
-      (robe-start)
+      (when (executable-find "pry")
+	(robe-start))
       (custom-set-variables '(restaurant/ruby-present-p t)))
   (warn "``Ruby'' and/or ``irb'' are not installed in your system. Install it via RVM (Menu -> Tools -> RVM) or in your preferred way, else only restricted ruby support available"))
 
@@ -99,9 +103,7 @@
                (lambda (arg) (ruby-end-of-block)) nil))
 
 (defhooklet restaurant/ruby-generic enh-ruby-mode t
-  (inf-ruby-minor-mode 1)
-  (when (executable-find "pry")
-    (setq inf-ruby-default-implementation "pry")))
+  (inf-ruby-minor-mode 1))
 
 ;;;
 ;;; ruby-electric
@@ -183,7 +185,7 @@
 ;;;
 ;;; ruby-block-mode
 ;;;
-(defhooklet restaurant/ruby-block (enh-ruby-mode ruby-mode) t
+(defhooklet restaurant/ruby-block enh-ruby-mode t
   (require 'ruby-block)
   (custom-set-variables
    '(ruby-block-delay 0)
