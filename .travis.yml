@@ -86,7 +86,7 @@ script:
   - make el-get
   - make $RESTAURANT
   - if [ $RESTAURANT == "build" ]; then
-       ./restaurant --batch
+       ./restaurant --batch;
     fi
 
 ###
