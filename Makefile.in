@@ -47,6 +47,7 @@ emacs:
 ifeq (@STATIC@, yes)
 	@echo "Static build enabled. Getting Emacs precompiled binaries..."
 	@wget -qO- https://github.com/restaurant-ide/restaurant/releases/download/v0.1.2/emacs-restaurant.tar.gz | tar xz
+	@mv emacs @LOCAL_EMACS_DIR@
 else
 	@echo "Making temporary working directory ${BUILD_DIR}"
 	@mkdir -p ${BUILD_DIR}/emacs-build
@@ -177,6 +178,14 @@ package: build clean-build clean
 	@cd ${BUILD_DIR} && tar -czpf restaurant-${RESTAURANT_VERSION}-@GUI_TOOLKIT@.tar.gz restaurant
 	@cp ${BUILD_DIR}/restaurant-${RESTAURANT_VERSION}-@GUI_TOOLKIT@.tar.gz .
 	# hack to change emacs icons to restaurant
+
+static-packages:
+	@echo "Packaging emacs..."
+	@mv @LOCAL_EMACS_DIR@ emacs
+	@[ -d emacs ] && tar -czpf emacs-restaurant.tar.gz emacs || exit 1
+	@echo "Packaging el-get libraries..."
+	@@mv emacs @LOCAL_EMACS_DIR@
+	@[ -d el-get ] && tar -czpf el-get-packages.tar.gz el-get || exit 1
 
 release: package clean-emacs clean
 
