@@ -182,6 +182,9 @@
  '(whitespace-space-before-tab ((t (:inherit (whitespace-empty)))))
  '(whitespace-tab ((t (:inherit (whitespace-empty)))))
  '(whitespace-trailing ((t (:inherit (trailing-whitespace)))))
+
+ ;; hideshow
+ '(hs-face ((t (:background "RoyalBlue4" :box 1))))
  )
 
 (defvar restaurant-classic-theme-force-faces-for-mode t

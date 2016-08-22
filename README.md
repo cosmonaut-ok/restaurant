@@ -1,45 +1,31 @@
 # Restaurant
 
-## What is Restaurant IDE
+## What is Restaurant IDE and Why (just another IDE?).
 
-There is no specialized Chef IDE for DevOps for free usage (there is RubyMine with chef plugin, but only for non-commercial usage, or paid). So, Restaurant is the project of ready-to-use chef IDE, integrated with ``ruby``, ``foodcritic``, ``chefspec``, ``knife`` and ``kitchen``.
+**Restaurant** software is an Integrated Development Environment for Chef developers.
 
-## Installation
+### Objectives
 
-**NOTE:** To use Restaurant, you must have working **ruby, bundler, chef, knife, rspec and kitchen**
+There is no specialized Chef IDE for DevOps for free usage (there is RubyMine with chef plugin, but only for non-commercial usage, or paid). So, **Restaurant** is a project of free and opensource ready-to-use chef IDE...
 
-### Install basic packages
-```bash
-user@host$ apt-get install emacs24 git gpg
-```
+### Tools and Technologies
 
-### Install RVM (optional)
-```bash
-user@host$ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-user@host$ curl -sSL https://get.rvm.io | bash -s stable --ruby --autolibs=bundler
-user@host$ rvm install 2.1 # or what ruby version you want
-user@host$ rvm docs generate-ri # optional. Generate documentation
-```
+...which supports *code highlight*, *autocompletion*, inline *syntax* and *style checking* (via, `rubocop` and `foodcritic`) *code expansion* (via `code snippets`), *code refactoring*, built-in *unit* (via `rspec`) and *integration* tests (via `kitchen`) launching and interaction. Also, Restaurant supports tools `rvm`, `bundler`, `berkshelf` (via built-in extensions to this tools), `git` and `github` integrations, *yaml*, *json* and *markdown* file tools (like, reformatting, visualising etc).
 
-### Install basic packages (w/o RVM)
-```bash
-user@host$ apt-get install emacs24 git gpg ruby gem ruby-bundler
-```
+## Quick Start
 
-### Install Restaurant
-```bash
-user@host$ git clone https://github.com/cosmonaut-ok/restaurant.git restaurant
-user@host$ cd restaurant
-user@host$ ./bootstrap.sh install # local installation
-user@host$ sudo ./bootstrap.sh install --global # global installation
-user@host$ . ~/.profile # only for local installation
-user@host$ restaurant # Enjoy
-```
+Let's suppose, that you have no Restaurant, no ruby, no bundler... actually nothing
 
-### Build requirements
-* autotools
-* gcc (to build emacs)
-* imagemagik (convert command)
+  * Get Restautant (we recommend to use last binary build): [link](https://github.com/restaurant-ide/restaurant/releases/download/v0.1.2/restaurant-0.1.2-gtk2.tar.gz)
+	* Unpack it: `tar -xvzf restaurant-0.1.2-gtk2.tar.gz`
+	* GO GO GO: `cd restaurant && ./restaurant`
+  * Quick Install all needed dependencies
+	* **Menu** > **Help** > **Starup Wizard**
+  * Add source
+	* Right click on **Root** (top-right corner) > **Add Source Path**
+	* Add your cookbooks to source path for quick navigate
 
-### Requirements
 
+## Quick HOWTO
+
+TODO
