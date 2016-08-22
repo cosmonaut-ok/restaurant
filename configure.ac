@@ -29,7 +29,7 @@
 
 AC_PREREQ(2.69)
 
-AC_INIT(Restaurant Chef IDE, esyscmd(grep autoconf-anchor src/restaurant-version.el | cut -d\" -f2 | tr -d \\n), cosmonaut.ok@zoho.com)
+AC_INIT(Restaurant Chef IDE, esyscmd(grep autoconf-anchor src/restaurant-help.el | cut -d\" -f2 | tr -d \\n), cosmonaut.ok@zoho.com)
 
 AC_SUBST(EMACS_URI)
 AC_SUBST(BUILD_DIR)
@@ -105,4 +105,3 @@ fi
 AC_OUTPUT(Makefile)
 AC_OUTPUT(Gemfile)
 AC_OUTPUT([restaurant], [chmod +x restaurant])
-# AC_CONFIG_FILES([restaurant], [chmod +x ./restaurant])

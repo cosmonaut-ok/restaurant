@@ -16,7 +16,7 @@
     "ruby" "rspec" "chef" "kitchen" "bundler"
     "foodcritic" "rvm" "codebrowser" "markdown"
     "yaml" "json" "web" "erb" "fly" "popup-menu"
-    "menubar" "toolbar" "theme" "version"))
+    "menubar" "toolbar" "theme" "help"))
 
 ;; loading initial user-directories file
 (let ((ud-file (concat restaurant/source-directory "src/restaurant-user-directories.el")))
