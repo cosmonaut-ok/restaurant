@@ -460,6 +460,54 @@
   '( "Interactive Ruby Console" . inf-ruby))
 
 ;;;
+;;; package management
+;;;
+(define-key global-map
+  [menu-bar tools additional-packages]
+  (cons "Additional Packages" (make-sparse-keymap "Additional Packages")))
+
+(define-key global-map
+  [menu-bar tools additional-packages package-pm]
+  (cons "Package.el Package Manager" (make-sparse-keymap "Package.el Package Manager")))
+
+(define-key global-map
+  [menu-bar tools additional-packages package-pm package-delete]
+  '("Uninstall Package" . package-delete))
+
+(define-key global-map
+  [menu-bar tools additional-packages package-pm package-desc]
+  '("Show Full Package Information (Not Implemented)" . package-desc-zzz))
+
+(define-key global-map
+  [menu-bar tools additional-packages package-pm package-install]
+  '("Install Package" . package-install))
+
+(define-key global-map
+  [menu-bar tools additional-packages package-pm package-list-packages]
+  '("List Packages" . package-list-packages))
+
+;; el-get
+(define-key global-map
+  [menu-bar tools additional-packages el-get-pm]
+  (cons "El-Get Package Manager (default)" (make-sparse-keymap "El-Get Package Manager (default)")))
+
+(define-key global-map
+  [menu-bar tools additional-packages el-get-pm el-get-remove]
+  '("Uninstall Package" . el-get-remove))
+
+(define-key global-map
+  [menu-bar tools additional-packages el-get-pm el-get-describe]
+  '("Show Full Package Information" . el-get-describe))
+
+(define-key global-map
+  [menu-bar tools additional-packages el-get-pm el-get-install]
+  '("Install Package" . el-get-install))
+
+(define-key global-map
+  [menu-bar tools additional-packages el-get-pm el-get-list-packages]
+  '("List Packages" . el-get-list-packages))
+
+;;;
 ;;; rvm menu
 ;;;
 (define-key global-map
