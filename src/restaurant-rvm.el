@@ -59,4 +59,13 @@
 		     (when restaurant/use-bundler
 		       " --gems=bundler"))))))
 
+(defun rvm-install-ruby (ruby)
+  (interactive "sWhich ruby do you want to install?: ")
+  (compile
+   (concat
+    "source "
+    (expand-file-name "~/.rvm/scripts/rvm")
+    "; rvm install "
+    ruby)))
+
 ;;; restaurant-rvm.el ends here

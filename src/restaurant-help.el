@@ -34,4 +34,18 @@
 	(princ version)
       (princ (concat "Restaurant Chef IDE version: " version ".\nBuild with Emacs version:\n" (emacs-version) "\n")))))
 
+(defun bundle-install-selfdeps ()
+  (interactive)
+  (cd restaurant/source-directory)
+  (compile
+   (concat
+    "source "
+    (expand-file-name "~/.rvm/scripts/rvm")
+    "; bundle install ")))
+
+
+(defun startup-wizard ()
+  (interactive)
+  (call-interactively 'rvm-install-rvm)
+  (call-interactively 'bundle-install-selfdeps))
 ;;; restaurant-version.el ends here
