@@ -176,8 +176,13 @@
  '(whitespace-space-before-tab ((t (:inherit (whitespace-empty)))))
  '(whitespace-tab ((t (:inherit (whitespace-empty)))))
  '(whitespace-trailing ((t (:inherit (trailing-whitespace)))))
- )
 
+;; hideshow
+'(hs-face ((t (:background "RoyalBlue4" :box 1))))
+
+;; ediff
+'(ediff-even-diff-A ((t (:background "dark slate blue"))))
+)
 (defvar restaurant-atomic-theme-force-faces-for-mode t
   "If t, restaurant-atomic-theme will use Face Remapping to alter the theme faces for
 the current buffer based on its mode in an attempt to mimick the Atom Dark
