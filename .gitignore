@@ -100,5 +100,6 @@ build
 Makefile
 restaurant
 *.elc
-data/icons/status-ok.xpm
-data/icons/status-fail.xpm
+data/icons/status-ok.png
+data/icons/status-fail.png
+README.html
