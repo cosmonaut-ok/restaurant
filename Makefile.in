@@ -113,24 +113,8 @@ endif
 	@convert -alpha off -resize 48x48 +level-colors yellow,red ${CURRENT_DIR}/data/icons/restaurant.svg ${CURRENT_DIR}/data/icons/status-fail.png
 	@touch build
 
-bootstrap: build
-	@echo "Chekcing if all needed components are installed..."
-ifneq ($(RUBY),yes)
-	@echo "ERROR: there is no ruby in system. Exiting" && exit 1
-endif
-ifneq ($(BUNDLE),yes)
-	@echo "ERROR: there is no ruby in system. Exiting" && exit 1
-endif
-	@echo "Building restaurant starting dependencies..."
-	@cd bundle install
-ifeq ($(RVM),yes)
-	@echo "Generating RI documentation..."
-	@rvm docs generate
-endif
-	@touch bootstrap
-
 install: build
-	@echo install
+	@echo Not implemented
 
 clean-build:
 	@echo "Clearing build directory..."
