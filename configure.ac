@@ -44,9 +44,10 @@ AC_SUBST(STATIC)
 ## veriables definition
 EMACS_URI=https://github.com/emacs-mirror/emacs/archive/emacs-25.1-rc1.tar.gz
 BUILD_DIR=/tmp/restaurant-release
-RELEASE_FILES="restaurant data LICENSE src README.md el-get emacs lib Gemfile"
-BUILD_OPTIONS="--without-pop"
 LOCAL_EMACS_DIR="emacs"
+RELEASE_FILES="restaurant data LICENSE src README.md el-get $LOCAL_EMACS_DIR lib Gemfile"
+BUILD_OPTIONS="--without-pop"
+
 
 # Checks for programs.
 AC_ARG_WITH(gui,      [  --with-gui=TOOLKIT      use gtk2, gtk3, motif, athena, no (default gtk3)], GUI_TOOLKIT=$withval, GUI_TOOLKIT="gtk3")
