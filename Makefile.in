@@ -47,7 +47,7 @@ emacs:
 ifeq (@STATIC@, yes)
 	@echo "Static build enabled. Getting Emacs precompiled binaries..."
 	@wget -qO- https://github.com/restaurant-ide/restaurant/releases/download/v0.1.2/emacs-restaurant.tar.gz | tar xz
-	@mv emacs @LOCAL_EMACS_DIR@
+	@if [ "@LOCAL_EMACS_DIR@" != "emacs" ]; then mv emacs @LOCAL_EMACS_DIR@; fi
 else
 	@echo "Making temporary working directory ${BUILD_DIR}"
 	@mkdir -p ${BUILD_DIR}/emacs-build
@@ -153,7 +153,7 @@ clean-precompile:
 
 mrproper: clean-emacs clean clean-precompile
 	@echo "Clearing emacs 3rt-party data dirs..."
-	@rm -rf build el-get elpa configure Makefile Gemfile.lock ${ARCHIVE_NAME} Gemfile lib restaurant build
+	@rm -rf build el-get elpa configure Makefile Gemfile.lock ${ARCHIVE_NAME} lib restaurant build
 	@rm -f ${CURRENT_DIR}/data/icons/status-ok.png ${CURRENT_DIR}/data/icons/status-fail.png
 
 package: build clean-build clean

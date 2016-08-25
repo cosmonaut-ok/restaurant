@@ -23,6 +23,6 @@ if [ ! -z "$1" ] && [ "$1" = '-d' ]; then
     shift
 fi
 
-VERSION=$($EMACS -Q --batch --script ${MYDIR}/src/restaurant-help.el --eval '(restaurant-version t)')
+VERSION=$(grep autoconf-anchor src/restaurant-help.el | cut -d\" -f2 | tr -d \\n)
 
 $EMACS -q -l $MYDIR/src/restaurant.el --name restaurant --title "Restaurant Chef IDE version: (v.${VERSION})" $OPTIONS $@

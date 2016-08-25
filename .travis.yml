@@ -82,7 +82,7 @@ install:
 
 script:
   - autoconf
-  - ./configure --enable-static --with-emacs=emacs25
+  - ./configure --enable-static
   - make el-get
   - make $RESTAURANT
   - if [ $RESTAURANT == "build" ]; then
