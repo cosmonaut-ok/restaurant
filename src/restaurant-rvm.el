@@ -34,15 +34,7 @@
 
 (defvar rvm-installation-key "409B6B1796C275462A1703113804BB82D39DC0E3")
 
-(defun rvm-colorize-compilation-buffer ()
-  "Colorize RVM compile buffer output."
-  (toggle-read-only)
-  (ansi-color-apply-on-region compilation-filter-start (point))
-  (toggle-read-only))
-
-(define-compilation-mode rvm-installation-mode "RVM installation"
-  "Installation mode for RVM."
-  (add-hook 'compilation-filter-hook 'rvm-colorize-compilation-buffer nil t))
+(define-colored-compilation-mode rvm-installation-mode "RVM installation")
 
 (defun rvm-install-rvm (ruby)
   (interactive "sWhich ruby do you want to install?: ")
@@ -57,7 +49,8 @@
 		     ruby
 		     " --auto-dotfiles"
 		     (when restaurant/use-bundler
-		       " --gems=bundler"))))))
+		       " --gems=bundler"))
+		    'rvm-installation-mode))))
 
 (defun rvm-install-ruby (ruby)
   (interactive "sWhich ruby do you want to install?: ")

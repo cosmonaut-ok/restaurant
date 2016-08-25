@@ -643,4 +643,11 @@
   [menu-bar markdown-tools markdown-toc]
   '("Generate Table of Contents" . markdown-toc-generate-toc))
 
+;;;
+;;; help menu
+;;;
+(define-key global-map
+  [menu-bar help-menu install-required-dependencies]
+  '("Install Restaurant required dependencies" . startup-wizard))
+
 ;;; restaurant-menubar.el ends here

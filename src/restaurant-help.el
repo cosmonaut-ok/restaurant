@@ -34,18 +34,28 @@
 	(princ version)
       (princ (concat "Restaurant Chef IDE version: " version ".\nBuild with Emacs version:\n" (emacs-version) "\n")))))
 
-(defun bundle-install-selfdeps ()
-  (interactive)
-  (cd restaurant/source-directory)
-  (compile
-   (concat
-    "source "
-    (expand-file-name "~/.rvm/scripts/rvm")
-    "; bundle install ")))
+(define-colored-compilation-mode selfdeps-installation-mode "Installing Restaurant required dependencies")
 
+(defun bundle-install-selfdeps (&optional buffer result &rest rest)
+  (interactive)
+  (setq
+   compilation-finish-functions
+   (remove 'bundle-install-selfdeps compilation-finish-functions)) ; ``delete'' is not working properly sometimes
+  (if (or (null result) (string-match "^finished" result))
+      (progn
+	(cd restaurant/source-directory)
+	(compile
+	 (concat
+	  ". "
+	  (expand-file-name "~/.rvm/scripts/rvm") ;; init required env. variables before start
+	  "; bundle install ")
+	 'selfdeps-installation-mode))
+    (error "RVM installation failed. Can not continue.")))
 
 (defun startup-wizard ()
   (interactive)
-  (call-interactively 'rvm-install-rvm)
-  (call-interactively 'bundle-install-selfdeps))
+  (add-to-list 'compilation-finish-functions
+	       'bundle-install-selfdeps)
+  (call-interactively 'rvm-install-rvm))
+
 ;;; restaurant-version.el ends here

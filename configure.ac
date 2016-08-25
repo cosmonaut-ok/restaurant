@@ -103,5 +103,4 @@ if test x$MAKEINFO == "xno"; then
 fi
 
 AC_OUTPUT(Makefile)
-AC_OUTPUT(Gemfile)
 AC_OUTPUT([restaurant], [chmod +x restaurant])

@@ -91,7 +91,6 @@ else
 	@EMACSDATA=${CURRENT_DIR}/@LOCAL_EMACS_DIR@/etc/ LD_LIBRARY_PATH=${LDLIB} ${LOCAL_EMACS} -Q --debug-init --script ./src/bootstrap.el
 	@cd ${CURRENT_DIR}/el-get/yasnippets && ln -s ruby-mode enh-ruby-mode
 endif
-	@cat el-get/robe-mode/Gemfile >> Gemfile
 
 lib: emacs
 	@echo "Building 3rd party libraries..."
