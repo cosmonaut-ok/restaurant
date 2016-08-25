@@ -88,6 +88,9 @@ script:
   - if [ $RESTAURANT == "build" ]; then
        ./restaurant --batch;
     fi
+  - if [ $RESTAURANT == "release" ]; then
+       test -f restaurant-*tar.gz
+    fi
 
 ###
 ### settings
