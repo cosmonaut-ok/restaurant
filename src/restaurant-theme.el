@@ -36,6 +36,6 @@
   ;; TODO: add all themes in this folder
   (add-to-list 'custom-theme-load-path (concat restaurant/user-data-directory "/themes")))
 
-(load-theme 'restaurant-classic t)
+;; (load-theme 'restaurant-classic t)
 
 ;;; restaurant-theme.el ends here

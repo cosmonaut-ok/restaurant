@@ -67,5 +67,8 @@
   (load local-file))
 
 (when (not noninteractive)
+  ;; enable default theme, if still none set
+  (when (not custom-enabled-themes)
+    (load-theme 'restaurant-atomic t))
   (message "Wellcome to the Restaurant. Please, choose your dishes from menu. Right click for Appetizer"))
 ;;; init.el ends here
