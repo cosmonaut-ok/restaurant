@@ -1,4 +1,4 @@
-;;; ruby.el --- TODO:  -*- lexical-binding: t -*-
+;;; ruby.el --- ruby language support  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 

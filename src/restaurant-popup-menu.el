@@ -1,4 +1,4 @@
-;;; popup-menu.el --- TODO:  -*- lexical-binding: t -*-
+;;; popup-menu.el --- context menu for restautant -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 

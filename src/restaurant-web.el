@@ -1,4 +1,4 @@
-;;; web.el --- TODO:  -*- lexical-binding: t -*-
+;;; web.el --- web mode support  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 

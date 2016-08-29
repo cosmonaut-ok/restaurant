@@ -1,4 +1,4 @@
-;;; lib.el --- TODO:  -*- lexical-binding: t -*-
+;;; lib.el --- common restaurant library  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 

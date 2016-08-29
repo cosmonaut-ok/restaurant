@@ -1,4 +1,4 @@
-;;; rspec.el --- TODO:  -*- lexical-binding: t -*-
+;;; rspec.el --- rspec support  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 

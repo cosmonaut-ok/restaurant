@@ -1,4 +1,4 @@
-;;; restaurant-company.el --- TODO:  -*- lexical-binding: t -*-
+;;; restaurant-company.el --- enable company mode for autocompletions  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 

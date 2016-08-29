@@ -1,4 +1,4 @@
-;;; erb.el --- TODO:  -*- lexical-binding: t -*-
+;;; erb.el --- erb ruby templates support  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 

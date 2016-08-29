@@ -1,4 +1,4 @@
-;;; foodcritic.el --- TODO:  -*- lexical-binding: t -*-
+;;; foodcritic.el --- chef foodcritic support  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 

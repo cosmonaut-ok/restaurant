@@ -1,4 +1,4 @@
-;;; restaurant-fly.el --- TODO:  -*- lexical-binding: t -*-
+;;; restaurant-fly.el --- flycheck and flymake support  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 

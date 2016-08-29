@@ -1,4 +1,4 @@
-;;; kitchen.el --- TODO:  -*- lexical-binding: t -*-
+;;; kitchen.el --- test kitchen support  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 

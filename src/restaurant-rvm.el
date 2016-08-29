@@ -1,4 +1,4 @@
-;;; restaurant-rvm.el --- TODO:  -*- lexical-binding: t -*-
+;;; restaurant-rvm.el --- RVM support  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 

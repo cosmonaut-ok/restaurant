@@ -1,4 +1,4 @@
-;;; yaml.el --- TODO:  -*- lexical-binding: t -*-
+;;; yaml.el --- yaml file format support:  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 

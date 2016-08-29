@@ -1,4 +1,4 @@
-;;; yasnippet.el --- TODO:  -*- lexical-binding: t -*-
+;;; yasnippet.el ---  code sinppets support  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 

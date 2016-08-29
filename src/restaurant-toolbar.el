@@ -1,4 +1,4 @@
-;;; toolbar.el --- TODO:  -*- lexical-binding: t -*-
+;;; toolbar.el --- restaurant toolbar customizations  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 

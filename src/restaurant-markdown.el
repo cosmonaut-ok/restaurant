@@ -1,4 +1,4 @@
-;;; markdown.el --- TODO:  -*- lexical-binding: t -*-
+;;; markdown.el --- markdown file format support  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 

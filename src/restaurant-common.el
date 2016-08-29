@@ -1,4 +1,4 @@
-;;; restaurant-common.el --- TODO:  -*- lexical-binding: t -*-
+;;; restaurant-common.el --- common restaurant features  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 

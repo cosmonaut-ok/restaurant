@@ -1,4 +1,4 @@
-;;; restaurant-tabbar.el --- TODO:  -*- lexical-binding: t -*-
+;;; restaurant-tabbar.el --- tabs support and customizations  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 

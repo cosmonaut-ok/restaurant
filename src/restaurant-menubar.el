@@ -1,4 +1,4 @@
-;;; restaurant-menubar.el --- TODO:  -*- lexical-binding: t -*-
+;;; restaurant-menubar.el --- restaurant menubar customizations  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 

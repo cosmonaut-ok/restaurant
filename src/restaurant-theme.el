@@ -1,4 +1,4 @@
-;;; theme.el --- TODO:  -*- lexical-binding: t -*-
+;;; theme.el --- themes support  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 

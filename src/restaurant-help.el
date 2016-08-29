@@ -1,4 +1,4 @@
-;;; version.el --- TODO:  -*- lexical-binding: t -*-
+;;; restaurant-help.el --- help and versioning  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 
@@ -58,4 +58,4 @@
 	       'bundle-install-selfdeps)
   (call-interactively 'rvm-install-rvm))
 
-;;; restaurant-version.el ends here
+;;; restaurant-help.el ends here
