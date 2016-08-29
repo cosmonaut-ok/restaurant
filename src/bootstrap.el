@@ -29,7 +29,7 @@
 
 ;; (defvar restaurant/source-directory (file-name-directory load-file-name))
 (defvar restaurant/source-directory (file-name-directory (directory-file-name (file-name-directory load-file-name))))
-(defvar restaurant/packages-installed-p (concat restaurant/source-directory "el-get"))
+(defvar restaurant/packages-installed-p (concat restaurant/source-directory "el-get/.installed-p"))
 (defvar restaurant/elget-user-recipes-path (concat restaurant/source-directory "el-get-user/recipes"))
 (defvar restaurant/do-bootstrap t)
 (defvar restaurant/el-get-force-reinit nil)
@@ -113,6 +113,7 @@
     ))
 
 (defun init-elget-user-recipes ()
+  (message "init-elget-user-recipes")
   (unless (file-directory-p restaurant/elget-user-recipes-path)
     (mkdir restaurant/elget-user-recipes-path t))
   (when (file-exists-p "/tmp/el-get-master.zip")
@@ -164,7 +165,9 @@
   ;; (init-elget-user-recipes)
   (message "Getting el-get packages...")
   (init-el-get-packages)
-  (message "Getting el-get packages...[ DONE ]"))
+  (message "...Getting el-get packages [ DONE ]")
+  (write-region "" nil restaurant/packages-installed-p))
+   
 
 ;;; Add 3rd party projects
 (let ((default-directory (concat restaurant/source-directory "lib/")))
