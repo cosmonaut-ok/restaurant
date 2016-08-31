@@ -89,7 +89,7 @@ script:
        ./restaurant --batch;
     fi
   - if [ $RESTAURANT == "release" ]; then
-       test -f restaurant-*tar.gz
+       test -f restaurant-*tar.gz;
     fi
 
 ###
