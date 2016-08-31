@@ -43,6 +43,7 @@
   (let ((root-dir (test-kitchen-locate-root-dir)))
     (if root-dir
         (let ((default-directory root-dir))
-          (term test-kitchen-login-command))
+	  (with-current-buffer (term "/bin/bash")
+	    (term-send-raw-string (concat test-kitchen-login-command "\n"))))
       (error "Couldn't locate .kitchen.yml!"))))
 ;;
