@@ -58,4 +58,34 @@
 	       'bundle-install-selfdeps)
   (call-interactively 'rvm-install-rvm))
 
+(defun show-md-doc-page (name)
+  (browse-url (concat "https://github.com/restaurant-ide/restaurant/wiki/" name)))
+
+;; (defun show-md-doc-page (name)
+;;   (let ((file-pathname (locate-source-file name)))
+;;     (if (file-exists-p file-pathname)
+;; 	(let ((the-buffer (find-file-read-only file-pathname))
+;; 	      (browse-url-browser-function 'xwidget-webkit-browse-url))
+;; 	  (with-current-buffer the-buffer
+;; 	    (markdown-preview)
+;; 	    (kill-buffer the-buffer)))
+;;       (error "No such file %s. Check your installation consistency" name))))
+
+
+(defun restaurant/help ()
+  (interactive)
+  (show-md-doc-page "Home"))
+
+(defun restaurant/faq ()
+  (interactive)
+  (show-md-doc-page "FAQ"))
+
+(defun restaurant/cheat-sheet ()
+  (interactive)
+  (show-md-doc-page "cheatSheet"))
+
+(defun restaurant/installation ()
+  (interactive)
+  (show-md-doc-page "Installation"))
+
 ;;; restaurant-help.el ends here
