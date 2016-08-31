@@ -158,12 +158,12 @@ package: build clean-build clean
 	@find ${BUILD_DIR}/restaurant/ -type d -name '.git' -exec rm -rf {} +
 	@find ${BUILD_DIR}/restaurant/ -type f -name '.gitignore' -delete
 	# optimizing size
-	rm -rf ${BUILD_DIR}/restaurant/el-get/ecb/html
-	rm -rf ${BUILD_DIR}/restaurant/el-get/ecb/html-help
-	rm -rf ${BUILD_DIR}/restaurant/el-get/cedet/doc
-	rm -rf ${BUILD_DIR}/restaurant/el-get/cedet/tests
-	rm -rf ${BUILD_DIR}/restaurant/el-get/magit/Documentation/
-	rm -rf ${BUILD_DIR}/restaurant/el-get/color-theme/color-theme*tar.gz
+	@rm -rf ${BUILD_DIR}/restaurant/el-get/ecb/html
+	@rm -rf ${BUILD_DIR}/restaurant/el-get/ecb/html-help
+	@rm -rf ${BUILD_DIR}/restaurant/el-get/cedet/doc
+	@rm -rf ${BUILD_DIR}/restaurant/el-get/cedet/tests
+	@rm -rf ${BUILD_DIR}/restaurant/el-get/magit/Documentation/
+	@rm -rf ${BUILD_DIR}/restaurant/el-get/color-theme/color-theme*tar.gz
 	# TODO: move needed snippets to own directory
 	# TODO: add external libraries
 	@echo "Packaging..."
