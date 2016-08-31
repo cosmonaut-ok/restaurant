@@ -120,24 +120,33 @@ clean-build:
 	@echo "Clearing build directory..."
 	@[ -d ${BUILD_DIR} ] && rm -rf ${BUILD_DIR} || return 0
 
-clean:
+clean-precompile:
+	@echo "Cleaning precompiled elc files..."
+	@rm -f src/*.elc
+	@[ -d lib ] && find lib -type f -name '*.elc' -delete || return 0
+
+clean-emacs: clean-build
+	@echo "Removing emacs directory..."
+	@rm -rf emacs
+
+clean-lib:
+	@echo "Removing lib directory..."
+	@rm -rf lib
+
+clean-3rdparty:
+	@echo "Removing 3rd-party libs..."
+	@rm -rf el-get elpa
+
+clean: clean-build clean-precompile
 	@echo "Clearing working directory..."
 	@rm -rf autom4te.cache config.log conf18498.dir config.status
 	@find . -type f -name '*~' -delete
 	@find . -type f -name '*#$$' -delete
 	@find . -type f -name '*^#*' -delete
 
-clean-emacs: clean-build
-	@rm -rf emacs
-
-clean-precompile:
-	@echo "Cleaning precompiled elc files..."
-	@rm -f src/*.elc
-	@[ -d lib ] && find lib -type f -name '*.elc' -delete || return 0
-
-mrproper: clean-emacs clean clean-precompile
-	@echo "Clearing emacs 3rt-party data dirs..."
-	@rm -rf build el-get elpa configure Makefile Gemfile.lock ${ARCHIVE_NAME} lib restaurant build
+mrproper: clean-emacs clean clean-3rdparty clean-lib
+	@echo "Clearing all..."
+	@rm -rf build configure Makefile Gemfile.lock ${ARCHIVE_NAME} restaurant build
 	@rm -f ${CURRENT_DIR}/data/icons/status-ok.png ${CURRENT_DIR}/data/icons/status-fail.png
 
 package: build clean-build clean
