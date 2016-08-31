@@ -149,7 +149,7 @@ mrproper: clean-emacs clean clean-3rdparty clean-lib
 	@rm -rf build configure Makefile Gemfile.lock ${ARCHIVE_NAME} restaurant build
 	@rm -f ${CURRENT_DIR}/data/icons/status-ok.png ${CURRENT_DIR}/data/icons/status-fail.png
 
-package: build clean-build clean
+package: build libdeps clean
 	@echo "Building package..."
 	@mkdir -p ${BUILD_DIR}/restaurant/
 	@for i in @RELEASE_FILES@; do cp -rp $$i ${BUILD_DIR}/restaurant/; done
