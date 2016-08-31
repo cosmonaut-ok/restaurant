@@ -187,6 +187,7 @@
 ;;;
 (defhooklet restaurant/ruby-block enh-ruby-mode t
   (require 'ruby-block)
+  (ruby-block-mode 1)
   (custom-set-variables
    '(ruby-block-delay 0)
    '(ruby-block-highlight-toggle t)))
