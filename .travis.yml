@@ -31,6 +31,8 @@ language: lisp
 
 env:
   matrix:
+    - os: linux
+    dist: jessie
     - RESTAURANT=build
     - RESTAURANT=test
     - RESTAURANT=release
@@ -43,7 +45,7 @@ env:
 
 matrix:
   allow_failures:
-    - env: RESTAURANT=test
+    - env: RESTAURANT=release
 
 ###
 ### limit build attempts to defined branches
