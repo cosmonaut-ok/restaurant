@@ -647,7 +647,35 @@
 ;;; help menu
 ;;;
 (define-key global-map
+  [menu-bar help-menu restaurant-help-separator-1]
+  '("--" nil :visible))
+
+(define-key global-map
+  [menu-bar help-menu restaurant-help-separator-2]
+  '("--" nil :visible))
+
+(define-key global-map
   [menu-bar help-menu install-required-dependencies]
   '("Install Restaurant required dependencies" . startup-wizard))
+
+(define-key global-map
+  [menu-bar help-menu restaurant-help-separator-3]
+  '("--" nil :visible))
+
+(define-key global-map
+  [menu-bar help-menu restaurant-installation]
+  '("Restaurant installation (online)" . restaurant/installation))
+
+(define-key global-map
+  [menu-bar help-menu restaurant-cheat-sheet]
+  '("Restaurant keybindings cheat sheet (online)" . restaurant/cheat-sheet))
+
+(define-key global-map
+  [menu-bar help-menu restaurant-faq]
+  '("Restaurant FAQ (online)" . restaurant/faq))
+
+(define-key global-map
+  [menu-bar help-menu restaurant-help]
+  '("Restaurant help (online)" . restaurant/help))
 
 ;;; restaurant-menubar.el ends here
