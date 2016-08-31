@@ -17,6 +17,8 @@
 
 # travis-lint no longer permits this value
 language: lisp
+os: linux
+dist: jessie
 
 ###
 ### defining the build matrix
@@ -31,8 +33,6 @@ language: lisp
 
 env:
   matrix:
-    - os: linux
-    dist: jessie
     - RESTAURANT=build
     - RESTAURANT=test
     - RESTAURANT=release
