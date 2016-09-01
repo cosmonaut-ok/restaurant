@@ -149,7 +149,7 @@ mrproper: clean-emacs clean clean-3rdparty clean-lib
 	@rm -rf build configure Makefile Gemfile.lock ${ARCHIVE_NAME} restaurant build
 	@rm -f ${CURRENT_DIR}/data/icons/status-ok.png ${CURRENT_DIR}/data/icons/status-fail.png
 
-package: build clean-build clean
+package: build libdeps clean
 	@echo "Building package..."
 	@mkdir -p ${BUILD_DIR}/restaurant/
 	@for i in @RELEASE_FILES@; do cp -rp $$i ${BUILD_DIR}/restaurant/; done
@@ -158,12 +158,12 @@ package: build clean-build clean
 	@find ${BUILD_DIR}/restaurant/ -type d -name '.git' -exec rm -rf {} +
 	@find ${BUILD_DIR}/restaurant/ -type f -name '.gitignore' -delete
 	# optimizing size
-	rm -rf ${BUILD_DIR}/restaurant/el-get/ecb/html
-	rm -rf ${BUILD_DIR}/restaurant/el-get/ecb/html-help
-	rm -rf ${BUILD_DIR}/restaurant/el-get/cedet/doc
-	rm -rf ${BUILD_DIR}/restaurant/el-get/cedet/tests
-	rm -rf ${BUILD_DIR}/restaurant/el-get/magit/Documentation/
-	rm -rf ${BUILD_DIR}/restaurant/el-get/color-theme/color-theme*tar.gz
+	@rm -rf ${BUILD_DIR}/restaurant/el-get/ecb/html
+	@rm -rf ${BUILD_DIR}/restaurant/el-get/ecb/html-help
+	@rm -rf ${BUILD_DIR}/restaurant/el-get/cedet/doc
+	@rm -rf ${BUILD_DIR}/restaurant/el-get/cedet/tests
+	@rm -rf ${BUILD_DIR}/restaurant/el-get/magit/Documentation/
+	@rm -rf ${BUILD_DIR}/restaurant/el-get/color-theme/color-theme*tar.gz
 	# TODO: move needed snippets to own directory
 	# TODO: add external libraries
 	@echo "Packaging..."
@@ -190,6 +190,7 @@ libdeps:
 	@mkdir -p ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/
 	@cp -H /usr/lib/x86_64-linux-gnu/libgnutls-deb0.so.28 ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/
 	@cp -H /usr/lib/x86_64-linux-gnu/libhogweed.so.2 ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/
+	@cp -H /lib/x86_64-linux-gnu/libtinfo.so.5 ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/
 
 help:
 	@echo "Restaurant Chef IDE v. ${RESTAURANT_VERSION}"

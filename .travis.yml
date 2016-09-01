@@ -11,12 +11,19 @@
 ### *first* character of the line.
 ###
 
+### Check syntax
+### https://lint.travis-ci.org/restaurant-ide/restaurant
+
+### https://docs.travis-ci.com/user/customizing-the-build/
+
 ###
 ### language
 ###
 
 # travis-lint no longer permits this value
-language: lisp
+language: emacs-lisp
+os: linux
+dist: trusty
 
 ###
 ### defining the build matrix
@@ -43,7 +50,7 @@ env:
 
 matrix:
   allow_failures:
-    - env: RESTAURANT=test
+    - env: RESTAURANT=release
 
 ###
 ### limit build attempts to defined branches
