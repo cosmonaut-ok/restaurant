@@ -516,23 +516,27 @@
 
 (define-key global-map
   [menu-bar tools rvm rvm-install-rvm]
-  '("Install RVM (restart needed)" . rvm-install-rvm))
+  '("Install RVM" . rvm-install-rvm))
+
+(define-key global-map
+  [menu-bar tools rvm-generate-docs]
+  '("Generate ruby documentation" . rvm-generate-docs))
 
 (define-key global-map
   [menu-bar tools rvm rvm-use]
   '("Use default ruby for this session" . rvm-use))
 
 (define-key global-map
-  [menu-bar tools rvm rvm-use]
-  '("Switch ruby and gemset version" . rvm-use))
+  [menu-bar tools rvm rvm-open-gem]
+  '("Open gem" . rvm-open-gem))
 
 (define-key global-map
   [menu-bar tools rvm install-gem]
   '("install Gem" . rvm-gem-install))
 
 (define-key global-map
-  [menu-bar tools rvm rvm-open-gem]
-  '("Open gem" . rvm-open-gem))
+  [menu-bar tools rvm rvm-use]
+  '("Switch ruby and gemset version" . rvm-use))
 
 ;;;
 ;;; bundler Menu

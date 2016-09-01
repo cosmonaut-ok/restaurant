@@ -59,6 +59,16 @@
     "source "
     (expand-file-name "~/.rvm/scripts/rvm")
     "; rvm install "
-    ruby)))
+    ruby)
+   'rvm-installation-mode))
+
+(defun rvm-generate-docs ()
+  (interactive)
+  (compile
+   (concat
+    "source "
+    (expand-file-name "~/.rvm/scripts/rvm")
+    "; rvm docs generate ")
+   'rvm-installation-mode))
 
 ;;; restaurant-rvm.el ends here
