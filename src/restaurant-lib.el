@@ -154,6 +154,24 @@
 (defmacro tool-bar-add-item-for-mode (icon def key mode &rest rest)
   `(tool-bar-add-item ,icon ,def ,key :active-modes '(,mode) ,@rest))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun restaurant/colorize-compilation-buffer ()
+  "Colorize compile buffer output."
+  (toggle-read-only)
+  (ansi-color-apply-on-region compilation-filter-start (point))
+  (toggle-read-only))
+
+(defmacro define-colored-compilation-mode (name title &rest body)
+  "Define compilation mode with ansi colors support."
+  `(define-compilation-mode ,name ,title
+     (progn
+       (add-hook 'compilation-filter-hook 'restaurant/colorize-compilation-buffer nil t)
+       ,@body)))
+
+;; define simple colored installation mode
+(define-colored-compilation-mode restaurant/colored-compilation-mode "*compile*")
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun download-file (url &optional download-name)
   (interactive "sEnter download URL:\nFEnter destination filename:")
@@ -176,25 +194,8 @@
 (defun gpg-install-key (key)
   (if (executable-find "gpg")
       (let ((cmd (concat "gpg --keyserver hkp://keys.gnupg.net --recv-keys " key)))
-	(call-process-shell-command cmd))
+	(compile cmd 'restaurant/colored-compilation-mode))
     (error "There is no ``gpg'' binary installed in system. Can not continue")))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defun restaurant/colorize-compilation-buffer ()
-  "Colorize compile buffer output."
-  (toggle-read-only)
-  (ansi-color-apply-on-region compilation-filter-start (point))
-  (toggle-read-only))
-
-(defmacro define-colored-compilation-mode (name title &rest body)
-  "Define compilation mode with ansi colors support."
-  `(define-compilation-mode ,name ,title
-     (progn
-       (add-hook 'compilation-filter-hook 'restaurant/colorize-compilation-buffer nil t)
-       ,@body)))
-
-;; define simple colored installation mode
-(define-colored-compilation-mode restaurant/colored-compilation-mode "*compile*")
 
 ;;; restaurant-lib.el ends here
