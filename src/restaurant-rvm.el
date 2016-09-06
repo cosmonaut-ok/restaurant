@@ -41,26 +41,27 @@
   (let ((installator (locate-user-cache-file ".rvm.sh")))
     (progn (gpg-install-key rvm-installation-key)
 	   (download-file rvm-installation-url installator)
-	   (compile (concat
-		     "/bin/bash "
-		     installator
-		     " stable"
-		     " --ruby="
-		     ruby
-		     " --auto-dotfiles"
-		     (when restaurant/use-bundler
-		       " --gems=bundler"))
-		    'rvm-installation-mode))))
+	   (compile
+	    (concat
+	     "/bin/bash "
+	     installator
+	     " stable"
+	     " --ruby="
+	     ruby
+	     " --auto-dotfiles"
+	     (when restaurant/use-bundler
+	       " --gems=bundler"))
+	    'rvm-installation-mode))))
 
 (defun rvm-install-ruby (ruby)
   (interactive "sWhich ruby do you want to install?: ")
-  (compile
+  (async-shell-command
    (concat
     "source "
     (expand-file-name "~/.rvm/scripts/rvm")
     "; rvm install "
     ruby)
-   'rvm-installation-mode))
+   "*Ruby installation*"))
 
 (defun rvm-generate-docs ()
   (interactive)

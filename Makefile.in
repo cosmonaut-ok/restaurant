@@ -63,7 +63,7 @@ else
 	@cp data/icons/restaurant.svg ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/scalable/apps/emacs.svg
 	@echo "Building emacs..."
 	@cd ${BUILD_DIR}/${SOURCE_DIR} && \
-	autoreconf -fi -I m4 ## emacs 25
+	autoreconf -fi -I m4
 	cd ${BUILD_DIR}/${SOURCE_DIR} && \
 	./configure --prefix=/ --with-x-toolkit=@GUI_TOOLKIT@ @BUILD_OPTIONS@ && \
 	make && \
@@ -82,6 +82,12 @@ else
 	@rm -f @LOCAL_EMACS_DIR@/etc/images/splash.png
 endif
 
+libdeps: emacs
+	@mkdir -p ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/
+	@for i in `ldd ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/bin/emacs | grep -E 'libgnutls-deb|libhogweed|libtinfo' | awk '{print $3}'`; do \
+	@	cp -r ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/; \
+	@done
+
 el-get: emacs
 ifeq (@STATIC@, yes)
 	@echo "Static build enabled. Getting prepared el-get libraries..."
@@ -94,7 +100,7 @@ endif
 
 lib: emacs
 	@echo "Building 3rd party libraries..."
-	@mkdir lib
+	@mkdir -p lib
 	@cd scripts && for i in `ls *.sh | grep -v tmpl.sh`; do \
 		/bin/bash $$i install -v; \
 	done
@@ -113,7 +119,7 @@ endif
 	@convert -alpha off -resize 48x48 +level-colors yellow,red ${CURRENT_DIR}/data/icons/restaurant.svg ${CURRENT_DIR}/data/icons/status-fail.png
 	@touch build
 
-install: build
+install:
 	@echo Not implemented
 
 clean-build:
@@ -157,19 +163,16 @@ package: build libdeps clean
 	@echo "Stripping package from unneded files..."
 	@find ${BUILD_DIR}/restaurant/ -type d -name '.git' -exec rm -rf {} +
 	@find ${BUILD_DIR}/restaurant/ -type f -name '.gitignore' -delete
-	# optimizing size
+	@echo "Optimizing size..."
 	@rm -rf ${BUILD_DIR}/restaurant/el-get/ecb/html
 	@rm -rf ${BUILD_DIR}/restaurant/el-get/ecb/html-help
 	@rm -rf ${BUILD_DIR}/restaurant/el-get/cedet/doc
 	@rm -rf ${BUILD_DIR}/restaurant/el-get/cedet/tests
 	@rm -rf ${BUILD_DIR}/restaurant/el-get/magit/Documentation/
 	@rm -rf ${BUILD_DIR}/restaurant/el-get/color-theme/color-theme*tar.gz
-	# TODO: move needed snippets to own directory
-	# TODO: add external libraries
 	@echo "Packaging..."
 	@cd ${BUILD_DIR} && tar -czpf restaurant-${RESTAURANT_VERSION}-@GUI_TOOLKIT@.tar.gz restaurant
 	@cp ${BUILD_DIR}/restaurant-${RESTAURANT_VERSION}-@GUI_TOOLKIT@.tar.gz .
-	# hack to change emacs icons to restaurant
 
 static-packages:
 	@echo "Packaging emacs..."
@@ -185,12 +188,6 @@ test: build
 	@touch /tmp/.restaurant-mock.rb
 	@./restaurant --batch /tmp/.restaurant-mock.rb || exit 1
 	@rm -f /tmp/.restaurant-mock.rb
-
-libdeps:
-	@mkdir -p ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/
-	@cp -H /usr/lib/x86_64-linux-gnu/libgnutls-deb0.so.28 ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/
-	@cp -H /usr/lib/x86_64-linux-gnu/libhogweed.so.2 ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/
-	@cp -H /lib/x86_64-linux-gnu/libtinfo.so.5 ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/
 
 help:
 	@echo "Restaurant Chef IDE v. ${RESTAURANT_VERSION}"
