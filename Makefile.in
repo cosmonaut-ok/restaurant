@@ -84,9 +84,9 @@ endif
 
 libdeps: emacs
 	@mkdir -p ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/
-	@for i in `ldd ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/bin/emacs | grep -E 'libgnutls-deb|libhogweed|libtinfo' | awk '{print $3}'`; do \
-	@	cp -r ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/; \
-	@done
+	@for i in `ldd ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/bin/emacs | grep -E 'libgnutls-deb|libhogweed|libtinfo' | awk '{print $$3}'`; do \
+		cp -r $$i ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/; \
+	done
 
 el-get: emacs
 ifeq (@STATIC@, yes)
