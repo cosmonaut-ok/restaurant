@@ -519,7 +519,7 @@
   '("Install RVM" . rvm-install-rvm))
 
 (define-key global-map
-  [menu-bar tools rvm-generate-docs]
+  [menu-bar tools rvm rvm-generate-docs]
   '("Generate ruby documentation" . rvm-generate-docs))
 
 (define-key global-map
