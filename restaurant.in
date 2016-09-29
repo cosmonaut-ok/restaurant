@@ -25,4 +25,8 @@ fi
 
 VERSION=$(grep autoconf-anchor $MYDIR/src/restaurant-help.el | cut -d\" -f2 | tr -d \\n)
 
+## hack for unity. Ubuntu developers are bastards, which don't want to fix their bug
+## https://bugs.launchpad.net/ubuntu/+source/appmenu-gtk/+bug/673302
+export UBUNTU_MENUPROXY=
+
 $EMACS -q -l $MYDIR/src/restaurant.el --name restaurant --title "Restaurant Chef IDE version: (v.${VERSION})" $OPTIONS $@
