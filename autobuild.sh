@@ -1,8 +1,8 @@
 #!/bin/sh
 
 autoconf
-./configure
-make release
-make clean-emacs
-./configure --with-gui=gtk2
-make release
+for i in gtk2 gtk3; do
+    ./configure --with-gui=${i}
+    make release
+    make clean-emacs
+done    
