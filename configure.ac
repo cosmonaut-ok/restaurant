@@ -42,7 +42,7 @@ AC_SUBST(BYTE_COMPILE_P)
 AC_SUBST(STATIC)
 
 ## veriables definition
-EMACS_URI=https://github.com/emacs-mirror/emacs/archive/emacs-25.1-rc1.tar.gz
+EMACS_URI=https://github.com/emacs-mirror/emacs/archive/emacs-25.1.tar.gz
 BUILD_DIR=/tmp/restaurant-release
 LOCAL_EMACS_DIR="emacs"
 RELEASE_FILES="restaurant data LICENSE src README.md el-get $LOCAL_EMACS_DIR lib Gemfile"
