@@ -1,4 +1,4 @@
-;;; restaurant-json.el --- json file format support  -*- lexical-binding: t -*-
+;;; restaurant-shell-script.el --- shell-script file format support  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 
@@ -27,17 +27,10 @@
 
 ;;; Code:
 
-(require 'json-mode)
-(require 'json-reformat)
-(require 'json-snatcher)
+(add-auto-mode 'shell-script-mode
+               "\\.sh\\'")
 
-(add-auto-mode 'json-mode
-               "\\.json\\'")
-
-(defhooklet restaurant/json json-mode t
+(defhooklet restaurant/shell-script shell-script-mode t
   (custom-set-variables
-   '(json-reformat:indent-width restaurant/indent-level))
-  (local-set-key (kbd "C-M-q") 'json-reformat-region)
-  (local-set-key (kbd "C-c C-g") 'jsons-print-path))
-
-;;; restaurant-json.el ends here
+   '(sh-basic-offset restaurant/indent-level)))
+;;; restaurant-shell-script.el ends here
