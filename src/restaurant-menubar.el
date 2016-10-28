@@ -1,4 +1,4 @@
-;;; restaurant-menubar.el --- restaurant menubar customizations  -*- lexical-binding: t -*-
+s;;; restaurant-menubar.el --- restaurant menubar customizations  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 
@@ -654,17 +654,17 @@
   [menu-bar help-menu restaurant-help-separator-1]
   '("--" nil :visible))
 
-(define-key global-map
-  [menu-bar help-menu restaurant-help-separator-2]
-  '("--" nil :visible))
+;; (define-key global-map
+;;   [menu-bar help-menu restaurant-help-separator-2]
+;;   '("--" nil :visible))
 
-(define-key global-map
-  [menu-bar help-menu install-required-dependencies]
-  '("Install Restaurant required dependencies" . startup-wizard))
+;; (define-key global-map
+;;   [menu-bar help-menu install-required-dependencies]
+;;   '("Install Restaurant required dependencies" . startup-wizard))
 
-(define-key global-map
-  [menu-bar help-menu restaurant-help-separator-3]
-  '("--" nil :visible))
+;; (define-key global-map
+;;   [menu-bar help-menu restaurant-help-separator-3]
+;;   '("--" nil :visible))
 
 (define-key global-map
   [menu-bar help-menu restaurant-installation]
