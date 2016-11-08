@@ -23,11 +23,17 @@ bootstrap_rvm ()
     curl -sSL https://rvm.io/mpapis.asc | gpg --import -
     # bootstrap RVM
     curl -sSL https://get.rvm.io | bash -s stable --ruby=${RUBY_VERSION} --auto-dotfiles --gems=bundler
-    # install required gems
-    source ${HOME}/.rvm/scripts/rvm
+    . ${HOME}/.rvm/scripts/rvm
   fi
+  # install required gems
   bundle install
 }
 
 bootstrap_rvm
-echo "You must run command `source ${HOME}/.rvm/scripts/rvm` before launching restaurant"
+
+CURRENT_PATH="$(dirname `realpath $0`)"
+FIX_PATH="$(echo $CURRENT_PATH | sed 's/\//\\\//g')"
+
+sed "s/\@HERE\@/$FIX_PATH/g" $CURRENT_PATH/Restaurant.desktop.in > $CURRENT_PATH/Restaurant.desktop
+	
+echo "You must run command 'source ${HOME}/.rvm/scripts/rvm' before launching restaurant"

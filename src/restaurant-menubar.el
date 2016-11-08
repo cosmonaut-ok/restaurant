@@ -1,4 +1,4 @@
-s;;; restaurant-menubar.el --- restaurant menubar customizations  -*- lexical-binding: t -*-
+;;; restaurant-menubar.el --- restaurant menubar customizations  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 
@@ -84,11 +84,11 @@ s;;; restaurant-menubar.el --- restaurant menubar customizations  -*- lexical-bi
 
 (define-key prog-mode-map
   [menu-bar code drag-stuff-up]
-  '("Move line/Selected Up" . drag-stuff-up))
+  '("Move Line/Selected Up" . drag-stuff-up))
 
 (define-key prog-mode-map
   [menu-bar code drag-stuff-down]
-  '("Move line/Selected Down" . drag-stuff-down))
+  '("Move Line/Selected Down" . drag-stuff-down))
 
 ;; (define-key prog-mode-map
 ;;   [menu-bar code projectile]
@@ -199,7 +199,7 @@ s;;; restaurant-menubar.el --- restaurant menubar customizations  -*- lexical-bi
 
 (define-key enh-ruby-mode-map
   [menu-bar refactor ruby ruby-refactor-extract-to-let]
-  '("Extract to Let" . ruby-refactor-extract-to-let))
+  '("Extract To Let" . ruby-refactor-extract-to-let))
 
 (define-key enh-ruby-mode-map
   [menu-bar refactor ruby ruby-refactor-extract-constant]
@@ -207,7 +207,7 @@ s;;; restaurant-menubar.el --- restaurant menubar customizations  -*- lexical-bi
 
 (define-key enh-ruby-mode-map
   [menu-bar refactor ruby ruby-refactor-extract-to-method]
-  '("Extract to Method" . ruby-refactor-extract-to-method))
+  '("Extract To Method" . ruby-refactor-extract-to-method))
 
 (define-key enh-ruby-mode-map
   [menu-bar refactor ruby ruby-refactor-remove-inline-temp]
@@ -215,7 +215,7 @@ s;;; restaurant-menubar.el --- restaurant menubar customizations  -*- lexical-bi
 
 (define-key enh-ruby-mode-map
   [menu-bar refactor ruby ruby-refactor-extract-local-variable]
-  '("Extract Local variable" . ruby-refactor-extract-local-variable))
+  '("Extract LoCal Variable" . ruby-refactor-extract-local-variable))
 
 (define-key enh-ruby-mode-map
   [menu-bar refactor ruby ruby-refactor-convert-post-conditional]
@@ -229,24 +229,24 @@ s;;; restaurant-menubar.el --- restaurant menubar customizations  -*- lexical-bi
 ;;;; Ruby Tools
 (define-key prog-mode-map
   [menu-bar refactor ruby-tools-clear-string]
-  '("Clear string" . ruby-tools-clear-string))
+  '("Clear String" . ruby-tools-clear-string))
 
 (define-key prog-mode-map
   [menu-bar refactor ruby-tools-to-symbol]
-  '("Convert String to Symbol" . ruby-tools-to-symbol))
+  '("Convert String To Symbol" . ruby-tools-to-symbol))
 
 (define-key prog-mode-map
   [menu-bar refactor ruby-tools-to-single-quote-string]
-  '("Double to Single Quote" . ruby-tools-to-single-quote-string))
+  '("Double To Single Quote" . ruby-tools-to-single-quote-string))
 
 (define-key prog-mode-map
   [menu-bar refactor ruby-tools-to-double-quote-string]
-  '("Single to Double Quote" . ruby-tools-to-double-quote-string))
+  '("Single To Double Quote" . ruby-tools-to-double-quote-string))
 
 ;;;; Ruby hash syntax
 (define-key enh-ruby-mode-map
   [menu-bar refactor ruby-toggle-hash-syntax]
-  '("Switch between old and new ruby hashtable syntax" . ruby-toggle-hash-syntax))
+  '("Switch Between Old And New Ruby Hashtable Syntax" . ruby-toggle-hash-syntax))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -267,7 +267,7 @@ s;;; restaurant-menubar.el --- restaurant menubar customizations  -*- lexical-bi
 
 (define-key prog-mode-map
   [menu-bar vcs git clone]
-  '("Clone Git Repository" . magit-clone))
+  '("Clone Repository" . magit-clone))
 
 (define-key prog-mode-map
   [menu-bar vcs git magit-separator]
@@ -275,7 +275,11 @@ s;;; restaurant-menubar.el --- restaurant menubar customizations  -*- lexical-bi
 
 (define-key prog-mode-map
   [menu-bar vcs git push-to-upstream]
-  '("Push current branch to remote" . magit-push-current-to-pushremote))
+  '("Push Current Branch To Remote" . magit-push-current-to-pushremote))
+
+(define-key prog-mode-map
+  [menu-bar vcs git clone]
+  '("Pull Current Branch From Remote" . magit-pull-from-pushremote))
 
 (define-key prog-mode-map
   [menu-bar vcs git commit]
@@ -303,7 +307,7 @@ s;;; restaurant-menubar.el --- restaurant menubar customizations  -*- lexical-bi
 
 (define-key prog-mode-map
   [menu-bar vcs github create-pullrequest]
-  '("Create pull request branch" . magit-gh-pulls-create-pullrequest))
+  '("Create Pull Request Branch" . magit-gh-pulls-create-pullrequest))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -315,11 +319,11 @@ s;;; restaurant-menubar.el --- restaurant menubar customizations  -*- lexical-bi
 
 (define-key magit-mode-map
   [menu-bar github add-changed]
-  '("Create pull request branch" . magit-gh-pulls-create-branch))
+  '("Create Pull Request Branch" . magit-gh-pulls-create-branch))
 
 (define-key magit-mode-map
   [menu-bar github fetch-pr-commits]
-  '("Fetch pull request commits" . magit-gh-pulls-fetch-commits))
+  '("Fetch Pull Request Commits" . magit-gh-pulls-fetch-commits))
 
 (define-key magit-mode-map
   [menu-bar github open-pr-in-browser]
@@ -327,7 +331,7 @@ s;;; restaurant-menubar.el --- restaurant menubar customizations  -*- lexical-bi
 
 (define-key magit-mode-map
   [menu-bar github show-log-current]
-  '("Reload pull request" . magit-gh-pulls-reload))
+  '("Reload Pull Request" . magit-gh-pulls-reload))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define-key global-map
@@ -397,7 +401,7 @@ s;;; restaurant-menubar.el --- restaurant menubar customizations  -*- lexical-bi
 
 (define-key enh-ruby-mode-map
   [menu-bar run unit-testing run-all-tests]
-  '("Run all tests" . rspec-verify-all))
+  '("Run All Tests" . rspec-verify-all))
 
 (define-key enh-ruby-mode-map
   [menu-bar run test-kitchen kitchen-separator]
@@ -405,11 +409,11 @@ s;;; restaurant-menubar.el --- restaurant menubar customizations  -*- lexical-bi
 
 (define-key enh-ruby-mode-map
   [menu-bar run unit-testing run-tests-current-file]
-  '("Run all tests on current file" . rspec-verify))
+  '("Run All Tests On Current File" . rspec-verify))
 
 (define-key enh-ruby-mode-map
   [menu-bar run unit-testing run-test-at-point]
-  '("Run test at cursor" . rspec-verify-single))
+  '("Run Test At Cursor" . rspec-verify-single))
 
 ;;;; GDB
 (define-key prog-mode-map
@@ -435,7 +439,7 @@ s;;; restaurant-menubar.el --- restaurant menubar customizations  -*- lexical-bi
 
 (define-key prog-mode-map
   [menu-bar run shell-command-on-selected]
-  '("Selected as Shell Command" . shell-command-on-region))
+  '("Selected As Shell Command" . shell-command-on-region))
 
 (define-key prog-mode-map
   [menu-bar run shell-command]
@@ -520,23 +524,23 @@ s;;; restaurant-menubar.el --- restaurant menubar customizations  -*- lexical-bi
 
 (define-key global-map
   [menu-bar tools rvm rvm-generate-docs]
-  '("Generate ruby documentation" . rvm-generate-docs))
+  '("Generate Ruby Documentation" . rvm-generate-docs))
 
 (define-key global-map
   [menu-bar tools rvm rvm-use]
-  '("Use default ruby for this session" . rvm-use))
+  '("Use Default Ruby For This Session" . rvm-use))
 
 (define-key global-map
   [menu-bar tools rvm rvm-open-gem]
-  '("Open gem" . rvm-open-gem))
+  '("Open Gem" . rvm-open-gem))
 
 (define-key global-map
   [menu-bar tools rvm install-gem]
-  '("install Gem" . rvm-gem-install))
+  '("Install Gem" . rvm-gem-install))
 
 (define-key global-map
   [menu-bar tools rvm rvm-use]
-  '("Switch ruby and gemset version" . rvm-use))
+  '("Switch Ruby And Gemset Version" . rvm-use))
 
 ;;;
 ;;; bundler Menu
@@ -547,46 +551,46 @@ s;;; restaurant-menubar.el --- restaurant menubar customizations  -*- lexical-bi
 
 (define-key global-map
   [menu-bar tools bundler bundle-exec]
-  '("Bundle exec" . bundle-exec))
+  '("Exec" . bundle-exec))
 
 (define-key global-map
   [menu-bar tools bundler bundle-show]
-  '("Bundle show" . bundle-show))
+  '("Show" . bundle-show))
 
 (define-key global-map
   [menu-bar tools bundler bundle-check]
-  '("Bundle check" . bundle-check))
+  '("Check" . bundle-check))
 
 (define-key global-map
   [menu-bar tools bundler bundle-update]
-  '("Bundle update" . bundle-update))
+  '("Update" . bundle-update))
 
 (define-key global-map
   [menu-bar tools bundler bundle-version]
-  '("Bundle version" . bundle-version))
+  '("Version" . bundle-version))
 
 (define-key global-map
   [menu-bar tools bundler bundle-gemfile]
-  '("Bundle gemfile" . bundle-gemfile))
+  '("Gemfile" . bundle-gemfile))
 
 (define-key global-map
   [menu-bar tools bundler bundle-install]
-  '("Bundle install" . bundle-install))
+  '("Install" . bundle-install))
 
 (define-key global-map
   [menu-bar tools bundler bundle-console]
-  '("Bundle console" . bundle-console))
+  '("Console" . bundle-console))
 
 (define-key global-map
   [menu-bar tools bundler bundle-outdated]
-  '("Bundle outdated" . bundle-outdated))
+  '("Outdated" . bundle-outdated))
 
 ;;;
 ;;; keyboard macros menu
 ;;;
 (define-key global-map
   [menu-bar tools kmacro]
-  (cons "keyboard Macro" (make-sparse-keymap "keyboard Macro")))
+  (cons "Keyboard Macro" (make-sparse-keymap "keyboard Macro")))
 
 ;;;; Write keyboard macro
 (define-key global-map
@@ -614,7 +618,7 @@ s;;; restaurant-menubar.el --- restaurant menubar customizations  -*- lexical-bi
 
 (define-key json-mode-map
   [menu-bar code json-reformat]
-  '("Pretty format JSON file" . json-reformat-region))
+  '("Pretty Format JSON file" . json-reformat-region))
 
 (define-key json-mode-map
   [menu-bar code json-snatcher]
@@ -629,7 +633,7 @@ s;;; restaurant-menubar.el --- restaurant menubar customizations  -*- lexical-bi
 
 (define-key markdown-mode-map
   [menu-bar markdown-tools markdown-preview]
-  '("Preview Markdown file" . markdown-preview-open-browser))
+  '("Preview Markdown File" . markdown-preview-open-browser))
 
 (define-key markdown-mode-map
   [menu-bar markdown-tools markdown-toc]
@@ -668,18 +672,18 @@ s;;; restaurant-menubar.el --- restaurant menubar customizations  -*- lexical-bi
 
 (define-key global-map
   [menu-bar help-menu restaurant-installation]
-  '("Restaurant installation (online)" . restaurant/installation))
+  '("Restaurant Installation (Online)" . restaurant/installation))
 
 (define-key global-map
   [menu-bar help-menu restaurant-cheat-sheet]
-  '("Restaurant keybindings cheat sheet (online)" . restaurant/cheat-sheet))
+  '("Restaurant Keybindings Cheat Sheet (Online)" . restaurant/cheat-sheet))
 
 (define-key global-map
   [menu-bar help-menu restaurant-faq]
-  '("Restaurant FAQ (online)" . restaurant/faq))
+  '("Restaurant FAQ (Online)" . restaurant/faq))
 
 (define-key global-map
   [menu-bar help-menu restaurant-help]
-  '("Restaurant help (online)" . restaurant/help))
+  '("Restaurant Help (Online)" . restaurant/help))
 
 ;;; restaurant-menubar.el ends here
