@@ -38,12 +38,12 @@
 (defcustom test-kitchen-login-command "kitchen login"
   "The command used for converge project.")
 
-(defun test-kitchen-login ()
-  (interactive)
+(defun test-kitchen-login (instance)
+  (interactive (list (completing-read "Kitchen instance to login: " (split-string (test-kitchen-list-bare)))))
   (let ((root-dir (test-kitchen-locate-root-dir)))
     (if root-dir
         (let ((default-directory root-dir))
 	  (with-current-buffer (term "/bin/bash")
-	    (term-send-raw-string (concat test-kitchen-login-command "\n"))))
+	    (term-send-raw-string (concat test-kitchen-login-command " " instance "\n"))))
       (error "Couldn't locate .kitchen.yml!"))))
 ;;

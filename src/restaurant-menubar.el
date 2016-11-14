@@ -364,20 +364,36 @@
   (cons "Test Kitchen" (make-sparse-keymap "Test Kitchen")))
 
 (define-key enh-ruby-mode-map
+  [menu-bar run test-kitchen destroy-all]
+  '("Destroy All" . test-kitchen-destroy-all))
+
+(define-key enh-ruby-mode-map
   [menu-bar run test-kitchen destroy]
   '("Destroy" . test-kitchen-destroy))
 
 (define-key enh-ruby-mode-map
-  [menu-bar run test-kitchen kitchen-separator]
+  [menu-bar run test-kitchen kitchen-separator-3]
+  '("--" nil :visible))
+
+(define-key enh-ruby-mode-map
+  [menu-bar run test-kitchen test-all]
+  '("Test All" . test-kitchen-test-all))
+
+(define-key enh-ruby-mode-map
+  [menu-bar run test-kitchen verify-all]
+  '("Verify All" . test-kitchen-verify-all))
+
+(define-key enh-ruby-mode-map
+  [menu-bar run test-kitchen converge-all]
+  '("Converge All" . test-kitchen-converge-all))
+
+(define-key enh-ruby-mode-map
+  [menu-bar run test-kitchen kitchen-separator-2]
   '("--" nil :visible))
 
 (define-key enh-ruby-mode-map
   [menu-bar run test-kitchen test]
   '("Test" . test-kitchen-test))
-
-(define-key enh-ruby-mode-map
-  [menu-bar run test-kitchen list]
-  '("List" . test-kitchen-list))
 
 (define-key enh-ruby-mode-map
   [menu-bar run test-kitchen verify]
@@ -391,6 +407,13 @@
   [menu-bar run test-kitchen converge]
   '("Converge" . test-kitchen-converge))
 
+(define-key enh-ruby-mode-map
+  [menu-bar run test-kitchen kitchen-separator-1]
+  '("--" nil :visible))
+
+(define-key enh-ruby-mode-map
+  [menu-bar run test-kitchen list]
+  '("List" . test-kitchen-list))
 
 ;;;
 ;;; rspec
