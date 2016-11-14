@@ -307,7 +307,7 @@
 
 (define-key prog-mode-map
   [menu-bar vcs github create-pullrequest]
-  '("Create Pull Request Branch" . magit-gh-pulls-create-pullrequest))
+  '("Create Pull Request Branch" . magit-gh-pulls-create-pull-request))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
