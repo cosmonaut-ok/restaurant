@@ -16,14 +16,14 @@ There is no specialized Chef IDE for DevOps for free usage (there is RubyMine wi
 
 Let's suppose, that you have no Restaurant, no ruby, no bundler... actually nothing
 
-  * Get Restautant (we recommend to use last binary build): [link](https://github.com/restaurant-ide/restaurant/releases/download/v0.2.1/restaurant-0.2.1-gtk2.tar.gz)
-	* Unpack it: `tar -xvzf restaurant-0.2.1-gtk2.tar.gz`
-	* Install rvm environment with helper: `cd restaurant && ./envinstall.sh <your.favorite.ruby.version|2.2>` or in your favorite way (Gemfile present)
+  * Get Restautant (we recommend to use last binary build): [link](https://github.com/restaurant-ide/restaurant/releases/download/v0.3.0/restaurant-0.3.0-gtk2.tar.gz)
+	* Unpack it: `tar -xvzf restaurant-0.3.0-gtk2.tar.gz`
+	* Install rvm environment with helper: `cd restaurant && ./bootstrap.sh <your.favorite.ruby.version|2.2>` or in your favorite way (Gemfile present)
+        * At your option: drag-n-drop ``Restaurant'' icon to your quick launch place (e.g. to Desktop)
 	* GO GO GO: `cd restaurant && ./restaurant`
   * Add source
 	* Right click on **Root** (top-right corner) > **Add Source Path**
 	* Add your cookbooks to source path for quick navigate
-
 
 ## Quick HOWTO
 
