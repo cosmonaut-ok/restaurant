@@ -1,0 +1,8 @@
+0.2.0 -> 0.3.0
+	* Improve test-kitchen usage (add per-vm operations)
+	* Add bootstrap to prepare Restaurant to work
+	* Fix enabling correct mode, when opening json files
+	* Move to stable emacs25 version
+	* Move icons to new locations
+	* Improve icon generation
+	* Fix git pull request creation in menu
