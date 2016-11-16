@@ -3,6 +3,8 @@
 	* Add bootstrap to prepare Restaurant to work
 	* Fix enabling correct mode, when opening json files
 	* Move to stable emacs25 version
+	* Fix git pull request creation in menu
 	* Move icons to new locations
 	* Improve icon generation
-	* Fix git pull request creation in menu
+	* Change logo
+
