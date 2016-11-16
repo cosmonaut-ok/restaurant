@@ -1,0 +1,21 @@
+[Desktop Entry]
+Categories=Application;Development;
+Comment=IDE for Opscode Chef sources
+Comment[en_US]=IDE for Opscode Chef sources
+Comment[uk_UA]=IDE для Opscode Chef коду
+Exec=Exec=@HERE@/restaurant
+GenericName=Integrated Development Environment for Opscode Chef
+GenericName[en_US]=Integrated Development Environment for Opscode Chef
+GenericName[uk_UA]=Інтегроване Середовище Розробки для Opscode Chef
+Icon=@HERE@/emacs/etc/images/icons/hicolor/48x48/apps/emacs.png
+MimeType=
+Name=Restaurant Chef IDE
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-DBUS-ServiceName=
+X-DBUS-StartupType=
+X-KDE-SubstituteUID=false
+X-KDE-Username=

@@ -30,7 +30,8 @@
 ;; add
 
 ;; add load path "data" for icons etc
-(add-to-list 'load-path (locate-source-file "data/icons"))
+(dolist (v (cddr (directory-files (locate-source-file "data/icons/hicolor/"))))
+  (add-to-list 'load-path (locate-source-file (concat "data/icons/hicolor/" v))))
 
 (define-key-after (default-value 'tool-bar-map) [separator-10] menu-bar-separator)
 ;;

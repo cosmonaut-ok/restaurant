@@ -100,7 +100,6 @@ build
 Makefile
 restaurant
 *.elc
-data/icons/status-ok.png
-data/icons/status-fail.png
+data/icons/hicolor/
 README.html
 Restaurant.desktop

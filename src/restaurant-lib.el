@@ -108,7 +108,7 @@
 			  )
 		  :urgency urgency
 		  :icon (locate-source-file
-			 (concat "data/icons/status-" status ".png"))))))))
+			 (concat "data/icons/hicolor/48x48/status-" status ".png"))))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
