@@ -59,8 +59,8 @@ else
 	@tar -C ${BUILD_DIR} -xf ${BUILD_DIR}/${ARCHIVE_NAME}
 	@echo "Preparing emacs archive..."
 	@for i in `ls ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/ | grep -E [0-9]`; do rm -f ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/$$i/apps/emacs.png; done
-	@for i in `ls ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/ | grep -E [0-9]`; do convert -resize $$i ${CURRENT_DIR}/data/icons/restaurant.svg ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/$$i/apps/emacs.png; done
-	@cp data/icons/restaurant.svg ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/scalable/apps/emacs.svg
+	@for i in `ls ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/ | grep -E [0-9]`; do convert -resize $$i ${CURRENT_DIR}/data/icons/source/restaurant.svg ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/$$i/apps/emacs.png; done
+	@cp data/icons/source/restaurant.svg ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/scalable/apps/emacs.svg
 	@echo "Building emacs..."
 	@cd ${BUILD_DIR}/${SOURCE_DIR} && \
 	autoreconf -fi -I m4
@@ -164,7 +164,7 @@ clean: clean-build clean-precompile
 
 mrproper: clean-emacs clean clean-3rdparty clean-lib
 	@echo "Clearing all..."
-	@rm -rf build configure Makefile Gemfile.lock ${ARCHIVE_NAME} restaurant build
+	@rm -rf build configure Makefile Gemfile.lock ${ARCHIVE_NAME} restaurant build Restaurant.desktop
 	@rm -rf ${BUILD_DIR}/data/icons/hicolor/
 
 package: build libdeps clean

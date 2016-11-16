@@ -45,7 +45,7 @@ AC_SUBST(STATIC)
 EMACS_URI=https://github.com/emacs-mirror/emacs/archive/emacs-25.1.tar.gz
 BUILD_DIR=/tmp/restaurant-release
 LOCAL_EMACS_DIR="emacs"
-RELEASE_FILES="restaurant data LICENSE src README.md el-get $LOCAL_EMACS_DIR lib Gemfile"
+RELEASE_FILES="restaurant data LICENSE src README.md el-get $LOCAL_EMACS_DIR lib Gemfile bootstrap.sh"
 BUILD_OPTIONS="--without-pop"
 
 # Checks for programs.
@@ -65,6 +65,10 @@ AC_CHECK_PROG(GIT,git,yes,no)
 AC_CHECK_PROG(MERCURIAL,hg,yes,no)
 AC_CHECK_PROG(RUBY,ruby,yes,no)
 AC_CHECK_PROG(BUNDLE,bundle,yes,no)
+
+# check for build deps
+AC_CHECK_HEADER([X11/Xlib-xcb.h])
+AC_CHECK_HEADER([X11/xpm.h])
 
 if test $GIT == "no"; then
    AC_MSG_ERROR([there is no git package in system])
