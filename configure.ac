@@ -65,6 +65,7 @@ AC_CHECK_PROG(GIT,git,yes,no)
 AC_CHECK_PROG(MERCURIAL,hg,yes,no)
 AC_CHECK_PROG(RUBY,ruby,yes,no)
 AC_CHECK_PROG(BUNDLE,bundle,yes,no)
+AC_CHECK_PROG(SSHASKPASS,ssh-askpass,yes,no)
 
 # check for build deps
 AC_CHECK_HEADER([X11/Xlib-xcb.h])
@@ -84,6 +85,10 @@ fi
 
 if test $BUNDLE == "no"; then
    AC_MSG_WARN([there is no bundler package in system. You can not use restaurant (build only)])
+fi
+
+if test $SSHASKPASS == "no"; then
+   AC_MSG_WARN([there is no ssh-askpass package in system. You can not use github pull requests from restaurant (build only)])
 fi
 
 if test x$GIF == "xno"; then
