@@ -697,17 +697,13 @@
   [menu-bar help-menu restaurant-help-separator-1]
   '("--" nil :visible))
 
-;; (define-key global-map
-;;   [menu-bar help-menu restaurant-help-separator-2]
-;;   '("--" nil :visible))
+(define-key global-map
+  [menu-bar help-menu install-required-dependencies]
+  '("Install Restaurant Required Dependencies" . startup-wizard))
 
-;; (define-key global-map
-;;   [menu-bar help-menu install-required-dependencies]
-;;   '("Install Restaurant required dependencies" . startup-wizard))
-
-;; (define-key global-map
-;;   [menu-bar help-menu restaurant-help-separator-3]
-;;   '("--" nil :visible))
+(define-key global-map
+  [menu-bar help-menu restaurant-help-separator-2]
+  '("--" nil :visible))
 
 (define-key global-map
   [menu-bar help-menu restaurant-installation]

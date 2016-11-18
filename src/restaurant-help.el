@@ -52,11 +52,9 @@
 	 'selfdeps-installation-mode))
     (error "RVM installation failed. Can not continue.")))
 
-(defun startup-wizard ()
-  (interactive)
-  (add-to-list 'compilation-finish-functions
-	       'bundle-install-selfdeps)
-  (call-interactively 'rvm-install-rvm))
+(defun startup-wizard (ruby-version)
+  (interactive "sInput ruby version to install: ")
+  (async-shell-command (concat "/bin/sh " (locate-source-file "bootstrap.sh") " " ruby-version) "*Restaurant Bootstrap*"))
 
 (defun show-md-doc-page (name)
   (browse-url (concat "https://github.com/restaurant-ide/restaurant/wiki/" name)))

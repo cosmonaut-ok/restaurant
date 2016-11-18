@@ -2,7 +2,11 @@
 
 set -e
 
-RUBY_VERSION=$(test $1 || echo 2.2)
+if [ ! -z $1 ]; then
+    RUBY_VERSION=$1
+else
+    RUBY_VERSION=2.2
+fi
 
 rvm_installed_p ()
 {
@@ -36,4 +40,4 @@ FIX_PATH="$(echo $CURRENT_PATH | sed 's/\//\\\//g')"
 
 sed "s/\@HERE\@/$FIX_PATH/g" $CURRENT_PATH/data/restaurant.desktop.in > $CURRENT_PATH/Restaurant.desktop
 	
-echo "You must run command 'source ${HOME}/.rvm/scripts/rvm' before launching restaurant"
+printf "\n\nYou must run command 'source ${HOME}/.rvm/scripts/rvm' before launching restaurant, or just restart 'restaurant' if it already launched\n\n"
