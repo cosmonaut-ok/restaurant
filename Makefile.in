@@ -126,9 +126,10 @@ endif
 	@echo "Generating logos and notification images"
 	@for i in 128x128 16x16 24x24 32x32 48x48; do \
 		mkdir -p ${CURRENT_DIR}/data/icons/hicolor/$$i; \
-		convert -resize $$i ${CURRENT_DIR}/data/icons/source/restaurant.svg ${CURRENT_DIR}/data/icons/hicolor/$$i/restaurant.png; done; \
+		convert -resize $$i ${CURRENT_DIR}/data/icons/source/restaurant.svg ${CURRENT_DIR}/data/icons/hicolor/$$i/restaurant.png; \
 		convert -resize $$i -alpha off +level-colors yellow,green ${CURRENT_DIR}/data/icons/source/restaurant.svg ${CURRENT_DIR}/data/icons/hicolor/$$i/status-ok.png; \
-		convert -resize $$i -alpha off +level-colors yellow,red ${CURRENT_DIR}/data/icons/source/restaurant.svg ${CURRENT_DIR}/data/icons/hicolor/$$i/status-fail.png
+		convert -resize $$i -alpha off +level-colors yellow,red ${CURRENT_DIR}/data/icons/source/restaurant.svg ${CURRENT_DIR}/data/icons/hicolor/$$i/status-fail.png; \
+	done
 	@touch build
 
 install:
