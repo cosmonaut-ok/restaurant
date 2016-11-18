@@ -32,6 +32,7 @@ bootstrap_rvm ()
   fi
   # install required gems
   . ${HOME}/.rvm/scripts/rvm
+  rvm use $RUBY_VERSION
   cd $SCRIPT_HOME
   bundle install
 }
