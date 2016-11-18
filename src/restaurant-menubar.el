@@ -306,8 +306,24 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define-key prog-mode-map
+  [menu-bar vcs github create-oauth-token]
+  '("Create New Github OAuth Token" . gh-create-oauth-token))
+
+(define-key prog-mode-map
+  [menu-bar vcs github set-credentials]
+  '("Set Github Username/Password" . gh-auth-set-credentials ))
+
+(define-key prog-mode-map
+  [menu-bar vcs github set-oauth-token]
+  '("Set Github OAuth Token" . gh-auth-set-oauth-token))
+
+(define-key prog-mode-map
+  [menu-bar vcs github gh-separator-1]
+  '("--" nil :visible))
+
+(define-key prog-mode-map
   [menu-bar vcs github create-pullrequest]
-  '("Create Pull Request Branch" . magit-gh-pulls-create-pull-request))
+  '("Create Pull Request From Branch" . magit-gh-pulls-create-pull-request))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
