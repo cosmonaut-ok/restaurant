@@ -146,8 +146,6 @@
   [menu-bar code inspection foodcritic-check-current-file]
   '("Foodcritic File" . foodcritic-check-current-file))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (define-key enh-ruby-mode-map
   [menu-bar code syntax-correction]
   (cons "Correct Syntax" (make-sparse-keymap "Correct Syntax")))
@@ -163,6 +161,10 @@
 (define-key enh-ruby-mode-map
   [menu-bar code syntax-correction autocorrect-project]
   '("Autocorrect Project" . rubocop-autocorrect-project))
+
+(define-key prog-mode-map
+  [menu-bar code format-selected]
+  '("Format Selected" . indent-region))
 
 (define-key prog-mode-map
   [menu-bar code expand]

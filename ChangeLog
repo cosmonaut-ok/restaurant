@@ -11,3 +11,4 @@
 	* Fix starup wizard
 	* Fix incorrect bundler behavior
 	* Add berkshelf support
+	* Add menu item "Code>Format Selected"
