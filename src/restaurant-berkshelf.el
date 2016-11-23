@@ -1,4 +1,4 @@
-;;; bundler.el --- make Restaurant bootstrap and early boot  -*- lexical-binding: t -*-
+;;; berkshelf.el --- make Restaurant bootstrap and early boot  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 
@@ -27,25 +27,25 @@
 
 ;;; Code:
 
-(require 'bundler)
+(require 'berkshelf)
 
-(defvar restaurant/use-bundler t) ;; TODO: convert to defcustom
+(defvar restaurant/use-berkshelf t) ;; TODO: convert to defcustom
 
-;; small bundler hack ;-)
-(defun bundler-colorize-compilation-buffer ()
-  "Colorize bundler compile buffer output."
+;; small berkshelf hack ;-)
+(defun berkshelf-colorize-compilation-buffer ()
+  "Colorize berkshelf compile buffer output."
   (toggle-read-only)
   (ansi-color-apply-on-region compilation-filter-start (point))
   (toggle-read-only))
 
 ;; define test kitchen compilation mode
-(define-compilation-mode bundler-compilation-mode "Bundler compilation"
-  "Compilation mode for Bundler output."
-  (add-hook 'compilation-filter-hook 'bundler-colorize-compilation-buffer nil t))
+(define-compilation-mode berkshelf-compilation-mode "Berkshelf compilation"
+  "Compilation mode for Berkshelf output."
+  (add-hook 'compilation-filter-hook 'berkshelf-colorize-compilation-buffer nil t))
 
-(defun bundle-command (cmd)
+(defun berks-command (cmd)
   "Run CMD in an async buffer."
-  (let ((default-directory (bundle-locate-gemfile)))
-    (compile cmd 'bundler-compilation-mode)))
+  (let ((default-directory (berks-locate-berksfile)))
+    (compile cmd 'berkshelf-compilation-mode)))
 
-;;; restaurant-bundler.el ends here
+;;; restaurant-berkshelf.el ends here

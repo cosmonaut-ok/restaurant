@@ -13,7 +13,7 @@
 
 (defvar restaurant/list-load-components
   '("lib" "custom" "common" "tabbar" "git" "yasnippet" "company"
-    "ruby" "rspec" "chef" "kitchen" "bundler"
+    "ruby" "rspec" "chef" "kitchen" "bundler" "berkshelf"
     "foodcritic" "rvm" "codebrowser" "markdown"
     "yaml" "json" "web" "erb" "fly" "popup-menu"
     "shell-script" "menubar" "toolbar" "theme"

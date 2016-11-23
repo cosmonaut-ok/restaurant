@@ -625,6 +625,33 @@
   '("Outdated" . bundle-outdated))
 
 ;;;
+;;; berkshelf Menu
+;;;
+(define-key global-map
+  [menu-bar tools berkshelf]
+  (cons "Berkshelf" (make-sparse-keymap "Berkshelf")))
+
+(define-key global-map
+  [menu-bar tools berkshelf berks-show]
+  '("Show" . berks-show))
+
+(define-key global-map
+  [menu-bar tools berkshelf berks-update]
+  '("Update" . berks-update))
+
+(define-key global-map
+  [menu-bar tools berkshelf berks-version]
+  '("Version" . berks-version))
+
+(define-key global-map
+  [menu-bar tools berkshelf berks-install]
+  '("Install" . berks-install))
+
+(define-key global-map
+  [menu-bar tools berkshelf berks-outdated]
+  '("Outdated" . berks-outdated))
+
+;;;
 ;;; keyboard macros menu
 ;;;
 (define-key global-map

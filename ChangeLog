@@ -9,4 +9,5 @@
 	* Change logo
 	* Improve github support
 	* Fix starup wizard
-
+	* Fix incorrect bundler behavior
+	* Add berkshelf support
