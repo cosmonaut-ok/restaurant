@@ -31,10 +31,8 @@ bootstrap_rvm ()
     curl -sSL https://get.rvm.io | bash -s stable --ruby=${RUBY_VERSION} --auto-dotfiles --gems=bundler
   fi
   # install required gems
-  . ${HOME}/.rvm/scripts/rvm
-  rvm use $RUBY_VERSION
-  cd $SCRIPT_HOME
-  bundle install
+  ## use ``/bin/bash --login`` because rvm is stupid
+  /bin/bash --login -c ". ${HOME}/.rvm/scripts/rvm && rvm use $RUBY_VERSION && cd $SCRIPT_HOME && bundle install"
 }
 
 bootstrap_rvm
