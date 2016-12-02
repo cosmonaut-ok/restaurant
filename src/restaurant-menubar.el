@@ -667,7 +667,7 @@
   '("--" nil :visible))
 
 (define-key global-map
-  [menu-bar tools berkshelf berks-outdated]
+  [menu-bar tools berkshelf berks-upload]
   '("Upload" . berks-upload))
 
 (define-key global-map
