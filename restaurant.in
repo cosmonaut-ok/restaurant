@@ -4,6 +4,31 @@ set -e
 
 ME=$(readlink -f $0)
 MYDIR=$(dirname $ME)
+REQUIRED_PACKAGES="git"
+
+print_message()
+{
+    message=$@
+    msg_engine=""
+    ## check
+    if [ -n "$(which zenity)" ]; then
+	msg_engine="zenity --error --text"
+    elif [ -n "$(which kdialog)" ]; then
+	msg_engine="kdialog --error"
+    elif [ -n "$(which xdialog)" ]; then
+	msg_engine="dialog --error"
+    else
+	msg_engine="echo"
+    fi
+    $msg_engine "$message"
+}
+
+for i in $REQUIRED_PACKAGES; do
+    if [ -z "$(which $i)" ]; then
+	print_message You must install package \"$i\" firstly
+	exit 1
+    fi
+done
 
 if [ ! -z $EMACS ]; then
     :

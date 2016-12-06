@@ -56,7 +56,7 @@
       (when (executable-find "pry")
 	(robe-start))
       (custom-set-variables '(restaurant/ruby-present-p t)))
-  (warn "WARNING! ``Ruby'' and/or ``irb'' are not installed in your system. You can install it, bu clicking ``Menu'' -> ``Help'' -> ``Install Restaurant required dependencies'',\nor via RVM (``Menu'' -> ``Tools'' -> ``RVM'' -> ``install gemfile'' -> ``irb'') and irb/pry via gems or in your preferred way, else only restricted ruby support available"))
+  (warn "WARNING! ``Ruby'' and/or ``irb'' are not installed in your system. You can install it, by clicking ``Menu'' -> ``Help'' -> ``Install Restaurant required dependencies'',\nor via RVM (``Menu'' -> ``Tools'' -> ``RVM'' -> ``install gemfile'' -> ``irb'') and irb/pry via gems or in your preferred way, else only restricted ruby support available"))
 
 ;; (defalias 'ruby-mode 'enh-ruby-mode)
 
