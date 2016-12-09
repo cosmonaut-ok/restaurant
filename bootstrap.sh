@@ -9,7 +9,7 @@ else
 fi
 
 SCRIPT_HOME="$(dirname `realpath $0`)"
-REQUIRED_PACKAGES="git"
+REQUIRED_PACKAGES="git vagrant"
 
 print_message()
 {
