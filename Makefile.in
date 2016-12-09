@@ -137,12 +137,12 @@ install:
 
 clean-build:
 	@echo "Clearing build directory..."
-	@[ -d ${BUILD_DIR} ] && rm -rf ${BUILD_DIR} || return 0
+	@[ -d ${BUILD_DIR} ] && rm -rf ${BUILD_DIR} || true
 
 clean-precompile:
 	@echo "Cleaning precompiled elc files..."
 	@rm -f src/*.elc
-	@[ -d lib ] && find lib -type f -name '*.elc' -delete || return 0
+	@[ -d lib ] && find lib -type f -name '*.elc' -delete || true
 
 clean-emacs: clean-build
 	@echo "Removing emacs directory..."

@@ -31,21 +31,4 @@
 
 (defvar restaurant/use-berkshelf t) ;; TODO: convert to defcustom
 
-;; small berkshelf hack ;-)
-(defun berkshelf-colorize-compilation-buffer ()
-  "Colorize berkshelf compile buffer output."
-  (toggle-read-only)
-  (ansi-color-apply-on-region compilation-filter-start (point))
-  (toggle-read-only))
-
-;; define test kitchen compilation mode
-(define-compilation-mode berkshelf-compilation-mode "Berkshelf compilation"
-  "Compilation mode for Berkshelf output."
-  (add-hook 'compilation-filter-hook 'berkshelf-colorize-compilation-buffer nil t))
-
-(defun berks-command (cmd)
-  "Run CMD in an async buffer."
-  (let ((default-directory (berks-locate-berksfile)))
-    (compile cmd 'berkshelf-compilation-mode)))
-
 ;;; restaurant-berkshelf.el ends here

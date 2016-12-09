@@ -629,29 +629,54 @@
 ;;;
 ;;; berkshelf Menu
 ;;;
+
 (define-key global-map
   [menu-bar tools berkshelf]
   (cons "Berkshelf" (make-sparse-keymap "Berkshelf")))
 
 (define-key global-map
+  [menu-bar tools berkshelf berks-viz]
+  '("Build Dependencies Graph" . berks-viz))
+
+(define-key global-map
+  [menu-bar tools berkshelf berks-contingent]
+  '("Show Dependencies For Cookbook" . berks-contingent))
+
+(define-key global-map
+  [menu-bar tools berkshelf berks-list]
+  '("List" . berks-list))
+
+(define-key global-map
   [menu-bar tools berkshelf berks-show]
-  '("Show" . berks-show))
+  '("Info" . berks-info))
+
+(define-key global-map
+  [menu-bar tools berkshelf berks-verify]
+  '("Verify" . berks-verify))
+
+(define-key global-map
+  [menu-bar tools berkshelf berks-outdated]
+  '("Outdated" . berks-outdated))
+
+(define-key global-map
+  [menu-bar tools berkshelf berks-search]
+  '("Search For Remote Cookbooks" . berks-search))
+
+(define-key global-map
+  [menu-bar tools berkshelf berks-delimiter-1]
+  '("--" nil :visible))
+
+(define-key global-map
+  [menu-bar tools berkshelf berks-upload]
+  '("Upload" . berks-upload))
 
 (define-key global-map
   [menu-bar tools berkshelf berks-update]
   '("Update" . berks-update))
 
 (define-key global-map
-  [menu-bar tools berkshelf berks-version]
-  '("Version" . berks-version))
-
-(define-key global-map
   [menu-bar tools berkshelf berks-install]
   '("Install" . berks-install))
-
-(define-key global-map
-  [menu-bar tools berkshelf berks-outdated]
-  '("Outdated" . berks-outdated))
 
 ;;;
 ;;; keyboard macros menu

@@ -161,6 +161,9 @@
 			 (call-interactively (intern (ido-completing-read
 						      "M-x " (all-completions "" obarray 'commandp))))))
 
+;; set ido-completing-read as default completing function
+(setq-default completing-read-function 'ido-completing-read)
+
 ;;;; TODO: temporary disabled during some emacs bug
 ;; (defvar ido-enable-replace-completing-read t
 ;;   "If t, use ido-completing-read instead of completing-read if possible.
