@@ -66,13 +66,14 @@ AC_CHECK_PROG(MERCURIAL,hg,yes,no)
 AC_CHECK_PROG(RUBY,ruby,yes,no)
 AC_CHECK_PROG(BUNDLE,bundle,yes,no)
 AC_CHECK_PROG(SSHASKPASS,ssh-askpass,yes,no)
+AC_CHECK_PROG(MARKDOWN,markdown,yes,no)
 
 # check for build deps
 AC_CHECK_HEADER([X11/Xlib-xcb.h])
 AC_CHECK_HEADER([X11/xpm.h])
 
 if test $GIT == "no"; then
-   AC_MSG_ERROR([there is no git package in system])
+   AC_MSG_ERROR([there is no git package in system. This binary required for correct restaurant working])
 fi
 
 if test $MERCURIAL == "no"; then
@@ -89,6 +90,10 @@ fi
 
 if test $SSHASKPASS == "no"; then
    AC_MSG_WARN([there is no ssh-askpass package in system. You can not use github pull requests from restaurant (build only)])
+fi
+
+if test $MARKDOWN == "no"; then
+   AC_MSG_ERROR([there is no markdown package in system. This binary required for correct restaurant working])
 fi
 
 if test x$GIF == "xno"; then
