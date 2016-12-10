@@ -191,9 +191,9 @@
 ;; 				     nil require-match initial-input hist def))
 ;; 	ad-do-it))))
 
-;; ;; I found ido-completing-read to interfere when using dired mode buffers (e.g., renaming files). To turn it off
-;; (add-hook 'dired-mode-hook
-;; 	  '(lambda () (setq ido-enable-replace-completing-read nil)))
+;; I found ido-completing-read to interfere when using dired mode buffers (e.g., renaming files). To turn it off
+(add-hook 'dired-mode-hook
+	  '(lambda () (setq ido-enable-replace-completing-read nil)))
 
 ;;;; If we read a compressed file, uncompress it on the fly:
 ;;;; (this works with .tar.gz and .tgz file as well)
