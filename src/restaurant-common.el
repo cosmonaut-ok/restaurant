@@ -369,6 +369,13 @@
   (setq dirtrackp nil))
 
 ;;;
+;;; Ediff customizations
+;;;
+(setq ediff-ignore-similar-regions t)
+(setq ediff-use-last-dir t)
+(setq ediff-diff-options " -b ")
+
+;;;
 ;;; common compilation options
 ;;;
 
