@@ -2,7 +2,7 @@
 
 . config.in
 
-CHEF_MODE_URL="https://raw.githubusercontent.com/restaurant-ide/chef-mode/master/chef-mode.el"
+CHEF_MODE_URL="https://raw.githubusercontent.com/mpasternacki/chef-mode/master/chef-mode.el"
 CHEF_URL="https://raw.githubusercontent.com/cosmonaut-ok/emacs-chef/master/chef.el"
 KITCHEN_URL="https://raw.githubusercontent.com/restaurant-ide/test-kitchen-el/master/test-kitchen.el"
 KNIFE_URL="https://raw.githubusercontent.com/bryanwb/knife-mode/master/knife.el"
