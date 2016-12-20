@@ -242,7 +242,9 @@
   (font-lock-mode 1)
   ;; Drag and move selcted
   (drag-stuff-mode 1)
-
+  ;; set global indent-tabs-mode
+  (setq indent-tabs-mode restaurant/indent-tabs-mode)
+  
   (local-set-key (kbd "C-c C-f") 'flash-cross)
   (local-set-key (kbd "RET") 'newline-and-indent)
 
