@@ -663,6 +663,10 @@
   '("Search For Remote Cookbooks" . berks-search))
 
 (define-key global-map
+  [menu-bar tools berkshelf berks-update-cookbook]
+  '("Update Cookbook" . berks-update-cookbook))
+
+(define-key global-map
   [menu-bar tools berkshelf berks-delimiter-1]
   '("--" nil :visible))
 
