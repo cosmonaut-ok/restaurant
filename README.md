@@ -12,6 +12,19 @@ There is no specialized Chef IDE for DevOps for free usage (there is RubyMine wi
 
 ...which supports *code highlight*, *autocompletion*, inline *syntax* and *style checking* (via, `rubocop` and `foodcritic`) *code expansion* (via `code snippets`), *code refactoring*, built-in *unit* (via `rspec`) and *integration* tests (via `kitchen`) launching and interaction. Also, Restaurant supports tools `rvm`, `bundler`, `berkshelf` (via built-in extensions to this tools), `git` and `github` integrations, *yaml*, *json* and *markdown* file tools (like, reformatting, visualising etc).
 
+### Integrations
+
+* Chef
+* PRY
+* rspec/chefspec
+* rubocop
+* foodcritic
+* kitchen/serverspec/inspec
+* berkshelf
+* bundler
+* RVM
+* git/github
+
 ## Quick Start
 
 Let's suppose, that you have no Restaurant, no ruby, no bundler... actually nothing
