@@ -46,4 +46,12 @@
 	  (with-current-buffer (term "/bin/bash")
 	    (term-send-raw-string (concat test-kitchen-login-command " " instance "\n"))))
       (error "Couldn't locate .kitchen.yml!"))))
-;;
+
+;; we use rvm and custom binary path to kitchen, so don't need 'chef exec'
+(custom-set-variables
+ '(test-kitchen-converge-command "kitchen converge")
+ '(test-kitchen-destroy-command "kitchen destroy")
+ '(test-kitchen-list-command "kitchen list")
+ '(test-kitchen-test-command "kitchen test")
+ '(test-kitchen-verify-command "kitchen verify")
+ )
