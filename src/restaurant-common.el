@@ -149,6 +149,8 @@
 ;; https://github.com/magnars/.emacs.d/blob/master/settings/setup-ido.el
 (require 'ido)
 (require 'ido-vertical-mode)
+(require 'ido-completing-read+)
+;;
 (ido-mode 1)
 (ido-vertical-mode 1)
 (setq ido-vertical-show-count t)
@@ -162,6 +164,7 @@
 						      "M-x " (all-completions "" obarray 'commandp))))))
 
 ;; set ido-completing-read as default completing function
+(setq ido-cr+-replace-completely t)
 (setq-default completing-read-function 'ido-completing-read)
 
 ;;;; TODO: temporary disabled during some emacs bug
