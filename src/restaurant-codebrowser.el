@@ -39,7 +39,7 @@
     (ecb-redraw-layout))
 
   ;;;; defining standard layouts
-  (ecb-layout-define "restaurant-default" left
+  (ecb-layout-define "restaurant-3-0" left
 		     "This function creates the following layout:
 
    -------------------------------------------------------
@@ -148,6 +148,42 @@ little more place."
 		     (ecb-split-ver 0.66)
 		     (ecb-set-sources-buffer)
 		     (select-window (previous-window (previous-window (selected-window) 0) 0)))
+
+  (ecb-layout-define "restaurant-default" left-right
+		     "This function creates the following layout:
+
+   --------------------------------------------------------------
+   |              |                               |             |
+   |  Methods     |                               |             |
+   |              |                               |             |
+   |              |                               |             |
+   |              |                               |             |
+   |              |                               | Directories |
+   |              |                               |             |
+   |--------------|             Edit              |     and     |
+   |              |                               |             |
+   |  History     |                               |   Sources   |
+   |              |                               |             |
+   |              |                               |             |
+   |              |                               |             |
+   |              |                               |             |
+   |              |                               |             |
+   --------------------------------------------------------------
+   |                                                            |
+   |                    Compilation                             |
+   |                                                            |
+   --------------------------------------------------------------
+
+If you have not set a compilation-window in `ecb-compile-window-height' then
+the layout contains no persistent compilation window and the other windows get a
+little more place."
+		     (ecb-set-methods-buffer)
+		     (ecb-split-ver 0.5)
+		     (ecb-set-history-buffer)
+		     (select-window (next-window (next-window)))
+		     (ecb-set-directories-buffer)
+		     (select-window (previous-window (selected-window) 0) 0)
+		     (push "restaurant-default" ecb-show-sources-in-directories-buffer))
 
   (custom-set-variables
    '(ecb-tip-of-the-day nil)
