@@ -39,6 +39,42 @@
     (ecb-redraw-layout))
 
   ;;;; defining standard layouts
+  (ecb-layout-define "restaurant-default" left
+		     "This function creates the following layout:
+
+   -------------------------------------------------------
+   |              |                                      |
+   |  Speedbar    |                                      |
+   |              |                                      |
+   |              |                                      |
+   |              |                                      |
+   |              |                                      |
+   |              |                                      |
+   |--------------|                 Edit                 |
+   |              |                                      |
+   |   History    |                                      |
+   |              |                                      |
+   |--------------|                                      |
+   |              |                                      |
+   |   Methods    |                                      |
+   |              |                                      |
+   -------------------------------------------------------
+   |                                                     |
+   |                    Compilation                      |
+   |                                                     |
+   -------------------------------------------------------
+
+If you have not set a compilation-window in `ecb-compile-window-height' then
+the layout contains no persistent compilation window and the other windows get a
+little more place. This layout works best if it is contained in
+`ecb-show-sources-in-directories-buffer'!"
+		     (ecb-set-speedbar-buffer)
+		     (ecb-split-ver 0.5)
+		     (ecb-set-history-buffer)
+		     (ecb-split-ver 0.5)
+		     (ecb-set-methods-buffer)
+		     (select-window (next-window)))
+
   (ecb-layout-define "restaurant-3-1" left-right
 		     "This function creates the following layout:
 
@@ -116,7 +152,7 @@ little more place."
   (custom-set-variables
    '(ecb-tip-of-the-day nil)
    '(ecb-options-version "2.40")
-   '(ecb-layout-name "restaurant-2-2")
+   '(ecb-layout-name "restaurant-default")
    '(ecb-windows-width 0.2)
    '(ecb-tip-of-the-day nil)
    '(ecb-compile-window-height 0.15)
@@ -178,18 +214,19 @@ little more place."
   )
 
 ;; (setq ecb-create-layout-file (locate-user-config-file "ecb-user-layouts.el"))
+;; default setup for speedbar
+(require 'sr-speedbar)
+(custom-set-variables
+ '(speedbar-use-images t)
+ '(speedbar-show-unknown-files t))
 
 (when (not restaurant/code-browser-switch-to-simple)
   (custom-set-variables
-   '(ecb-layout-name "restaurant-2-2")))
+   '(ecb-layout-name "restaurant-default")))
 
 (when restaurant/code-browser-switch-to-simple
-  (require 'sr-speedbar)
   (custom-set-variables
-   '(speedbar-use-images t)
-   '(sr-speedbar-right-side nil)
-   '(speedbar-show-unknown-files t))
-  )
+   '(sr-speedbar-right-side nil)))
 
 (defun toggle-code-browser ()
   (interactive)
