@@ -49,13 +49,20 @@
 ;;;; Global default configuration parameters
 
 (custom-set-variables
- '(yes-or-no-p 'y-or-n-p) ;replace y-e-s by y
- '(inhibit-startup-message t) ;no splash screen
+ '(yes-or-no-p 'y-or-n-p)		;replace y-e-s by y
+ '(inhibit-startup-message t)		;no splash screen
  ;; backup
  '(make-backup-files restaurant/autobackup)
  '(use-backup-dir restaurant/autobackup) ;use backup directory
  '(version-control t) ;; Enable versioning with default values (keep five last versions, I think!)
+ '(backup-by-copying t)
  '(delete-old-versions t)
+ '(backup-directory-alist
+   `((".*" . ,restaurant/backup-directory))) ; don't litter my fs tree
+ '(auto-save-file-name-transforms
+   `((".*" ,restaurant/backup-directory t)))
+ `(auto-save-interval ,restaurant/autobackup-interval)
+ ;; other
  '(query-replace-highlight t)           ;highlight during query
  '(search-highlight t)                  ;highlight incremental search
  '(ls-lisp-dirs-first t)                ;display dirs first in dired
@@ -410,5 +417,19 @@
 			 ("org" . "http://orgmode.org/elpa/")))
 
 (package-initialize)
+
+;;;
+;;; automatically remove old backups
+;;;
+(when restaurant/clear-autobackups
+  (message "Deleting old backup files...")
+  (let ((week (* 60 60 24 7))
+	(current (float-time (current-time))))
+    (dolist (file (directory-files temporary-file-directory t))
+      (when (and (backup-file-name-p file)
+		 (> (- current (float-time (fifth (file-attributes file))))
+		    week))
+	(message "%s" file)
+	(delete-file file)))))
 
 ;;; restaurant-common.el ends here

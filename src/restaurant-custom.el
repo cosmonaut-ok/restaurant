@@ -107,7 +107,19 @@
   :group 'restaurant/backup
   )
 
-(defcustom restaurant/backup-directory (concat restaurant/user-config-directory "/backups")
+(defcustom restaurant/clear-autobackups nil
+  "Clear old autobackup files during startup."
+  :type 'boolean
+  :group 'restaurant/backup
+  )
+
+(defcustom restaurant/autobackup-interval 300
+  "Set interval between autobackups."
+  :type 'integer
+  :group 'restaurant/backup
+  )
+
+(defcustom restaurant/backup-directory (locate-user-data-file "backups/")
   "Enable backups." ;; FIXME: not working yet
   :type 'directory
   :group 'restaurant/backup
