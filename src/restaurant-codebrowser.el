@@ -30,6 +30,8 @@
 ;;;
 ;;; ecb
 ;;;
+(require 'sr-speedbar)
+
 (when (not restaurant/code-browser-switch-to-simple)
 
   (require 'ecb)
@@ -197,6 +199,7 @@ little more place."
    '(ecb-enlarged-compilation-window-max-height 0.6) ;; best, half, number
    '(ecb-create-layout-file (locate-user-config-file "ecb-user-layouts.el"))
    '(ecb-tip-of-the-day-file (locate-user-config-file "ecb-tip-of-day.el"))
+   '(ecb-auto-update-methods-after-save t)
    '(ecb-source-path (quote (("/" "Root"))))
 
    ;; ecb-windows-width 30
@@ -251,10 +254,14 @@ little more place."
 
 ;; (setq ecb-create-layout-file (locate-user-config-file "ecb-user-layouts.el"))
 ;; default setup for speedbar
-(require 'sr-speedbar)
+
 (custom-set-variables
+ ;; speedbar
  '(speedbar-use-images t)
- '(speedbar-show-unknown-files t))
+ '(speedbar-show-unknown-files t)
+
+ 
+ )
 
 (when (not restaurant/code-browser-switch-to-simple)
   (custom-set-variables
