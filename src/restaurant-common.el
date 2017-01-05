@@ -86,15 +86,14 @@
 (defhooklet restaurant/cua-mode prog-mode restaurant/familiar-copy-paste-cut
   (cua-mode t))
 
-;;;; Enable Drag stuff
-(drag-stuff-global-mode 1)
-
+(custom-set-variables
 ;;;; Sync linux and eamcs clipboards
-;; after copy Ctrl+c in Linux X11, you can paste by `yank' in emacs
-(setq x-select-enable-clipboard t)
+ ;; after copy Ctrl+c in Linux X11, you can paste by `yank' in emacs
+ '(x-select-enable-clipboard t)
 
-;; after mouse selection in X11, you can paste by `yank' in emacs
-(setq x-select-enable-primary t)
+ ;; after mouse selection in X11, you can paste by `yank' in emacs
+ '(x-select-enable-primary t)
+ )
 
 ;;;; Move lines/regions up/down
 (require 'drag-stuff)
@@ -160,10 +159,13 @@
 ;;
 (ido-mode 1)
 (ido-vertical-mode 1)
-(setq ido-vertical-show-count t)
 (ido-better-flex/enable)
-(setq ido-enable-flex-matching t)
-(setq ido-vertical-define-keys 'C-n-C-p-up-and-down)
+
+(custom-set-variables
+ '(ido-vertical-show-count t)
+ '(ido-enable-flex-matching t)
+ '(ido-vertical-define-keys 'C-n-C-p-up-and-down)
+ )
 
 (global-set-key "\M-x" (lambda ()
 			 (interactive)
@@ -174,40 +176,10 @@
 (setq ido-cr+-replace-completely t)
 (setq-default completing-read-function 'ido-completing-read)
 
-;;;; TODO: temporary disabled during some emacs bug
-;; (defvar ido-enable-replace-completing-read t
-;;   "If t, use ido-completing-read instead of completing-read if possible.
-    
-;;     Set it to nil using let in around-advice for functions where the
-;;     original completing-read is required.  For example, if a function
-;;     foo absolutely must use the original completing-read, define some
-;;     advice like this:
-    
-;;     (defadvice foo (around original-completing-read-only activate)
-;;       (let (ido-enable-replace-completing-read) ad-do-it))")
-
-;; ;; Replace completing-read wherever possible, unless directed otherwise
-;; (defadvice completing-read
-;;     (around use-ido-when-possible activate)
-;;   (if (or (not ido-enable-replace-completing-read) ; Manual override disable ido
-;; 	  (and (boundp 'ido-cur-list)
-;; 	       ido-cur-list)) ; Avoid infinite loop from ido calling this
-;;       ad-do-it
-;;     (let ((allcomp (all-completions "" collection predicate)))
-;;       (if allcomp
-;; 	  (setq ad-return-value
-;; 		(ido-completing-read prompt
-;; 				     allcomp
-;; 				     nil require-match initial-input hist def))
-;; 	ad-do-it))))
-
-;; I found ido-completing-read to interfere when using dired mode buffers (e.g., renaming files). To turn it off
-(add-hook 'dired-mode-hook
-	  '(lambda () (setq ido-enable-replace-completing-read nil)))
-
 ;;;; If we read a compressed file, uncompress it on the fly:
 ;;;; (this works with .tar.gz and .tgz file as well)
-(setq auto-compression-mode 1)
+(custom-set-variables
+ '(auto-compression-mode 1))
 
 ;;;; fill-column
 (defun restaurant/fill-column ()
@@ -219,9 +191,6 @@
 ;;;; Uniquify buffers
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse)
-
-;; ;; WAT
-;; (setq stack-trace-on-error nil)
 
 ;;;
 ;;; Prog mode configuration
