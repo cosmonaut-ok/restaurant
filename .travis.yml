@@ -85,7 +85,7 @@ branches:
 ###
 
 install:
-  - sudo apt-get -qq install realpath imagemagick autoconf automake git libdbus-1-dev xdg-user-dirs wget ruby ruby-bundler
+  - sudo apt-get -qq install realpath imagemagick autoconf automake git libdbus-1-dev xdg-user-dirs wget ruby ruby-bundler markdown ssh-askpass
 
 script:
   - autoconf
