@@ -196,7 +196,7 @@
 ;;; RVM form enh-ruby-mode
 ;;;
 (defhooklet restaurant/ruby-rvm enh-ruby-mode restaurant/enable-rvm
-  (rvm-use-default)
+  ;; (rvm-use-default)
   (require 'rvm)
   ;; connect rvm+robe
   (when restaurant/enable-robe
