@@ -125,6 +125,16 @@
  '(semanticdb-default-save-directory (locate-user-cache-file "restaurant-semanticdb"))
  '(srecode-map-save-file (locate-user-cache-file "restaurant-srecode-map.el")))
 
+;; setup semantic/imenu autorefresh
+(custom-set-variables
+ '(imenu-auto-rescan t)
+ )
+
+(global-semanticdb-minor-mode 1)
+(global-semantic-mode 1)
+(global-semantic-idle-scheduler-mode 1)
+(semantic-load-enable-minimum-features)
+
 ;;;; Column & line numbers in mode bar
 (column-number-mode t)
 (line-number-mode t)
