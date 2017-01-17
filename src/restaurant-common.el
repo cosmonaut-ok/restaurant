@@ -80,7 +80,7 @@
   ;; https://www.emacswiki.org/emacs/CuaMode
   (cua-mode t))
 
-(defhooklet restaurant/cua-mode test-mode restaurant/familiar-copy-paste-cut
+(defhooklet restaurant/cua-mode text-mode restaurant/familiar-copy-paste-cut
   (cua-mode t))
 
 (defhooklet restaurant/cua-mode prog-mode restaurant/familiar-copy-paste-cut
