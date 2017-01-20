@@ -95,7 +95,7 @@ ifeq (@STATIC@, yes)
 else
 	@echo "Getting required dependencies via el-get..."
 	@EMACSDATA=${CURRENT_DIR}/@LOCAL_EMACS_DIR@/etc/ LD_LIBRARY_PATH=${LDLIB} ${LOCAL_EMACS} -Q --debug-init --script ./src/bootstrap.el
-	@cd ${CURRENT_DIR}/el-get/yasnippets && ln -s ruby-mode enh-ruby-mode
+	@cd ${CURRENT_DIR}/el-get/yasnippets && ln -sf ruby-mode enh-ruby-mode
 endif
 
 lib: emacs
