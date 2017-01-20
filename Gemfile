@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rubocop', '= 0.41.0'
+gem 'rubocop', '~> 0.42.0'
 gem 'berkshelf', '~> 3.2.0'
 gem 'chef'
 gem 'knife-solo', '~> 0.4.0'
@@ -19,6 +19,7 @@ gem 'activesupport', '~> 4.2.0'
 gem 'buff-ignore', '~> 1.1.0'
 gem 'json', '< 2.0.0'
 gem 'dep_selector', '~> 1.0.3'
+gem 'chefstyle', '~> 0.4.0'
 
 group :metrics do
   gem 'simplecov', require: false

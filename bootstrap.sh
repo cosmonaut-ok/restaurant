@@ -31,15 +31,12 @@ print_message()
 bootstrap_with_packages ()
 {
     os="$(which lsb_release 2>/dev/null >/dev/null && lsb_release -s -i)"
-    sudo_cmd="$(which sudo1 || true)"
+    sudo_cmd="$(which sudo || true)"
     su_cmd="su -c"
         
     case $os in
 	Debian|Ubuntu)
 	    echo "installing required packages"
-	    echo sudo: $sudo_cmd
-	    echo su  : $su_cmd
-	    
 	    if [ -n "$sudo_cmd" ]; then
 		$sudo_cmd apt-get -y install $REQUIRED_PACKAGES
 	    else
@@ -75,7 +72,11 @@ bootstrap_rvm ()
 {
   if rvm_installed_p; then
       echo "RVM alreary installed. Skipping installation. Installing ruby and required gems"
-      rvm install ${RUBY_VERSION}
+      if [ -z "$(rvm list | grep ${RUBY_VERSION})" ]; then
+	  rvm install ${RUBY_VERSION}
+      else
+	  echo "Ruby ${RUBY_VERSION} already installed. Switching to it"
+      fi
       rvm use ${RUBY_VERSION}
       gem install bundler
   else
