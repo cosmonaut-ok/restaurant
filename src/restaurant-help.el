@@ -29,7 +29,7 @@
 
 (defun restaurant-version (&optional short)
   (interactive)
-  (let ((version "0.3.1")) ;; autoconf-anchor
+  (let ((version "LATEST")) ;; autoconf-anchor
     (if short
 	(princ version)
       (princ (concat "Restaurant Chef IDE version: " version ".\nBuild with Emacs version:\n" (emacs-version) "\n")))))
