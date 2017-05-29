@@ -1,5 +1,7 @@
 # Restaurant
 
+[![Travis Build Status](https://api.travis-ci.org/restaurant-ide/restaurant.svg?branch=master)](https://travis-ci.org/restaurant-ide/restaurant)
+
 ## What is Restaurant IDE and Why (just another IDE?).
 
 **Restaurant** software is an Integrated Development Environment for Chef developers.
