@@ -333,9 +333,8 @@
 ;;;
 ;;; projectile
 ;;;
-(defhooklet restaurant/projectile prog-mode t
-  (require 'projectile)
-  (projectile-mode 1))
+(require 'projectile)
+(projectile-global-mode 1)
 
 ;;;
 ;;; require-final-newline
