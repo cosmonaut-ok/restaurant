@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rubocop', '~> 0.46.0'
 gem 'berkshelf', '~> 3.2.0'
-gem 'chef'
+gem 'chef', '~> 11.16.0'
 gem 'knife-solo', '~> 0.4.0'
 gem 'knife-solo_data_bag'
 gem 'foodcritic', '~> 4.0.0'
