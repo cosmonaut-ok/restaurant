@@ -65,7 +65,7 @@ else
 	@cd ${BUILD_DIR}/${SOURCE_DIR} && \
 	autoreconf -fi -I m4
 	cd ${BUILD_DIR}/${SOURCE_DIR} && \
-	./configure --prefix=/ --with-x-toolkit=@GUI_TOOLKIT@ @BUILD_OPTIONS@ && \
+	./configure CFLAGS=@EMACS_CFLAGS@ --prefix=/ --with-x-toolkit=@GUI_TOOLKIT@ @BUILD_OPTIONS@ && \
 	make && \
 	make install DESTDIR=${BUILD_DIR}/emacs-build
 	@echo "Preparing to working state..."

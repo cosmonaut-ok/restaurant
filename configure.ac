@@ -32,6 +32,7 @@ AC_PREREQ(2.69)
 AC_INIT(Restaurant Chef IDE, esyscmd(grep autoconf-anchor src/restaurant-help.el | cut -d\" -f2 | tr -d \\n), cosmonaut.ok@zoho.com)
 
 AC_SUBST(EMACS_URI)
+AC_SUBST(EMACS_CFLAGS)
 AC_SUBST(BUILD_DIR)
 AC_SUBST(GUI_TOOLKIT)
 AC_SUBST(RELEASE_FILES)
@@ -55,7 +56,8 @@ AC_ARG_WITH(gif,      [  --with-gif              build emacs with/without gif su
 AC_ARG_WITH(png,      [  --with-png              build emacs with/without png support (default no)], PNG=$withval, PNG="no")
 AC_ARG_WITH(jpeg,     [  --with-jpeg             build emacs with/without jped support (default no)], JPEG=$withval, JPEG="no")
 AC_ARG_WITH(tiff,     [  --with-tiff             build emacs with/without tiff support (default no)], TIFF=$withval, TIFF="no")
-AC_ARG_WITH(makeinfo,     [  --with-makeinfo         build emacs with/without makeinfo additional information (default no)], MAKEINFO=$withval, MAKEINFO="no")
+AC_ARG_WITH(cflags,   [  --with-emacs-cflags     build emacs with specific emacs cflags], EMACS_CFLAGS=$withval, EMACS_CFLAGS="-no-pie")
+AC_ARG_WITH(makeinfo, [  --with-makeinfo         build emacs with/without makeinfo additional information (default no)], MAKEINFO=$withval, MAKEINFO="no")
 # AC_ARG_WITH(xml2,     [  --without-xml2             build emacs with/without xml2 support (default no)], ECL_PATH=$withval, XML2="auto")
 AC_ARG_ENABLE(byte-compile, [  --enable-byte-compile  Enables Restaurant bute compilation (experimental, default: disabled)], [ BYTE_COMPILE_P=yes ])
 AC_ARG_ENABLE(static, [  --enable-statuc  Enables static precompiled archives, instead of full build], [ STATIC=yes ])
@@ -67,6 +69,7 @@ AC_CHECK_PROG(RUBY,ruby,yes,no)
 AC_CHECK_PROG(BUNDLE,bundle,yes,no)
 AC_CHECK_PROG(SSHASKPASS,ssh-askpass,yes,no)
 AC_CHECK_PROG(MARKDOWN,markdown,yes,no)
+AC_CHECK_PROG(RSVG_CONVERT,rsvg-convert,yes,no)
 
 # check for build deps
 AC_CHECK_HEADER([X11/Xlib-xcb.h])
@@ -94,6 +97,10 @@ fi
 
 if test $MARKDOWN == "no"; then
    AC_MSG_ERROR([there is no markdown package in system. This binary required for correct restaurant working])
+fi
+
+if test $RSVG_CONVERT == "no"; then
+   AC_MSG_ERROR([there is no librsvg-bin package in system. This binary rsvg-convert required for correct restaurant working])
 fi
 
 if test x$GIF == "xno"; then
