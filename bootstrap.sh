@@ -5,7 +5,13 @@ set -e
 if [ ! -z $1 ]; then
     RUBY_VERSION=$1
 else
-    RUBY_VERSION=2.2
+    RUBY_VERSION=2.3
+fi
+
+if [ ! -z $2 ]; then
+    GEMSET_NAME=$2
+else
+    GEMSET_NAME="restaurant"
 fi
 
 SCRIPT_HOME="$(dirname `realpath $0`)"
@@ -77,7 +83,7 @@ bootstrap_rvm ()
       else
 	  echo "Ruby ${RUBY_VERSION} already installed. Switching to it"
       fi
-      rvm use ${RUBY_VERSION}
+      rvm use ${RUBY_VERSION}@${GEMSET_NAME}
       gem install bundler
   else
     echo "RVM is not installed. Installing rvm, ruby and required gems"
@@ -92,8 +98,18 @@ bootstrap_rvm ()
   fi
   # install required gems
   ## use ``/bin/bash --login`` because rvm is stupid
-  /bin/bash --login -c ". ${HOME}/.rvm/scripts/rvm && rvm use $RUBY_VERSION && cd $SCRIPT_HOME && bundle install"
+  /bin/bash --login -c ". ${HOME}/.rvm/scripts/rvm && rvm use ${RUBY_VERSION}@${GEMSET_NAME} && cd $SCRIPT_HOME && bundle install"
 }
+
+generate_configfile ()
+{
+    mkdir -p ${SCRIPT_HOME}/etc/
+    echo "RUBY_VERSION=${RUBY_VERSION}" > ${SCRIPT_HOME}/etc/restaurant.conf
+    echo "GEMSET_NAME=${GEMSET_NAME}" >> ${SCRIPT_HOME}/etc/restaurant.conf
+    echo "OPTIONS=\"-fs\"" >> ${SCRIPT_HOME}/etc/restaurant.conf
+}
+
+generate_configfile
 
 bootstrap_with_packages
 
