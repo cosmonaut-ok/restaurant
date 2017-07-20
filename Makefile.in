@@ -87,6 +87,7 @@ libdeps: emacs
 	@for i in `ldd ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/bin/emacs | grep -E 'libgnutls-deb|libhogweed|libtinfo' | awk '{print $$3}'`; do \
 		cp -rH $$i ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/; \
 	done
+	@cp `ldd ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/bin/emacs | tail -n1 | awk '{print $$3}' | xargs dirname`/libnettle.so.4.* ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/libnettle.so.4
 
 el-get: emacs
 ifeq (@STATIC@, yes)
