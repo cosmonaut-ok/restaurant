@@ -6,7 +6,7 @@ ME=$(readlink -f $0)
 MYDIR=$(dirname $ME)
 REQUIRED_PACKAGES="git"
 
-if [ -n ${MYDIR}/etc/restaurant.conf ]; then
+if [ -s ${MYDIR}/etc/restaurant.conf ]; then
     . ${MYDIR}/etc/restaurant.conf
 else
     echo "WARNING! Configfile ${MYDIR}/etc/restaurant.conf not found. Falling back to default values" >2
