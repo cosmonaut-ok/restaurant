@@ -6,6 +6,15 @@ ME=$(readlink -f $0)
 MYDIR=$(dirname $ME)
 REQUIRED_PACKAGES="git"
 
+if [ -s ${MYDIR}/etc/restaurant.conf ]; then
+    . ${MYDIR}/etc/restaurant.conf
+else
+    echo "WARNING! Configfile ${MYDIR}/etc/restaurant.conf not found. Falling back to default values" >2
+    RUBY_VERSION='2.3'
+    GEMSET_NAME='restaurant'
+    OPTIONS="-fw"
+fi
+
 print_message()
 {
     message=$@
@@ -53,5 +62,7 @@ VERSION=$(grep autoconf-anchor $MYDIR/src/restaurant-help.el | cut -d\" -f2 | tr
 ## hack for unity. Ubuntu developers are bastards, which don't want to fix their bug
 ## https://bugs.launchpad.net/ubuntu/+source/appmenu-gtk/+bug/673302
 export UBUNTU_MENUPROXY=
+
+rvm use ${RUBY_VERSION}@${GEMSET_NAME} --create
 
 $EMACS -q -l $MYDIR/src/restaurant.el --name restaurant --title "Restaurant Chef IDE version: (v.${VERSION})" $OPTIONS $@

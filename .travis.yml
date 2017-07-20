@@ -92,6 +92,7 @@ script:
   - ./configure --enable-static
   - make el-get
   - make $RESTAURANT
+  # - ./bootstrap.sh
   - if [ $RESTAURANT == "build" ]; then
        ./restaurant --batch;
     fi
