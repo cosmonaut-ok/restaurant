@@ -190,13 +190,13 @@ package: build libdeps clean
 	@cd ${BUILD_DIR} && tar -czpf restaurant-${RESTAURANT_VERSION}-@GUI_TOOLKIT@.tar.gz restaurant
 	@cp ${BUILD_DIR}/restaurant-${RESTAURANT_VERSION}-@GUI_TOOLKIT@.tar.gz .
 
-static-packages:
+static-packages: emacs el-get
 	@echo "Packaging emacs..."
 	@mv @LOCAL_EMACS_DIR@ emacs
-	@[ -d emacs ] && tar -czpf emacs-restaurant.tar.gz emacs || exit 1
+	@tar -czpf emacs-restaurant.tar.gz emacs || exit 1
 	@echo "Packaging el-get libraries..."
 	@@mv emacs @LOCAL_EMACS_DIR@
-	@[ -d el-get ] && tar -czpf el-get-packages.tar.gz el-get || exit 1
+	@tar -czpf el-get-packages.tar.gz el-get || exit 1
 
 release: package clean-emacs clean
 
