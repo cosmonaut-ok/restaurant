@@ -63,6 +63,6 @@ VERSION=$(grep autoconf-anchor $MYDIR/src/restaurant-help.el | cut -d\" -f2 | tr
 ## https://bugs.launchpad.net/ubuntu/+source/appmenu-gtk/+bug/673302
 export UBUNTU_MENUPROXY=
 
-rvm use ${RUBY_VERSION}@${GEMSET_NAME}
+rvm use ${RUBY_VERSION}@${GEMSET_NAME} --create >/dev/null 2>&1
 
 $EMACS -q -l $MYDIR/src/restaurant.el --name restaurant --title "Restaurant Chef IDE version: (v.${VERSION})" $OPTIONS $@
