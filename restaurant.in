@@ -9,7 +9,7 @@ REQUIRED_PACKAGES="git"
 if [ -s ${MYDIR}/etc/restaurant.conf ]; then
     . ${MYDIR}/etc/restaurant.conf
 else
-    echo "WARNING! Configfile ${MYDIR}/etc/restaurant.conf not found. Falling back to default values" >2
+    echo "WARNING! Configfile ${MYDIR}/etc/restaurant.conf not found. Falling back to default values" >&2
     RUBY_VERSION='2.3'
     GEMSET_NAME='restaurant'
     OPTIONS="-fw"

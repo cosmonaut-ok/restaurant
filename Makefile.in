@@ -37,6 +37,8 @@ RUBY=$(shell which ruby)
 BUNDLE=$(shell which bundle)
 RVM=$(shell which rvm)
 RESTAURANT_VERSION=$(shell grep autoconf-anchor src/restaurant-help.el | cut -d\" -f2 | tr -d \\n)
+RESTAURANT_BINARY_ARCHIVE=https://github.com/restaurant-ide/restaurant-static/raw/master/emacs-restaurant.tar.gz
+RESTAURANT_ELGET_ARCHIVE=https://github.com/restaurant-ide/restaurant-static/raw/master/el-get-packages.tar.gz
 LOCAL_EMACS=@LOCAL_EMACS_DIR@/bin/emacs
 CURRENT_DIR=$(shell pwd)
 LDLIB=$LD_LIBRARY_PATH:${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/
@@ -46,7 +48,7 @@ all: build clean-build clean
 emacs:
 ifeq (@STATIC@, yes)
 	@echo "Static build enabled. Getting Emacs precompiled binaries..."
-	@wget -qO- https://github.com/restaurant-ide/restaurant/releases/download/v0.1.2/emacs-restaurant.tar.gz | tar xz
+	@wget -qO- ${RESTAURANT_BINARY_ARCHIVE} | tar xz
 	@if [ "@LOCAL_EMACS_DIR@" != "emacs" ]; then mv emacs @LOCAL_EMACS_DIR@; fi
 else
 	@echo "Making temporary working directory ${BUILD_DIR}"
@@ -70,7 +72,7 @@ else
 	make install DESTDIR=${BUILD_DIR}/emacs-build
 	@echo "Preparing to working state..."
 	@cp -r ${BUILD_DIR}/${SOURCE_DIR}/lib-src/ ${BUILD_DIR}/emacs-build/lib-src/
-	@mv -f ${BUILD_DIR}/emacs-build/share/@LOCAL_EMACS_DIR@/25.1/* ${BUILD_DIR}/emacs-build/
+	@mv -f ${BUILD_DIR}/emacs-build/share/@LOCAL_EMACS_DIR@/25.2/* ${BUILD_DIR}/emacs-build/
 	@mv -f ${BUILD_DIR}/emacs-build/share/man/ ${BUILD_DIR}/emacs-build/
 	@mv -f ${BUILD_DIR}/emacs-build/share/info/ ${BUILD_DIR}/emacs-build/
 	@echo "Stripping from unneded files..."
@@ -84,15 +86,14 @@ endif
 
 libdeps: emacs
 	@mkdir -p ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/
-	@for i in `ldd ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/bin/emacs | grep -E 'libgnutls-deb|libhogweed|libtinfo' | awk '{print $$3}'`; do \
+	@for i in `ldd ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/bin/emacs | awk '{print $$3}'`; do \
 		cp -rH $$i ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/; \
 	done
-	@cp `ldd ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/bin/emacs | tail -n1 | awk '{print $$3}' | xargs dirname`/libnettle.so.4.* ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/libnettle.so.4
 
 el-get: emacs
 ifeq (@STATIC@, yes)
 	@echo "Static build enabled. Getting prepared el-get libraries..."
-	@wget -qO- https://github.com/restaurant-ide/restaurant/releases/download/v0.1.2/el-get-packages.tar.gz | tar xz
+	@wget -qO- ${RESTAURANT_ELGET_ARCHIVE} | tar xz
 else
 	@echo "Getting required dependencies via el-get..."
 	@EMACSDATA=${CURRENT_DIR}/@LOCAL_EMACS_DIR@/etc/ LD_LIBRARY_PATH=${LDLIB} ${LOCAL_EMACS} -Q --debug-init --script ./src/bootstrap.el
@@ -113,9 +114,6 @@ endif
 
 build: el-get lib
 	@echo "Building restaurant..."
-ifeq (@BYTE_COMPILE_P@, yes)
-	@EMACSDATA=${CURRENT_DIR}/@LOCAL_EMACS_DIR@/etc/ LD_LIBRARY_PATH=${LDLIB} ${LOCAL_EMACS} -Q -batch --script ./init.el
-endif
 	@mkdir -p ${CURRENT_DIR}/data/icons/hicolor/scalable/
 	@echo "Creating scalable images"
 	@cp ${CURRENT_DIR}/data/icons/source/restaurant.svg ${CURRENT_DIR}/data/icons/hicolor/scalable/restaurant.svg
@@ -131,6 +129,9 @@ endif
 		convert -resize $$i -alpha off +level-colors yellow,green ${CURRENT_DIR}/data/icons/source/restaurant.svg ${CURRENT_DIR}/data/icons/hicolor/$$i/status-ok.png; \
 		convert -resize $$i -alpha off +level-colors yellow,red ${CURRENT_DIR}/data/icons/source/restaurant.svg ${CURRENT_DIR}/data/icons/hicolor/$$i/status-fail.png; \
 	done
+ifeq (@BYTE_COMPILE_P@, yes)
+	@EMACSDATA=${CURRENT_DIR}/@LOCAL_EMACS_DIR@/etc/ LD_LIBRARY_PATH=${LDLIB} ${LOCAL_EMACS} -Q -batch --script src/restaurant.el
+endif
 	@touch build
 
 install:

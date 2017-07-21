@@ -43,7 +43,7 @@ AC_SUBST(BYTE_COMPILE_P)
 AC_SUBST(STATIC)
 
 ## veriables definition
-EMACS_URI=https://github.com/emacs-mirror/emacs/archive/emacs-25.1.tar.gz
+EMACS_URI=https://github.com/emacs-mirror/emacs/archive/emacs-25.2.tar.gz
 BUILD_DIR=/tmp/restaurant-release
 LOCAL_EMACS_DIR="emacs"
 RELEASE_FILES="restaurant data LICENSE src README.md el-get $LOCAL_EMACS_DIR lib Gemfile bootstrap.sh"
@@ -59,8 +59,8 @@ AC_ARG_WITH(tiff,     [  --with-tiff             build emacs with/without tiff s
 AC_ARG_WITH(cflags,   [  --with-emacs-cflags     build emacs with specific emacs cflags], EMACS_CFLAGS=$withval, EMACS_CFLAGS="-no-pie")
 AC_ARG_WITH(makeinfo, [  --with-makeinfo         build emacs with/without makeinfo additional information (default no)], MAKEINFO=$withval, MAKEINFO="no")
 # AC_ARG_WITH(xml2,     [  --without-xml2             build emacs with/without xml2 support (default no)], ECL_PATH=$withval, XML2="auto")
-AC_ARG_ENABLE(byte-compile, [  --enable-byte-compile  Enables Restaurant bute compilation (experimental, default: disabled)], [ BYTE_COMPILE_P=yes ])
-AC_ARG_ENABLE(static, [  --enable-statuc  Enables static precompiled archives, instead of full build], [ STATIC=yes ])
+AC_ARG_ENABLE(byte-compile, [  --enable-byte-compile  Enables Restaurant bute compilation (experimental, default: disabled)], BYTE_COMPILE_P=$enableval, BYTE_COMPILE_P=no)
+AC_ARG_ENABLE(static, [  --disable-static  Enables static precompiled archives, instead of full build, default: enabled], STATIC=$enableval, STATIC=yes)
 
 # check for makeinfo
 AC_CHECK_PROG(GIT,git,yes,no)
