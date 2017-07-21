@@ -70,6 +70,8 @@ AC_CHECK_PROG(BUNDLE,bundle,yes,no)
 AC_CHECK_PROG(SSHASKPASS,ssh-askpass,yes,no)
 AC_CHECK_PROG(MARKDOWN,markdown,yes,no)
 AC_CHECK_PROG(RSVG_CONVERT,rsvg-convert,yes,no)
+AC_CHECK_PROG(INKSCAPE,inkscape,yes,no)
+AC_CHECK_PROG(IMAGEMAGICK,convert,yes,no)
 
 # check for build deps
 AC_CHECK_HEADER([X11/Xlib-xcb.h])
@@ -100,7 +102,15 @@ if test $MARKDOWN == "no"; then
 fi
 
 if test $RSVG_CONVERT == "no"; then
-   AC_MSG_ERROR([there is no librsvg-bin package in system. This binary rsvg-convert required for correct restaurant working])
+   AC_MSG_ERROR([there is no librsvg-bin package in system. Binary rsvg-convert required for correct restaurant working])
+fi
+
+if test $INKSCAPE == "no"; then
+   AC_MSG_ERROR([there is no inkscape package in system. Binary inkscape required to convert svg to png images on-the-fly (required for build)])
+fi
+
+if test $IMAGEMAGICK == "no"; then
+   AC_MSG_ERROR([there is no imagemagick package in system. Binary convert required to convert svg to png images on-the-fly (required for build)])
 fi
 
 if test x$GIF == "xno"; then
