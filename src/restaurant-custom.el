@@ -253,6 +253,11 @@
   :group 'restaurant/ruby
   )
 
+(defcustom restaurant/rvm-default-gemset "global"
+  "Default rvm default gemset."
+  :type 'string
+  :group 'restaurant/ruby)
+
 (defcustom restaurant/enable-rubocop t
   "Enable rubocop, when open ruby file,"
   :type 'boolean

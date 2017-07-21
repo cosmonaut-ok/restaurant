@@ -623,7 +623,11 @@
 
 (define-key global-map
   [menu-bar tools rvm rvm-use]
-  '("Use Default Ruby For This Session" . rvm-use))
+  '("Use Ruby/Gemset As Default For This Session" . rvm-use))
+
+(define-key global-map
+  [menu-bar tools rvm rvm-use-as-default]
+  '("Set Default Ruby And Gemset" . rvm-use-as-default))
 
 (define-key global-map
   [menu-bar tools rvm rvm-open-gem]
