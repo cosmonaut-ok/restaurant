@@ -83,7 +83,7 @@ bootstrap_rvm ()
       else
 	  echo "Ruby ${RUBY_VERSION} already installed. Switching to it"
       fi
-      rvm use ${RUBY_VERSION}@${GEMSET_NAME}
+      rvm use ${RUBY_VERSION}@${GEMSET_NAME}  --create
       gem install bundler
   else
     echo "RVM is not installed. Installing rvm, ruby and required gems"
@@ -98,7 +98,7 @@ bootstrap_rvm ()
   fi
   # install required gems
   ## use ``/bin/bash --login`` because rvm is stupid
-  /bin/bash --login -c ". ${HOME}/.rvm/scripts/rvm && rvm use ${RUBY_VERSION}@${GEMSET_NAME} && cd $SCRIPT_HOME && bundle install"
+  /bin/bash --login -c ". ${HOME}/.rvm/scripts/rvm && rvm use --create ${RUBY_VERSION}@${GEMSET_NAME} && cd $SCRIPT_HOME && bundle install"
 }
 
 generate_configfile ()
