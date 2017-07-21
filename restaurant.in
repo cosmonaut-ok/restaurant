@@ -57,7 +57,7 @@ if [ ! -z "$1" ] && [ "$1" = '-d' ]; then
     shift
 fi
 
-VERSION=$(grep autoconf-anchor $MYDIR/src/restaurant-help.el | cut -d\" -f2 | tr -d \\n)
+VERSION=$(grep autoconf-anchor $MYDIR/src/restaurant-help.el | cut -d\" -f2 | tr -d \\n || echo LATEST)
 
 ## hack for unity. Ubuntu developers are bastards, which don't want to fix their bug
 ## https://bugs.launchpad.net/ubuntu/+source/appmenu-gtk/+bug/673302

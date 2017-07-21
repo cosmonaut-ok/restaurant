@@ -93,7 +93,7 @@ script:
   - make el-get
   - make $RESTAURANT
   - if [ $RESTAURANT == "build" ]; then
-       ./restaurant --batch;
+       /bin/bash -x ./bootstrap.sh && ./restaurant -d --batch;
     fi
   - if [ $RESTAURANT == "release" ]; then
        test -f restaurant-*tar.gz;

@@ -1,6 +1,7 @@
 #!/bin/sh
 
 set -e
+set -a
 
 if [ ! -z $1 ]; then
     RUBY_VERSION=$1
@@ -73,6 +74,15 @@ rvm_installed_p ()
   which rvm 2>/dev/null
 }
 
+with_ruby ()
+{
+    ruby=$1
+    shift
+    gemset=$1
+    shift
+    args="$@"
+    /bin/bash --login -c ". ${HOME}/.rvm/scripts/rvm; rvm use ${ruby}@${gemset} --create && $args"
+}
 
 bootstrap_rvm ()
 {
@@ -82,9 +92,11 @@ bootstrap_rvm ()
 	  rvm install ${RUBY_VERSION}
       else
 	  echo "Ruby ${RUBY_VERSION} already installed. Switching to it"
+	  RUBY_VERSION="$(rvm list | grep ${RUBY_VERSION}|awk '{print $2}')"
       fi
-      rvm use ${RUBY_VERSION}@${GEMSET_NAME}  --create
-      gem install bundler
+      ## use ``/bin/bash --login`` because rvm is stupid
+      with_ruby ${RUBY_VERSION} ${GEMSET_NAME} gem install bundler
+      # /bin/bash --login -c "rvm use ${RUBY_VERSION}@${GEMSET_NAME} --create && gem install bundler"
   else
     echo "RVM is not installed. Installing rvm, ruby and required gems"
     # gpg --keyserver ${GNUPG_URL} --recv-keys ${RVM_KEY}
@@ -93,12 +105,11 @@ bootstrap_rvm ()
     [ -n "$(which gpg2)" ] && curl -sSL https://rvm.io/mpapis.asc | gpg2 --import - 2>/dev/null
     echo "done"
     # bootstrap RVM
-    curl -sSL https://get.rvm.io | bash -s stable --ruby=${RUBY_VERSION} --auto-dotfiles --gems=bundler
+    curl -sSL https://get.rvm.io | bash -s master --ruby=${RUBY_VERSION} --auto-dotfiles --gems=bundler
     echo "RVM Installed"
   fi
   # install required gems
-  ## use ``/bin/bash --login`` because rvm is stupid
-  /bin/bash --login -c ". ${HOME}/.rvm/scripts/rvm && rvm use --create ${RUBY_VERSION}@${GEMSET_NAME} && cd $SCRIPT_HOME && bundle install"
+  with_ruby ${RUBY_VERSION} ${GEMSET_NAME} "cd $SCRIPT_HOME && bundle install"
 }
 
 generate_configfile ()
