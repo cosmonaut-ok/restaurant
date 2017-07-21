@@ -9,7 +9,7 @@ gem 'foodcritic', '~> 11.3.0'
 gem 'test-kitchen', '~> 1.16.0'
 gem 'chefspec', '~> 7.1.0'
 gem 'serverspec', '~> 2.39.1'
-gem 'rake', '~> 10.4.0' ## should it be updated?
+gem 'rake', '~> 12.0.0' ## should it be updated?
 gem 'rack', '~> 1.5.0' ## should it be updated?
 gem 'rspec', '~> 3.6.0'
 gem 'pry', '~> 0.10.3'

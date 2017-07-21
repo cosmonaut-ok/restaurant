@@ -118,6 +118,13 @@
 (setq dabbrev-always-check-other-buffers t)
 ;; (setq dabbrev-abbrev-char-regexp "\\sw\\|\\s_")
 
+;; load cedet components
+(load "cedet")
+(load "semantic")
+(load "srecode")
+(load "eieio")
+(load "ede")
+
 ;; move semanticDB, srecode and ede to cache
 (mkdir restaurant/user-cache-directory t)
 (custom-set-variables
@@ -130,9 +137,11 @@
  '(imenu-auto-rescan t)
  )
 
-(global-semanticdb-minor-mode 1)
-(global-semantic-idle-scheduler-mode 1)
-(semantic-load-enable-minimum-features)
+;; semantic global mode
+(global-semantic-idle-completions-mode t)
+(global-semantic-decoration-mode t)
+(global-semantic-highlight-func-mode t)
+(global-semantic-show-unmatched-syntax-mode t)
 
 ;;;; Column & line numbers in mode bar
 (column-number-mode t)

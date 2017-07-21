@@ -31,6 +31,7 @@
 (require 'url)
 ;; RVM installation hack
 (defvar rvm-installation-url "https://get.rvm.io/")
+(defvar rvm--gemset-default "restaurant")
 
 (defvar rvm-installation-key "409B6B1796C275462A1703113804BB82D39DC0E3")
 

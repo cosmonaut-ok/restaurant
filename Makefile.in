@@ -37,8 +37,8 @@ RUBY=$(shell which ruby)
 BUNDLE=$(shell which bundle)
 RVM=$(shell which rvm)
 RESTAURANT_VERSION=$(shell grep autoconf-anchor src/restaurant-help.el | cut -d\" -f2 | tr -d \\n)
-RESTAURANT_BINARY_ARCHIVE=https://github.com/restaurant-ide/restaurant-static/raw/master/emacs-restaurant.tar.gz
-RESTAURANT_ELGET_ARCHIVE=https://github.com/restaurant-ide/restaurant-static/raw/master/el-get-packages.tar.gz
+RESTAURANT_BINARY_ARCHIVE=https://github.com/restaurant-ide/restaurant-static/raw/v0.4/emacs-restaurant.tar.gz
+RESTAURANT_ELGET_ARCHIVE=https://github.com/restaurant-ide/restaurant-static/raw/v0.4/el-get-packages.tar.gz
 LOCAL_EMACS=@LOCAL_EMACS_DIR@/bin/emacs
 CURRENT_DIR=$(shell pwd)
 LDLIB=$LD_LIBRARY_PATH:${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/
@@ -130,7 +130,9 @@ build: el-get lib
 		convert -resize $$i -alpha off +level-colors yellow,red ${CURRENT_DIR}/data/icons/source/restaurant.svg ${CURRENT_DIR}/data/icons/hicolor/$$i/status-fail.png; \
 	done
 ifeq (@BYTE_COMPILE_P@, yes)
-	@EMACSDATA=${CURRENT_DIR}/@LOCAL_EMACS_DIR@/etc/ LD_LIBRARY_PATH=${LDLIB} ${LOCAL_EMACS} -Q -batch --script src/restaurant.el
+	@for i in `find src -type f -name '*.el'`; do \
+		EMACSDATA=${CURRENT_DIR}/@LOCAL_EMACS_DIR@/etc/ LD_LIBRARY_PATH=${LDLIB} ${LOCAL_EMACS} -Q -batch --eval "(byte-compile-file \"$$i\")"; \
+	done
 endif
 	@touch build
 
