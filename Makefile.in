@@ -198,9 +198,10 @@ static-packages: emacs el-get
 release: package clean-emacs clean
 
 test: build
-	@touch /tmp/.restaurant-mock.rb
-	@./restaurant --batch /tmp/.restaurant-mock.rb || exit 1
-	@rm -f /tmp/.restaurant-mock.rb
+	touch /tmp/.restaurant-mock.rb
+	./bootstrap.sh 2.3 mockgemset
+	./restaurant --batch /tmp/.restaurant-mock.rb
+	rm -f /tmp/.restaurant-mock.rb
 
 help:
 	@echo "Restaurant Chef IDE v. @RESTAURANT_VERSION@"

@@ -33,7 +33,7 @@ env:
     - RESTAURANT=test
     - RESTAURANT=release
   global:
-    - SOME_TOKEN=some_value
+    - USE_SYSTEM_GECODE=1
 
 ###
 ### allowing build failures
@@ -42,6 +42,7 @@ env:
 matrix:
   allow_failures:
     - env: RESTAURANT=release
+    - env: RESTAURANT=test
 
 ###
 ### limit build attempts to defined branches
@@ -76,17 +77,13 @@ branches:
 ###
 
 install:
-  - sudo apt-get -qq install realpath imagemagick inkscape autoconf automake git libdbus-1-dev xdg-user-dirs curl ruby ruby-bundler markdown ssh-askpass librsvg2-bin
-  - bundle install
+  - sudo apt-get -qq install realpath imagemagick inkscape autoconf automake git libdbus-1-dev xdg-user-dirs curl ruby ruby-bundler markdown ssh-askpass librsvg2-bin libgecode-dev
 
 script:
   - autoconf
   - ./configure --enable-static
   - make el-get
   - make $RESTAURANT
-  - if [ $RESTAURANT == "build" ]; then
-       /bin/bash -x ./bootstrap.sh && ./restaurant -d --batch;
-    fi
   - if [ $RESTAURANT == "release" ]; then
        test -f restaurant-*tar.gz;
     fi

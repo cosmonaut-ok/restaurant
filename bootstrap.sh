@@ -92,7 +92,7 @@ bootstrap_rvm ()
 	  rvm install ${RUBY_VERSION}
       else
 	  echo "Ruby ${RUBY_VERSION} already installed. Switching to it"
-	  RUBY_VERSION="$(rvm list | grep -oE '[a-z].*2.2[0-9,.,-]*')"
+	  RUBY_VERSION="$(rvm list | grep -oE "[a-z].*${RUBY_VERSION}[0-9,.,-]*")"
       fi
       ## use ``/bin/bash --login`` because rvm is stupid
       with_ruby ${RUBY_VERSION} ${GEMSET_NAME} gem install bundler
