@@ -41,7 +41,6 @@ env:
 
 matrix:
   allow_failures:
-    - env: RESTAURANT=release
     - env: RESTAURANT=test
 
 ###
