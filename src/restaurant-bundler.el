@@ -48,4 +48,11 @@
   (let ((default-directory (bundle-locate-gemfile)))
     (compile cmd 'bundler-compilation-mode)))
 
+(defun bundle-install-restaurant-gems ()
+  (interactive)
+  (when restaurant/enable-rvm
+    (rvm-use-default))
+  (bundle-gemfile (locate-source-file "Gemfile"))
+  (bundle-install))
+
 ;;; restaurant-bundler.el ends here

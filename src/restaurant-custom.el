@@ -253,7 +253,11 @@
   :group 'restaurant/ruby
   )
 
-(defcustom restaurant/rvm-default-gemset "global"
+(defcustom restaurant/rvm-default-gemset (or
+					  (get-value-by-key-from-file
+                                           "GEMSET_NAME"
+                                           (locate-source-file "etc/restaurant.conf"))
+					  "global")
   "Default rvm default gemset."
   :type 'string
   :group 'restaurant/ruby)

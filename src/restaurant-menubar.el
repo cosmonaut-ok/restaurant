@@ -818,6 +818,10 @@
   '("Install Restaurant Required Dependencies" . startup-wizard))
 
 (define-key global-map
+  [menu-bar help-menu install-required-gems]
+  '("Install Restaurant Required Gems" . bundle-install-restaurant-gems))
+
+(define-key global-map
   [menu-bar help-menu restaurant-help-separator-2]
   '("--" nil :visible))
 

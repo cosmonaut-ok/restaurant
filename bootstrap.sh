@@ -12,7 +12,7 @@ fi
 if [ ! -z $2 ]; then
     GEMSET_NAME=$2
 else
-    GEMSET_NAME="restaurant"
+    GEMSET_NAME="global"
 fi
 
 SCRIPT_HOME="$(dirname `realpath $0`)"

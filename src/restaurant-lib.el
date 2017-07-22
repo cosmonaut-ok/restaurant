@@ -198,4 +198,26 @@
     (error "There is no ``gpg'' binary installed in system. Can not continue")))
 
 
+;;;;
+(defun read-file-to-string (filePath)
+  "Return filePath's file content."
+  (with-temp-buffer
+    (insert-file-contents filePath)
+    (buffer-string)))
+
+(defun get--kv-value-from-list (variable list &optional delimiter)
+  (or delimiter (setq delimiter "="))
+  (cond ((null list) nil)
+	((string-match variable (car list))
+	 (cadr (split-string (car list) "=")))
+	(t (get--kv-value-from-list variable (cdr list)))))
+
+(defun get-value-by-key-from-file (key file &optional delimiter)
+  (or delimiter (setq delimiter "="))
+  (let ((file-string (read-file-to-string file)))
+    (get--kv-value-from-list
+     key
+     (split-string file-string "\n")
+     delimiter)))
+
 ;;; restaurant-lib.el ends here
