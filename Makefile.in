@@ -39,7 +39,7 @@ SOURCE_DIR=emacs-$(shell basename ${EMACS_URI} .tar.gz)
 RUBY=$(shell which ruby)
 BUNDLE=$(shell which bundle)
 RVM=$(shell which rvm)
-RESTAURANT_VERSION=$(shell grep autoconf-anchor src/restaurant-help.el | cut -d\" -f2 | tr -d \\n)
+RESTAURANT_VERSION=@RESTAURANT_VERSION@ # $(shell grep autoconf-anchor src/restaurant-help.el | cut -d\" -f2 | tr -d \\n)
 LOCAL_EMACS=@LOCAL_EMACS_DIR@/bin/emacs
 CURRENT_DIR=$(shell pwd)
 LDLIB=$LD_LIBRARY_PATH:${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/
@@ -48,39 +48,39 @@ all: build clean-build clean
 
 emacs:
 ifeq (@STATIC@, yes)
-	@echo "Static build enabled. Getting Emacs precompiled binaries..."
+	@echo "Static build enabled. Getting Emacs precompiled binaries"
 	@wget -qO- ${EMACS_RESTAURANT_URI} | tar xz
-	@if [ "@LOCAL_EMACS_DIR@" != "emacs" ]; then mv emacs @LOCAL_EMACS_DIR@; fi
+	@[ "@LOCAL_EMACS_DIR@" != "emacs" ] && mv emacs @LOCAL_EMACS_DIR@
 else
 	@echo "Making temporary working directory ${BUILD_DIR}"
 	@mkdir -p ${BUILD_DIR}/emacs-build
 	@mkdir -p ${BUILD_DIR}/restaurant
-	@echo "Getting emacs archive..."
+	@echo "Getting emacs archive"
 	@test -f ${ARCHIVE_NAME} || curl -L --progress-bar ${EMACS_URI} > ${ARCHIVE_NAME}
 	@cp ${ARCHIVE_NAME} ${BUILD_DIR}
-	@echo "Unpacking emacs archive..."
+	@echo "Unpacking emacs archive"
 	@tar -C ${BUILD_DIR} -xf ${BUILD_DIR}/${ARCHIVE_NAME}
-	@echo "Preparing emacs archive..."
+	@echo "Preparing emacs archive"
 	@for i in `ls ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/ | grep -E [0-9]`; do rm -f ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/$$i/apps/emacs.png; done
 	@for i in `ls ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/ | grep -E [0-9]`; do convert -resize $$i ${CURRENT_DIR}/data/icons/source/restaurant.svg ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/$$i/apps/emacs.png; done
 	@cp data/icons/source/restaurant.svg ${BUILD_DIR}/${SOURCE_DIR}/etc/images/icons/hicolor/scalable/apps/emacs.svg
-	@echo "Building emacs..."
+	@echo "Building emacs"
 	@cd ${BUILD_DIR}/${SOURCE_DIR} && \
 	autoreconf -fi -I m4
 	cd ${BUILD_DIR}/${SOURCE_DIR} && \
 	./configure CFLAGS=@EMACS_CFLAGS@ --prefix=/ --with-x-toolkit=@GUI_TOOLKIT@ @BUILD_OPTIONS@ && \
 	make && \
 	make install DESTDIR=${BUILD_DIR}/emacs-build
-	@echo "Preparing to working state..."
+	@echo "Preparing to working state"
 	@cp -r ${BUILD_DIR}/${SOURCE_DIR}/lib-src/ ${BUILD_DIR}/emacs-build/lib-src/
 	@mv -f ${BUILD_DIR}/emacs-build/share/@LOCAL_EMACS_DIR@/25.2/* ${BUILD_DIR}/emacs-build/
 	@mv -f ${BUILD_DIR}/emacs-build/share/man/ ${BUILD_DIR}/emacs-build/
 	@mv -f ${BUILD_DIR}/emacs-build/share/info/ ${BUILD_DIR}/emacs-build/
-	@echo "Stripping from unneded files..."
+	@echo "Stripping from unneded files"
 	@rm -rf ${BUILD_DIR}/emacs-build/share/
 	@rm -rf ${BUILD_DIR}/emacs-build/var/
 	@find ${BUILD_DIR}/emacs-build/ -type f -name '*.el.gz' -delete
-	@echo "Moving to current directory as ''emacs''..."
+	@echo "Moving to current directory as ''emacs''"
 	@mv ${BUILD_DIR}/emacs-build/ emacs
 	@rm -f @LOCAL_EMACS_DIR@/etc/images/splash.png
 endif
@@ -93,16 +93,16 @@ libdeps: emacs
 
 el-get: emacs
 ifeq (@STATIC@, yes)
-	@echo "Static build enabled. Getting prepared el-get libraries..."
+	@echo "Static build enabled. Getting prepared el-get libraries"
 	@wget -qO- ${ELGET_RESTAURANT_URI} | tar xz
 else
-	@echo "Getting required dependencies via el-get..."
+	@echo "Getting required dependencies via el-get"
 	@EMACSDATA=${CURRENT_DIR}/@LOCAL_EMACS_DIR@/etc/ LD_LIBRARY_PATH=${LDLIB} ${LOCAL_EMACS} -Q --debug-init --script ./src/bootstrap.el
 	@cd ${CURRENT_DIR}/el-get/yasnippets && ln -sf ruby-mode enh-ruby-mode
 endif
 
 lib: emacs
-	@echo "Building 3rd party libraries..."
+	@echo "Building 3rd party libraries"
 	@mkdir -p lib
 	@cd scripts && for i in `ls *.sh | grep -v tmpl.sh`; do \
 		/bin/bash $$i install -v; \
@@ -114,7 +114,7 @@ ifeq (@BYTE_COMPILE_P@, yes)
 endif
 
 build: el-get lib
-	@echo "Building restaurant..."
+	@echo "Building restaurant"
 	@mkdir -p ${CURRENT_DIR}/data/icons/hicolor/scalable/
 	@echo "Creating scalable images"
 	@cp ${CURRENT_DIR}/data/icons/source/restaurant.svg ${CURRENT_DIR}/data/icons/hicolor/scalable/restaurant.svg
@@ -141,47 +141,50 @@ install:
 	@echo Not implemented
 
 clean-build:
-	@echo "Clearing build directory..."
+	@echo "Clearing build directory"
 	@[ -d ${BUILD_DIR} ] && rm -rf ${BUILD_DIR} || true
 
 clean-precompile:
-	@echo "Cleaning precompiled elc files..."
+	@echo "Cleaning precompiled elc files"
 	@rm -f src/*.elc
 	@[ -d lib ] && find lib -type f -name '*.elc' -delete || true
 
 clean-emacs: clean-build
-	@echo "Removing emacs directory..."
+	@echo "Removing emacs directory"
 	@rm -rf emacs
 
 clean-lib:
-	@echo "Removing lib directory..."
+	@echo "Removing lib directory"
 	@rm -rf lib
 
 clean-3rdparty:
-	@echo "Removing 3rd-party libs..."
+	@echo "Removing 3rd-party libs"
 	@rm -rf el-get elpa
 
 clean: clean-build clean-precompile
-	@echo "Clearing working directory..."
+	@echo "Clearing working directory"
 	@rm -rf autom4te.cache config.log conf18498.dir config.status
 	@find . -type f -name '*~' -delete
 	@find . -type f -name '*#$$' -delete
 	@find . -type f -name '*^#*' -delete
 
 mrproper: clean-emacs clean clean-3rdparty clean-lib
-	@echo "Clearing all..."
-	@rm -rf build configure Makefile Gemfile.lock ${ARCHIVE_NAME} restaurant build Restaurant.desktop
-	@rm -rf ${BUILD_DIR}/data/icons/hicolor/
+	@echo "Removing generated configuration files"
+	@rm -rf build configure Makefile Gemfile.lock restaurant build Restaurant.desktop
+	@echo "Removing generated static data"
+	@rm -rf data/icons/hicolor/ srecode-map.el etc/
+	@echo "Removing generated archives"
+	@rm -rf el-get-packages.tar.gz emacs-restaurant.tar.gz ${ARCHIVE_NAME}
 
 package: build libdeps clean
-	@echo "Building package..."
+	@echo "Building package"
 	@mkdir -p ${BUILD_DIR}/restaurant/
 	@for i in @RELEASE_FILES@; do cp -rp $$i ${BUILD_DIR}/restaurant/; done
 	@touch ${BUILD_DIR}/restaurant/build
-	@echo "Stripping package from unneded files..."
+	@echo "Stripping package from unneded files"
 	@find ${BUILD_DIR}/restaurant/ -type d -name '.git' -exec rm -rf {} +
 	@find ${BUILD_DIR}/restaurant/ -type f -name '.gitignore' -delete
-	@echo "Optimizing size..."
+	@echo "Optimizing size"
 	@rm -rf ${BUILD_DIR}/restaurant/data/icons/source/
 	@rm -rf ${BUILD_DIR}/restaurant/el-get/ecb/html
 	@rm -rf ${BUILD_DIR}/restaurant/el-get/ecb/html-help
@@ -189,16 +192,16 @@ package: build libdeps clean
 	@rm -rf ${BUILD_DIR}/restaurant/el-get/cedet/tests
 	@rm -rf ${BUILD_DIR}/restaurant/el-get/magit/Documentation/
 	@rm -rf ${BUILD_DIR}/restaurant/el-get/color-theme/color-theme*tar.gz
-	@echo "Packaging..."
+	@echo "Packaging"
 	@cd ${BUILD_DIR} && tar -czpf restaurant-${RESTAURANT_VERSION}-@GUI_TOOLKIT@.tar.gz restaurant
 	@cp ${BUILD_DIR}/restaurant-${RESTAURANT_VERSION}-@GUI_TOOLKIT@.tar.gz .
 
 static-packages: emacs el-get
-	@echo "Packaging emacs..."
-	@mv @LOCAL_EMACS_DIR@ emacs
+	@echo "Packaging emacs"
+	@[ "@LOCAL_EMACS_DIR@" != "emacs" ] && mv @LOCAL_EMACS_DIR@ emacs
 	@tar -czpf emacs-restaurant.tar.gz emacs || exit 1
-	@echo "Packaging el-get libraries..."
-	@@mv emacs @LOCAL_EMACS_DIR@
+	@[ "@LOCAL_EMACS_DIR@" != "emacs" ] && mv emacs @LOCAL_EMACS_DIR@
+	@echo "Packaging el-get libraries"
 	@tar -czpf el-get-packages.tar.gz el-get || exit 1
 
 release: package clean-emacs clean

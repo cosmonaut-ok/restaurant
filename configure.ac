@@ -29,29 +29,23 @@
 
 AC_PREREQ(2.69)
 
-AC_INIT(Restaurant Chef IDE, esyscmd(grep autoconf-anchor src/restaurant-help.el | cut -d\" -f2 | tr -d \\n), cosmonaut.ok@zoho.com)
+m4_define([M4_RESTAURANT_VERSION], m4_esyscmd(grep autoconf-anchor src/restaurant-help.el | cut -d\" -f2 | tr -d \\n))
 
-AC_SUBST(EMACS_URI)
-AC_SUBST(EMACS_RESTAURANT_URI)
-AC_SUBST(ELGET_RESTAURANT_URI)
+AC_INIT([Restaurant Chef IDE], [M4_RESTAURANT_VERSION], cosmonaut.ok@zoho.com)
+
+AC_SUBST(RESTAURANT_VERSION, M4_RESTAURANT_VERSION)
+AC_SUBST(EMACS_URI, https://github.com/emacs-mirror/emacs/archive/emacs-25.2.tar.gz)
+AC_SUBST(EMACS_RESTAURANT_URI, https://sourceforge.net/projects/restaurant-ide/files/static/emacs-restaurant.tar.gz/download)
+AC_SUBST(ELGET_RESTAURANT_URI, https://sourceforge.net/projects/restaurant-ide/files/static/el-get-packages.tar.gz/download)
 AC_SUBST(EMACS_CFLAGS)
-AC_SUBST(BUILD_DIR)
+AC_SUBST(BUILD_DIR, /tmp/restaurant-release)
 AC_SUBST(GUI_TOOLKIT)
-AC_SUBST(RELEASE_FILES)
+AC_SUBST(RELEASE_FILES, [restaurant data LICENSE src README.md el-get $LOCAL_EMACS_DIR lib Gemfile bootstrap.sh])
 AC_SUBST(EMACS)
-AC_SUBST(LOCAL_EMACS_DIR)
-AC_SUBST(BUILD_OPTIONS)
+AC_SUBST(LOCAL_EMACS_DIR, emacs)
+AC_SUBST(BUILD_OPTIONS, [--without-pop --with-gnutls])
 AC_SUBST(BYTE_COMPILE_P)
 AC_SUBST(STATIC)
-
-## veriables definition
-EMACS_URI=https://github.com/emacs-mirror/emacs/archive/emacs-25.2.tar.gz
-EMACS_RESTAURANT_URI=https://sourceforge.net/projects/restaurant-ide/files/static/emacs-restaurant.tar.gz/download
-ELGET_RESTAURANT_URI=https://sourceforge.net/projects/restaurant-ide/files/static/el-get-packages.tar.gz/download
-BUILD_DIR=/tmp/restaurant-release
-LOCAL_EMACS_DIR="emacs"
-RELEASE_FILES="restaurant data LICENSE src README.md el-get $LOCAL_EMACS_DIR lib Gemfile bootstrap.sh"
-BUILD_OPTIONS="--without-pop --with-gnutls"
 
 # Checks for programs.
 AC_ARG_WITH(gui,      [  --with-gui=TOOLKIT      use gtk2, gtk3, motif, athena, no (default gtk3)], GUI_TOOLKIT=$withval, GUI_TOOLKIT="gtk3")
