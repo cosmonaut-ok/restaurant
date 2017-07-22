@@ -28,7 +28,10 @@
 # Code:
 
 EMACS_URI=@EMACS_URI@
+EMACS_RESTAURANT_URI=@EMACS_RESTAURANT_URI@
+ELGET_RESTAURANT_URI=@ELGET_RESTAURANT_URI@
 BUILD_DIR=@BUILD_DIR@
+
 ARCHIVE_NAME=$(shell basename ${EMACS_URI})
 
 ## f*king github with its name conventions!
@@ -37,8 +40,6 @@ RUBY=$(shell which ruby)
 BUNDLE=$(shell which bundle)
 RVM=$(shell which rvm)
 RESTAURANT_VERSION=$(shell grep autoconf-anchor src/restaurant-help.el | cut -d\" -f2 | tr -d \\n)
-RESTAURANT_BINARY_ARCHIVE=https://github.com/restaurant-ide/restaurant-static/raw/v0.4/emacs-restaurant.tar.gz
-RESTAURANT_ELGET_ARCHIVE=https://github.com/restaurant-ide/restaurant-static/raw/v0.4/el-get-packages.tar.gz
 LOCAL_EMACS=@LOCAL_EMACS_DIR@/bin/emacs
 CURRENT_DIR=$(shell pwd)
 LDLIB=$LD_LIBRARY_PATH:${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/
@@ -48,7 +49,7 @@ all: build clean-build clean
 emacs:
 ifeq (@STATIC@, yes)
 	@echo "Static build enabled. Getting Emacs precompiled binaries..."
-	@wget -qO- ${RESTAURANT_BINARY_ARCHIVE} | tar xz
+	@wget -qO- ${EMACS_RESTAURANT_URI} | tar xz
 	@if [ "@LOCAL_EMACS_DIR@" != "emacs" ]; then mv emacs @LOCAL_EMACS_DIR@; fi
 else
 	@echo "Making temporary working directory ${BUILD_DIR}"
@@ -93,7 +94,7 @@ libdeps: emacs
 el-get: emacs
 ifeq (@STATIC@, yes)
 	@echo "Static build enabled. Getting prepared el-get libraries..."
-	@wget -qO- ${RESTAURANT_ELGET_ARCHIVE} | tar xz
+	@wget -qO- ${ELGET_RESTAURANT_URI} | tar xz
 else
 	@echo "Getting required dependencies via el-get..."
 	@EMACSDATA=${CURRENT_DIR}/@LOCAL_EMACS_DIR@/etc/ LD_LIBRARY_PATH=${LDLIB} ${LOCAL_EMACS} -Q --debug-init --script ./src/bootstrap.el

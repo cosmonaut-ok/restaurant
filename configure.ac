@@ -32,6 +32,8 @@ AC_PREREQ(2.69)
 AC_INIT(Restaurant Chef IDE, esyscmd(grep autoconf-anchor src/restaurant-help.el | cut -d\" -f2 | tr -d \\n), cosmonaut.ok@zoho.com)
 
 AC_SUBST(EMACS_URI)
+AC_SUBST(EMACS_RESTAURANT_URI)
+AC_SUBST(ELGET_RESTAURANT_URI)
 AC_SUBST(EMACS_CFLAGS)
 AC_SUBST(BUILD_DIR)
 AC_SUBST(GUI_TOOLKIT)
@@ -44,6 +46,8 @@ AC_SUBST(STATIC)
 
 ## veriables definition
 EMACS_URI=https://github.com/emacs-mirror/emacs/archive/emacs-25.2.tar.gz
+EMACS_RESTAURANT_URI=https://sourceforge.net/projects/restaurant-ide/files/static/emacs-restaurant.tar.gz/download
+ELGET_RESTAURANT_URI=https://sourceforge.net/projects/restaurant-ide/files/static/el-get-packages.tar.gz/download
 BUILD_DIR=/tmp/restaurant-release
 LOCAL_EMACS_DIR="emacs"
 RELEASE_FILES="restaurant data LICENSE src README.md el-get $LOCAL_EMACS_DIR lib Gemfile bootstrap.sh"
