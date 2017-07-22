@@ -21,20 +21,11 @@
 ###
 
 # travis-lint no longer permits this value
-language: emacs-lisp
+language: ruby
 os: linux
 dist: trusty
 
-###
-### defining the build matrix
-###
-### ===>                                                       <===
-### ===> each variation in env/matrix will be built and tested <===
-### ===>                                                       <===
-###
-### variables under env/global are available to the build process
-### but don't cause the creation of a separate variation
-###
+cache: bundler
 
 env:
   matrix:
@@ -85,7 +76,8 @@ branches:
 ###
 
 install:
-  - sudo apt-get -qq install realpath imagemagick autoconf automake git libdbus-1-dev xdg-user-dirs wget ruby ruby-bundler markdown ssh-askpass librsvg2-bin
+  - sudo apt-get -qq install realpath imagemagick inkscape autoconf automake git libdbus-1-dev xdg-user-dirs curl ruby ruby-bundler markdown ssh-askpass librsvg2-bin
+  - bundle install
 
 script:
   - autoconf

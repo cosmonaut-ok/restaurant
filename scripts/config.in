@@ -1,6 +1,7 @@
 #!/bin/bash
 
-WGET=`which wget` 
+WGET=`which wget`
+CURL=`which curl`
 TMP="$(mktemp -d /tmp/.inst_el.XXX)"
 ME=`readlink -f $0`
 DST="$(dirname $(dirname $ME))/lib/"
@@ -33,14 +34,14 @@ get_url_with_name() # args: what, from_where
 {
     local file=$1
     local url=$2
-    local wget_verb='-nv -q'
+    local curl_verb='-s'
     local code=0
     ###
-    [ $VERBOSEP -ge 1 ] && echo -n "Getting \`\`$file'' from $(echo $url | cut -d'/' -f3)..."
-    [ $VERBOSEP -ge 2 ] && echo
-    [ $VERBOSEP -ge 2 ] && wget_verb='-nv'
-    [ $VERBOSEP -eq 3 ] && wget_verb='-v'
-    $WGET $wget_verb $url -O $TMP/$file
+    [ $VERBOSEP -ge 1 ] && echo "Getting \`\`$file'' from $(echo $url | cut -d'/' -f3)..."
+    [ $VERBOSEP -ge 1 ] && curl_verb='--progress-bar'
+    [ $VERBOSEP -ge 2 ] && curl_verb=''
+    [ $VERBOSEP -eq 3 ] && curl_verb='-v'
+    $CURL -L $curl_verb $url > $TMP/$file
     maybe_fail $?
 }
 

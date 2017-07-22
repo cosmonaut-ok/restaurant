@@ -49,8 +49,8 @@ all: build clean-build clean
 emacs:
 ifeq (@STATIC@, yes)
 	@echo "Static build enabled. Getting Emacs precompiled binaries"
-	@wget -qO- ${EMACS_RESTAURANT_URI} | tar xz
-	@[ "@LOCAL_EMACS_DIR@" != "emacs" ] && mv emacs @LOCAL_EMACS_DIR@
+	@curl -L --progress-bar ${EMACS_RESTAURANT_URI} | tar xz
+	@[ "@LOCAL_EMACS_DIR@" != "emacs" ] && mv emacs @LOCAL_EMACS_DIR@ || return 0
 else
 	@echo "Making temporary working directory ${BUILD_DIR}"
 	@mkdir -p ${BUILD_DIR}/emacs-build
@@ -94,7 +94,7 @@ libdeps: emacs
 el-get: emacs
 ifeq (@STATIC@, yes)
 	@echo "Static build enabled. Getting prepared el-get libraries"
-	@wget -qO- ${ELGET_RESTAURANT_URI} | tar xz
+	@curl -L --progress-bar ${ELGET_RESTAURANT_URI} | tar xz
 else
 	@echo "Getting required dependencies via el-get"
 	@EMACSDATA=${CURRENT_DIR}/@LOCAL_EMACS_DIR@/etc/ LD_LIBRARY_PATH=${LDLIB} ${LOCAL_EMACS} -Q --debug-init --script ./src/bootstrap.el
@@ -198,9 +198,9 @@ package: build libdeps clean
 
 static-packages: emacs el-get
 	@echo "Packaging emacs"
-	@[ "@LOCAL_EMACS_DIR@" != "emacs" ] && mv @LOCAL_EMACS_DIR@ emacs
+	@[ "@LOCAL_EMACS_DIR@" != "emacs" ] && mv @LOCAL_EMACS_DIR@ emacs || return 0
 	@tar -czpf emacs-restaurant.tar.gz emacs || exit 1
-	@[ "@LOCAL_EMACS_DIR@" != "emacs" ] && mv emacs @LOCAL_EMACS_DIR@
+	@[ "@LOCAL_EMACS_DIR@" != "emacs" ] && mv emacs @LOCAL_EMACS_DIR@ || return 0
 	@echo "Packaging el-get libraries"
 	@tar -czpf el-get-packages.tar.gz el-get || exit 1
 

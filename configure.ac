@@ -40,10 +40,10 @@ AC_SUBST(ELGET_RESTAURANT_URI, https://sourceforge.net/projects/restaurant-ide/f
 AC_SUBST(EMACS_CFLAGS)
 AC_SUBST(BUILD_DIR, /tmp/restaurant-release)
 AC_SUBST(GUI_TOOLKIT)
-AC_SUBST(RELEASE_FILES, [restaurant data LICENSE src README.md el-get $LOCAL_EMACS_DIR lib Gemfile bootstrap.sh])
+AC_SUBST(RELEASE_FILES, ["restaurant data LICENSE src README.md el-get $LOCAL_EMACS_DIR lib Gemfile bootstrap.sh"])
 AC_SUBST(EMACS)
 AC_SUBST(LOCAL_EMACS_DIR, emacs)
-AC_SUBST(BUILD_OPTIONS, [--without-pop --with-gnutls])
+AC_SUBST(BUILD_OPTIONS, ["--without-pop --with-gnutls"])
 AC_SUBST(BYTE_COMPILE_P)
 AC_SUBST(STATIC)
 
@@ -62,6 +62,7 @@ AC_ARG_ENABLE(static, [  --disable-static  Enables static precompiled archives, 
 
 # check for makeinfo
 AC_CHECK_PROG(GIT,git,yes,no)
+AC_CHECK_PROG(CURL,curl,yes,no)
 AC_CHECK_PROG(MERCURIAL,hg,yes,no)
 AC_CHECK_PROG(RUBY,ruby,yes,no)
 AC_CHECK_PROG(BUNDLE,bundle,yes,no)
@@ -74,6 +75,10 @@ AC_CHECK_PROG(IMAGEMAGICK,convert,yes,no)
 # check for build deps
 AC_CHECK_HEADER([X11/Xlib-xcb.h])
 AC_CHECK_HEADER([X11/xpm.h])
+
+if test $CURL == "no"; then
+   AC_MSG_ERROR([there is no curl package in system. This binary required for correct restaurant build (build only)])
+fi
 
 if test $GIT == "no"; then
    AC_MSG_ERROR([there is no git package in system. This binary required for correct restaurant working])
