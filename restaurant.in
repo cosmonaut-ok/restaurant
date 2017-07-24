@@ -5,7 +5,12 @@ set -e
 ME=$(readlink -f $0)
 MYDIR=$(dirname $ME)
 REQUIRED_PACKAGES="git"
-
+OS="$(which lsb_release 2>/dev/null >/dev/null && lsb_release -s -i)"
+if [ $OS == 'Debian' ] || [ $OS == 'Ubuntu' ]; then
+    ## optimize libgecode
+    export USE_SYSTEM_GECODE=1
+fi
+	    
 if [ -s ${MYDIR}/etc/restaurant.conf ]; then
     . ${MYDIR}/etc/restaurant.conf
 else

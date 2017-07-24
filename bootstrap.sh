@@ -47,6 +47,10 @@ bootstrap_with_packages ()
     case $os in
 	Debian|Ubuntu)
 	    echo "installing required packages"
+	    ## optimize libgecode
+	    export REQUIRED_PACKAGES="$REQUIRED_PACKAGES libgecode-dev"
+	    export USE_SYSTEM_GECODE=1
+	    #
 	    if [ -n "$sudo_cmd" ]; then
 		$sudo_cmd apt-get -y install $REQUIRED_PACKAGES
 	    else
