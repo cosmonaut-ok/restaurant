@@ -17,6 +17,9 @@ fi
 
 SCRIPT_HOME="$(dirname `realpath $0`)"
 REQUIRED_PACKAGES="git vagrant markdown"
+CONF_FILE=${SCRIPT_HOME}/etc/restaurant.conf
+
+test -f ${CONF_FILE} && . ${CONF_FILE}
 
 print_message()
 {
@@ -114,10 +117,12 @@ bootstrap_rvm ()
 
 generate_configfile ()
 {
-    mkdir -p ${SCRIPT_HOME}/etc/
-    echo "RUBY_VERSION=${RUBY_VERSION}" > ${SCRIPT_HOME}/etc/restaurant.conf
-    echo "GEMSET_NAME=${GEMSET_NAME}" >> ${SCRIPT_HOME}/etc/restaurant.conf
-    echo "OPTIONS=\"-fs\"" >> ${SCRIPT_HOME}/etc/restaurant.conf
+    if [ ! -f ${CONF_FILE} ]; then
+       mkdir -p ${SCRIPT_HOME}/etc/
+       echo "RUBY_VERSION=${RUBY_VERSION}" > ${CONF_FILE}
+       echo "GEMSET_NAME=${GEMSET_NAME}" >> ${CONF_FILE}
+       echo "OPTIONS=\"-fs\"" >> ${CONF_FILE}
+    fi
 }
 
 generate_configfile
