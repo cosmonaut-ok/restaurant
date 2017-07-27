@@ -43,3 +43,16 @@ Let's suppose, that you have no Restaurant, no ruby, no bundler... actually noth
 ## Quick HOWTO
 
 TODO
+
+## Supported linux distributives
+
+* Linux
+  * Debian 9 (Stretch)
+  * Ubuntu 17.04
+  * Centos 7
+  * Fedora 26
+  * Opensuse 42.2
+
+Other linuxes officially not supported, and Restaurant is not tested on it. But it does not mean, that Restaurant can't be launched on it. Just use it on own risk there.
+
+Also, you can use Restaurant with external emacs, built for your OS. Just run `EMACS=/path/to/emacs ./restaurant` (of course, it is not tested with it too).

@@ -249,7 +249,14 @@ little more place."
    ;;       (set-frame-width (selected-frame) (+ (frame-width) (+ ecb-windows-width 2))))))
    )
 
-  (global-set-key (kbd "S-<f12>") 'ecb-toggle-compile-window)
+  (add-hook 'ecb-activate-hook
+	    (lambda ()
+	      (let ((compwin-buffer (ecb-get-compile-window-buffer)))
+		(if (not (and compwin-buffer
+			      (ecb-compilation-buffer-p compwin-buffer)))
+		    (ecb-toggle-compile-window -1)))))
+  
+  (global-set-key (kbd "<f9>") 'ecb-toggle-compile-window)
   )
 
 ;; (setq ecb-create-layout-file (locate-user-config-file "ecb-user-layouts.el"))

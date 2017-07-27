@@ -1,0 +1,13 @@
+name             'restaurant-test'
+maintainer       'Alexander aka "CosmonauT" Vynnyk'
+maintainer_email 'cosmonaut.ok@zoho.com'
+license          'GNU GPL v.3 or higher'
+description      'Installs/Configures restaurant-test'
+long_description 'Installs/Configures restaurant-test'
+version          '0.1.0'
+
+depends 'debian', '~> 1.8.0'
+depends 'ohai'
+depends 'xvfb', '~> 3.0.0'
+depends 'tar'
+depends 'sudo'

@@ -96,6 +96,7 @@ autom4te.cache
 config.status
 configure
 build
+package
 *.tar.gz
 Makefile
 restaurant
@@ -104,3 +105,6 @@ data/icons/hicolor/
 README.html
 Restaurant.desktop
 etc/restaurant.conf
+test/.kitchen/
+test/files/
+test/Berksfile.lock

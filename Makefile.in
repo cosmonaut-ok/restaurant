@@ -34,6 +34,7 @@ SOURCE_DIR=emacs-$(shell basename @EMACS_URI@ .tar.gz)
 LOCAL_EMACS=@LOCAL_EMACS_DIR@/bin/emacs
 CURRENT_DIR=$(shell pwd)
 LDLIB=$LD_LIBRARY_PATH:${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/
+INSTANCES=''
 
 all: build clean-build clean
 
@@ -161,13 +162,14 @@ clean: clean-build clean-precompile
 
 mrproper: clean-emacs clean clean-3rdparty clean-lib
 	@echo "Removing generated configuration files"
-	@rm -rf build configure Makefile Gemfile.lock restaurant build Restaurant.desktop
+	@rm -rf build configure Makefile Gemfile.lock restaurant build Restaurant.desktop package
 	@echo "Removing generated static data"
 	@rm -rf data/icons/hicolor/ srecode-map.el etc/
 	@echo "Removing generated archives"
 	@rm -rf el-get-packages.tar.gz emacs-restaurant.tar.gz ${ARCHIVE_NAME}
+	@cd test && kitchen destroy
 
-package: build libdeps clean
+package: build libdeps
 	@echo "Building package"
 	@mkdir -p @BUILD_DIR@/restaurant/
 	@for i in @RELEASE_FILES@; do cp -rp $$i @BUILD_DIR@/restaurant/; done
@@ -186,6 +188,7 @@ package: build libdeps clean
 	@echo "Packaging"
 	@cd @BUILD_DIR@ && tar -czpf restaurant-@RESTAURANT_VERSION@-@GUI_TOOLKIT@.tar.gz restaurant
 	@cp @BUILD_DIR@/restaurant-@RESTAURANT_VERSION@-@GUI_TOOLKIT@.tar.gz .
+	@touch package
 
 static-packages: emacs el-get
 	@echo "Packaging emacs"
@@ -197,11 +200,14 @@ static-packages: emacs el-get
 
 release: package clean-emacs clean
 
-test: build
-	touch /tmp/.restaurant-mock.rb
-	./bootstrap.sh 2.3 mockgemset
-	./restaurant --batch /tmp/.restaurant-mock.rb
-	rm -f /tmp/.restaurant-mock.rb
+test: package
+	test -f test/files/restaurant.tar.gz || cp restaurant-@RESTAURANT_VERSION@-@GUI_TOOLKIT@.tar.gz test/files/restaurant.tar.gz
+	cd test && test -f Berksfile.lock && berks update || berks install
+	cd test && kitchen converge ${INSTANCE} && kitchen verify ${INSTANCE}
+	# touch /tmp/.restaurant-mock.rb
+	# ./bootstrap.sh 2.3 mockgemset
+	# ./restaurant --batch /tmp/.restaurant-mock.rb
+	# rm -f /tmp/.restaurant-mock.rb
 
 help:
 	@echo "Restaurant Chef IDE v. @RESTAURANT_VERSION@"
