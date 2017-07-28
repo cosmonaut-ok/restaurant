@@ -77,6 +77,9 @@
 		 "\\.gemspec\\'" "Gemfile\\'")
   )
 
+(eval-after-load 'enh-ruby-mode
+  '(define-key ruby-mode-map (kbd "TAB") 'indent-for-tab-command))
+
 (eval-after-load 'ruby-mode
   '(define-key ruby-mode-map (kbd "TAB") 'indent-for-tab-command))
 
@@ -164,17 +167,18 @@
 ;;;
 (defhooklet restaurant/flycheck-ruby restaurant/enable-flycheck
   ;; (require 'flycheck) already activated in prog-mode
-  (flycheck-mode 1)
-  (setq-default flycheck-check-syntax-automatically '(save mode-enabled)))
+  ;; (setq flycheck-disabled-checkers restaurant/flycheck-disabled-checkers)
+  ;; (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (flycheck-mode 1))
 
 ;;;
 ;;; flymake
 ;;;
-(defhooklet restaurant/flymake-ruby enh-ruby-mode restaurant/enable-flymake
-  ;; (require 'flymake) already activated in prog-mode
-  (require 'flymake-ruby)
-  (flymake-ruby-load) ;; FIXME: not loading automatically
-  (flymake-mode 1))
+;; (defhooklet restaurant/flymake-ruby enh-ruby-mode restaurant/enable-flymake
+;;   ;; (require 'flymake) already activated in prog-mode
+;;   (require 'flymake-ruby)
+;;   (flymake-ruby-load) ;; FIXME: not loading automatically
+;;   (flymake-mode 1))
 
 ;;;
 ;;; ri

@@ -248,13 +248,6 @@ little more place."
    ;;                    (display-pixel-width)))
    ;;       (set-frame-width (selected-frame) (+ (frame-width) (+ ecb-windows-width 2))))))
    )
-
-  (add-hook 'ecb-activate-hook
-	    (lambda ()
-	      (let ((compwin-buffer (ecb-get-compile-window-buffer)))
-		(if (not (and compwin-buffer
-			      (ecb-compilation-buffer-p compwin-buffer)))
-		    (ecb-toggle-compile-window -1)))))
   
   (global-set-key (kbd "<f9>") 'ecb-toggle-compile-window)
   )
@@ -265,10 +258,7 @@ little more place."
 (custom-set-variables
  ;; speedbar
  '(speedbar-use-images t)
- '(speedbar-show-unknown-files t)
-
- 
- )
+ '(speedbar-show-unknown-files t))
 
 (when (not restaurant/code-browser-switch-to-simple)
   (custom-set-variables
@@ -286,7 +276,6 @@ little more place."
 	(call-interactively 'ecb-activate))))
 
 (global-set-key (kbd "<f11>") 'toggle-code-browser)
-
 
 (add-hook 'emacs-startup-hook '(lambda ()
 				 (when (not noninteractive)

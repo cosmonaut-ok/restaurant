@@ -204,11 +204,17 @@
   :group 'restaurant/programming
   )
 
-(defcustom restaurant/enable-flymake t
-  "Enable flymake support (on-the-fly syntax checking)."
-  :type 'boolean
+(defcustom restaurant/flycheck-disabled-checkers '(ruby-rubylint)
+  "Disable some flycheck checkers for ruby files."
+  :type 'list
   :group 'restaurant/programming
   )
+
+;; (defcustom restaurant/enable-flymake t
+;;   "Enable flymake support (on-the-fly syntax checking)."
+;;   :type 'boolean
+;;   :group 'restaurant/programming
+;;   )
 
 (defcustom restaurant/enable-spell-checking nil
   "Enable spell checking in code comments."
@@ -263,7 +269,7 @@
   :group 'restaurant/ruby)
 
 (defcustom restaurant/enable-rubocop t
-  "Enable rubocop, when open ruby file,"
+  "Enable rubocop, when open ruby file."
   :type 'boolean
   :group 'restaurant/ruby
   )

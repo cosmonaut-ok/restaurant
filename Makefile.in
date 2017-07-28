@@ -36,6 +36,8 @@ CURRENT_DIR=$(shell pwd)
 LDLIB=$LD_LIBRARY_PATH:${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/
 INSTANCES=''
 
+.PHONY: clean mrproper clean-build clean-precompile clean-lib clean-emacs clean-3rdparty
+
 all: build clean-build clean
 
 emacs:
@@ -167,7 +169,7 @@ mrproper: clean-emacs clean clean-3rdparty clean-lib
 	@rm -rf data/icons/hicolor/ srecode-map.el etc/
 	@echo "Removing generated archives"
 	@rm -rf el-get-packages.tar.gz emacs-restaurant.tar.gz ${ARCHIVE_NAME}
-	@cd test && kitchen destroy
+	@test -n `which kitchen` && cd test && kitchen destroy
 
 package: build libdeps
 	@echo "Building package"

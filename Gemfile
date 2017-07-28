@@ -19,7 +19,8 @@ gem 'method_source', '>= 0.8.2'
 gem 'activesupport', '~> 4.2.0'
 gem 'dep_selector', '~> 1.0.3'
 gem 'cookstyle', '~> 2.0.0'
-
+gem 'reek', '~> 4.7.0'
+gem 'ruby-lint', '~> 2.3.0'
 group :metrics do
   gem 'simplecov', require: false
 end

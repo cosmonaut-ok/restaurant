@@ -35,6 +35,7 @@
   (require 'flycheck-pos-tip)
   (flycheck-mode 1)
   (flycheck-pos-tip-mode 1)
+  (setq flycheck-disabled-checkers restaurant/flycheck-disabled-checkers)
   (setq flycheck-check-syntax-automatically '(save mode-enabled)))
 
 (eval-after-load 'flycheck
@@ -50,8 +51,8 @@
 ;;;
 ;;; flymake
 ;;;
-(defhooklet restaurant/flymake prog-mode restaurant/enable-flymake
-  (require 'flymake)
-  (flymake-mode 1))
+;; (defhooklet restaurant/flymake prog-mode restaurant/enable-flymake
+;;   (require 'flymake)
+;;   (flymake-mode 1))
 
 ;;; restaurant-fly.el ends here
