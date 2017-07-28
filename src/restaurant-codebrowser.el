@@ -247,7 +247,14 @@ little more place."
    ;;                                              (+ ecb-windows-width 2)))
    ;;                    (display-pixel-width)))
    ;;       (set-frame-width (selected-frame) (+ (frame-width) (+ ecb-windows-width 2))))))
+   '(ecb-layout-name "restaurant-default")
    )
+  ;; (add-hook 'prog-mode-hook 'ecb-rebuild-methods-buffer)
+  
+  (defhooklet restaurant/ecb-generic-hooks prog-mode t
+    (and
+     (sleep-for 0.1) ;; require a little bit to sleep, while buffer becames ready for get methods
+     (ecb-rebuild-methods-buffer 1)))
   
   (global-set-key (kbd "<f9>") 'ecb-toggle-compile-window)
   )
@@ -260,9 +267,9 @@ little more place."
  '(speedbar-use-images t)
  '(speedbar-show-unknown-files t))
 
-(when (not restaurant/code-browser-switch-to-simple)
-  (custom-set-variables
-   '(ecb-layout-name "restaurant-default")))
+;; (when (not restaurant/code-browser-switch-to-simple)
+;;   (custom-set-variables
+;;    '(ecb-layout-name "restaurant-default")))
 
 (when restaurant/code-browser-switch-to-simple
   (custom-set-variables
