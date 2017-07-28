@@ -6,9 +6,9 @@ default['xvfb']['dimensions'] = '1280x1024x24'
 default['xvfb']['args'] = '-ac'
 
 default['restaurant-test']['user'] = 'restaurant'
-default['restaurant-test']['user']['home'] = '/home/restaurant'
+default['restaurant-test']['user_home'] = '/home/restaurant'
 default['restaurant-test']['ruby'] = '2.3'
 default['restaurant-test']['gemset'] = 'global'
 
 
-default['restaurant-test']['restaurant_directory'] = "#{node['restaurant-test']['user']['home']}/restaurant"
+default['restaurant-test']['restaurant_directory'] = "#{node['restaurant-test']['user_home']}/restaurant"

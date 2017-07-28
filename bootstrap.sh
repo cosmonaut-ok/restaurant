@@ -112,7 +112,8 @@ bootstrap_rvm ()
     [ -n "$(which gpg2)" ] && curl -sSL https://rvm.io/mpapis.asc | gpg2 --import - 2>/dev/null
     echo "done"
     # bootstrap RVM
-    curl -sSL https://get.rvm.io | bash -s master --ruby=${RUBY_VERSION} --auto-dotfiles --gems=bundler
+    curl -sSL https://get.rvm.io | bash -s stable --ruby=${RUBY_VERSION} --auto-dotfiles --gems=bundler || \
+	(ln -s ~/.rvm/scripts/functions/version ~/.rvm/scripts/version && curl -sSL https://get.rvm.io | bash -s stable --ruby=${RUBY_VERSION} --auto-dotfiles --gems=bundler) # fix for new RVM convensions
     echo "RVM Installed"
   fi
   # install required gems
