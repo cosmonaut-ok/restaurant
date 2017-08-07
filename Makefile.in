@@ -81,7 +81,7 @@ endif
 
 libdeps: emacs
 	@mkdir -p ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/
-	@for i in `ldd ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/bin/emacs | awk '{print $$3}'`; do \
+	@for i in `ldd ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/bin/emacs | grep -vE 'libc.so.6|libpthread.so.0' | awk '{print $$3}'`; do \
 		cp -rH $$i ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/; \
 	done
 
