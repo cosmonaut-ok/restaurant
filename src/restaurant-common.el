@@ -41,11 +41,6 @@
 ;;; Global config
 ;;;
 
-(defun restaurant/colorize-compilation-buffer ()
-  (toggle-read-only)
-  (ansi-color-apply-on-region compilation-filter-start (point))
-  (toggle-read-only))
-
 ;;;; Global default configuration parameters
 
 (custom-set-variables

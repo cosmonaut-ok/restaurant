@@ -15,12 +15,18 @@ include_recipe 'xvfb'
 user_home = node['restaurant-test']['user_home']
 cache_dir = Chef::Config[:file_cache_path]
 
-%w[imagemagick sudo].each do |pkg|
+## install common packages
+%w[sudo].each do |pkg|
    package pkg
 end
 
+## install fedora-specific packages
+%w[ImageMagick ruby-devel redhat-lsb-core].each do |rpm|
+  package rpm
+end if node['platform_family'] == 'fedora'
+
 ## install debian-specific packages
-%w[ruby-dev].each do |dpkg|
+%w[imagemagick ruby-dev].each do |dpkg|
   package dpkg
 end if node['platform_family'] == 'debian'
 

@@ -158,9 +158,9 @@
 
 (defun restaurant/colorize-compilation-buffer ()
   "Colorize compile buffer output."
-  (toggle-read-only)
+  (read-only-mode 0)
   (ansi-color-apply-on-region compilation-filter-start (point))
-  (toggle-read-only))
+  (read-only-mode 1))
 
 (defmacro define-colored-compilation-mode (name title &rest body)
   "Define compilation mode with ansi colors support."

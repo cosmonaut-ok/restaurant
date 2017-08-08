@@ -49,7 +49,8 @@ if [ ! -z $EMACS ]; then
 elif [ -x $MYDIR/@LOCAL_EMACS_DIR@/bin/emacs ]; then
     export EMACS=$MYDIR/@LOCAL_EMACS_DIR@/bin/emacs
     export EMACSDATA=$MYDIR/@LOCAL_EMACS_DIR@/etc/
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MYDIR/@LOCAL_EMACS_DIR@/lib/
+    export LD_LIBRARY_PATH=${MYDIR}/emacs/lib/:"$(ld --verbose | grep SEARCH_DIR | tr -s ' ;' ':' | sed 's/SEARCH_DIR("\=//g;s/")//g;s/:$//g')"
+    
 elif [ ! -z `which emacs` ]; then
     export EMACS=`which emacs`
 else

@@ -31,17 +31,10 @@
 
 (defvar restaurant/use-bundler t) ;; TODO: convert to defcustom
 
-;; small bundler hack ;-)
-(defun bundler-colorize-compilation-buffer ()
-  "Colorize bundler compile buffer output."
-  (toggle-read-only)
-  (ansi-color-apply-on-region compilation-filter-start (point))
-  (toggle-read-only))
-
-;; define test kitchen compilation mode
+;; define bundler compilation mode
 (define-compilation-mode bundler-compilation-mode "Bundler compilation"
   "Compilation mode for Bundler output."
-  (add-hook 'compilation-filter-hook 'bundler-colorize-compilation-buffer nil t))
+  (add-hook 'compilation-filter-hook 'restaurant/colorize-compilation-buffer nil t))
 
 (defun bundle-command (cmd)
   "Run CMD in an async buffer."

@@ -16,7 +16,7 @@ else
 fi
 
 SCRIPT_HOME="$(dirname `realpath $0`)"
-REQUIRED_PACKAGES="git vagrant markdown"
+REQUIRED_PACKAGES="git vagrant discount gnupg xdg-user-dirs"
 CONF_FILE=${SCRIPT_HOME}/etc/restaurant.conf
 
 test -f ${CONF_FILE} && . ${CONF_FILE}
@@ -57,7 +57,7 @@ bootstrap_with_packages ()
 		$su_cmd "apt-get -y install $REQUIRED_PACKAGES"
 	    fi
 	    ;;
-	CentOS|RHEL)
+	CentOS|RHEL|Fedora)
 	    echo "installing required packages"
 	    if [ -n "$sudo_cmd" ]; then
 		$sudo_cmd yum -y install $REQUIRED_PACKAGES
