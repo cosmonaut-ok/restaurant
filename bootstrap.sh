@@ -16,7 +16,7 @@ else
 fi
 
 SCRIPT_HOME="$(dirname `realpath $0`)"
-REQUIRED_PACKAGES="git vagrant discount gnupg xdg-user-dirs"
+REQUIRED_PACKAGES="git vagrant discount gnupg"
 CONF_FILE=${SCRIPT_HOME}/etc/restaurant.conf
 
 test -f ${CONF_FILE} && . ${CONF_FILE}
@@ -113,7 +113,7 @@ bootstrap_rvm ()
     echo "done"
     # bootstrap RVM
     curl -sSL https://get.rvm.io | bash -s stable --ruby=${RUBY_VERSION} --auto-dotfiles --gems=bundler || \
-	(ln -s ~/.rvm/scripts/functions/version ~/.rvm/scripts/version && curl -sSL https://get.rvm.io | bash -s stable --ruby=${RUBY_VERSION} --auto-dotfiles --gems=bundler) # fix for new RVM convensions
+	(if [ ! -f ~/.rvm/scripts/version ]; then ln -s ~/.rvm/scripts/functions/version ~/.rvm/scripts/version && curl -sSL https://get.rvm.io | bash -s stable --ruby=${RUBY_VERSION} --auto-dotfiles --gems=bundler; fi) # fix for new RVM convensions
     echo "RVM Installed"
   fi
   # install required gems
