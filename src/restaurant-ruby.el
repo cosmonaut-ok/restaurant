@@ -160,7 +160,7 @@
   (auto-revert-mode 1) ;; TODO: is it needed here?
   (custom-set-variables
    '(rubocop-check-command "rubocop -r cookstyle -D --format emacs")
-   '(rubocop-check-command "rubocop -a -r cookstyle --format emacs")))
+   ))
 
 ;;;
 ;;; flycheck
