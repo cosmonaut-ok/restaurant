@@ -48,4 +48,7 @@
   (bundle-gemfile (locate-source-file "Gemfile"))
   (bundle-install))
 
+(defhooklet restaurant/bundle enh-ruby-mode t
+  (local-set-key (kbd "<S-f3>") 'bundle-update))
+
 ;;; restaurant-bundler.el ends here

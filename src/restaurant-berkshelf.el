@@ -31,4 +31,7 @@
 
 (defvar restaurant/use-berkshelf t) ;; TODO: convert to defcustom
 
+(defhooklet restaurant/berkshelf chef-mode t
+  (local-set-key (kbd "<f3>") 'berks-update))
+
 ;;; restaurant-berkshelf.el ends here

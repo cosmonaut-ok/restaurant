@@ -22,6 +22,9 @@ verifier:
   name: inspec
 
 platforms:
+  - name: fedora-25
+    driver:
+      box: bento/fedora-25
   - name: fedora-26
     driver:
       box: bento/fedora-26

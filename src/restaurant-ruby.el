@@ -106,7 +106,9 @@
                (lambda (arg) (ruby-end-of-block)) nil))
 
 (defhooklet restaurant/ruby-generic enh-ruby-mode t
-  (inf-ruby-minor-mode 1))
+  (inf-ruby-minor-mode 1)
+  (local-set-key (kbd "<C-f12>") 'ruby-switch-to-inf)
+  )
 
 ;;;
 ;;; ruby-electric
@@ -160,7 +162,10 @@
   (auto-revert-mode 1) ;; TODO: is it needed here?
   (custom-set-variables
    '(rubocop-check-command "rubocop -r cookstyle -D --format emacs")
-   ))
+   )
+  (local-set-key (kbd "<f6>") 'rubocop-check-project)
+  (local-set-key (kbd "<S-f6>") 'rubocop-check-current-file)
+  )
 
 ;;;
 ;;; flycheck

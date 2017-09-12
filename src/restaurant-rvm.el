@@ -114,6 +114,8 @@
     gemset
     " --default;"
     )))
-       
+
+(defhooklet restaurant/rvm enh-ruby-mode t
+  (local-set-key (kbd "<C-f3>") 'rvm-use))
 
 ;;; restaurant-rvm.el ends here

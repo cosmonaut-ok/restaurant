@@ -7,81 +7,90 @@
 # All rights reserved - Do Not Redistribute
 #
 
-include_recipe 'ohai'
-include_recipe 'debian' if node['platform_family'] == 'debian'
+apt_update 'update' if node['platform_family'] == 'debian'
 
-include_recipe 'xvfb'
+package 'ruby' # try to use system ruby
 
-user_home = node['restaurant-test']['user_home']
-cache_dir = Chef::Config[:file_cache_path]
-
-## install common packages
-%w[sudo].each do |pkg|
-   package pkg
+restaurant_test 'restaurant-2.4' do
+  user 'restaurant-2.4'
+  ruby_version '2.4'
 end
 
-## install fedora-specific packages
-%w[ImageMagick ruby-devel redhat-lsb-core].each do |rpm|
-  package rpm
-end if node['platform_family'] == 'fedora'
+# include_recipe 'ohai'
+# include_recipe 'debian' if node['platform_family'] == 'debian'
 
-## install debian-specific packages
-%w[imagemagick ruby-dev].each do |dpkg|
-  package dpkg
-end if node['platform_family'] == 'debian'
+# include_recipe 'xvfb'
 
-user node['restaurant-test']['user'] do
-  home user_home
-  manage_home true
-  shell '/bin/bash'
-end
+# user_home = node['restaurant-test']['user_home']
+# cache_dir = Chef::Config[:file_cache_path]
 
-sudo node['restaurant-test']['user'] do
-  user node['restaurant-test']['user']
-  nopasswd true
-end
+# ## install common packages
+# %w[sudo].each do |pkg|
+#    package pkg
+# end
 
-directory node['restaurant-test']['restaurant_directory'] do
-  owner node['restaurant-test']['user']
-  recursive true
-end
+# ## install fedora-specific packages
+# %w[ImageMagick ruby-devel redhat-lsb-core].each do |rpm|
+#   package rpm
+# end if node['platform_family'] == 'fedora'
 
-cookbook_file "#{cache_dir}/restaurant.tar.gz" do
-  source 'restaurant.tar.gz'
-  user node['restaurant-test']['user']
-  notifies :extract_local, "tar_extract[#{cache_dir}/restaurant.tar.gz]", :immediately
-end
+# ## install debian-specific packages
+# %w[imagemagick ruby-dev].each do |dpkg|
+#   package dpkg
+# end if node['platform_family'] == 'debian'
 
-tar_extract "#{cache_dir}/restaurant.tar.gz" do
-  target_dir user_home
-  creates "#{node['restaurant-test']['restaurant_directory']}/bootstrap.sh"
-  user node['restaurant-test']['user']
-  action :nothing
-  notifies :run, 'bash[bootstrap.sh]', :immediately
-end
+# user node['restaurant-test']['user'] do
+#   home user_home
+#   manage_home true
+#   shell '/bin/bash'
+# end
 
-bash 'bootstrap.sh' do
-  code <<-EOF
-## We should emulate user environment
-/bin/bash -l #{node['restaurant-test']['restaurant_directory']}/bootstrap.sh #{node['restaurant-test']['ruby']} #{node['restaurant-test']['gemset']}
-  EOF
-  creates "#{user_home}/.rvm/rubies/default/bin/ruby"
-  cwd node['restaurant-test']['restaurant_directory']
-  user node['restaurant-test']['user']
-  environment({
-                :HOME => user_home,
-                :USER => node['restaurant-test']['user']
-              })
-  not_if { ::File.exists?("#{user_home}/.rvm/rubies/default/bin/ruby") }
-end
+# sudo node['restaurant-test']['user'] do
+#   user node['restaurant-test']['user']
+#   nopasswd true
+# end
 
-bash 'restaurant batch' do
-  code "#{node['restaurant-test']['restaurant_directory']}/restaurant --batch"
-  cwd node['restaurant-test']['restaurant_directory']
-  user node['restaurant-test']['user']
-  environment({
-                :HOME => user_home,
-                :USER => node['restaurant-test']['user']
-              })
-  only_if { ::File.exists?("#{user_home}/.rvm/rubies/default/bin/ruby") && ::File.exists?("#{node['restaurant-test']['restaurant_directory']}/restaurant") }
-end
+# directory node['restaurant-test']['restaurant_directory'] do
+#   owner node['restaurant-test']['user']
+#   recursive true
+# end
+
+# cookbook_file "#{cache_dir}/restaurant.tar.gz" do
+#   source 'restaurant.tar.gz'
+#   user node['restaurant-test']['user']
+#   notifies :extract_local, "tar_extract[#{cache_dir}/restaurant.tar.gz]", :immediately
+# end
+
+# tar_extract "#{cache_dir}/restaurant.tar.gz" do
+#   target_dir user_home
+#   creates "#{node['restaurant-test']['restaurant_directory']}/bootstrap.sh"
+#   user node['restaurant-test']['user']
+#   action :nothing
+#   notifies :run, "bash[bootstrap.sh #{node['restaurant-test']['ruby']} #{node['restaurant-test']['gemset']}]", :immediately
+# end
+
+# bash "bootstrap.sh #{node['restaurant-test']['ruby']} #{node['restaurant-test']['gemset']}" do
+#   code <<-EOF
+# ## We should emulate user environment
+# /bin/bash -l -x #{node['restaurant-test']['restaurant_directory']}/bootstrap.sh #{node['restaurant-test']['ruby']} #{node['restaurant-test']['gemset']}
+#   EOF
+#   creates "#{user_home}/.rvm/rubies/default/bin/ruby"
+#   cwd node['restaurant-test']['restaurant_directory']
+#   user node['restaurant-test']['user']
+#   environment({
+#                 :HOME => user_home,
+#                 :USER => node['restaurant-test']['user']
+#               })
+#   not_if { ::File.exists?("#{user_home}/.rvm/rubies/default/bin/ruby") }
+# end
+
+# bash 'restaurant batch' do
+#   code "#{node['restaurant-test']['restaurant_directory']}/restaurant --batch"
+#   cwd node['restaurant-test']['restaurant_directory']
+#   user node['restaurant-test']['user']
+#   environment({
+#                 :HOME => user_home,
+#                 :USER => node['restaurant-test']['user']
+#               })
+#   only_if { ::File.exists?("#{user_home}/.rvm/rubies/default/bin/ruby") && ::File.exists?("#{node['restaurant-test']['restaurant_directory']}/restaurant") }
+# end

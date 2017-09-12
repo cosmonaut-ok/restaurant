@@ -383,8 +383,14 @@
 ;; (global-set-key (kbd "C-M-S") 'helm-swoop)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; set key to open-console
+;;;; set some generic keys
 (global-set-key (kbd "<f12>") 'open-console)
+(global-set-key (kbd "<C-S-f12>") 'ielm)
+
+(global-set-key (kbd "<f7>") 'isearch-forward)
+(global-set-key (kbd "<S-f7>") 'highlight-regexp)
+(global-set-key (kbd "<C-S-f7>") 'unhighlight-regexp)
+(global-set-key (kbd "<M-f7>") 'projectile-grep)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;

@@ -31,6 +31,10 @@
 
 (defhooklet restaurant/foodcritic-init enh-ruby-mode restaurant/enable-foodcritic
   (foodcritic-mode 1)
-  (auto-revert-mode 1)) ;; TODO: is it needed here?
+  (auto-revert-mode 1) ;; TODO: is it needed here?
+  ;; keybindings
+  (local-set-key (kbd "<f5>") 'foodcritic-check-project)
+  (local-set-key (kbd "<S-f5>") 'foodcritic-check-current-file)
+  )
 
 ;;; restaurant-foodcritic.el ends here

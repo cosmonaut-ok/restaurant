@@ -256,7 +256,7 @@ little more place."
      (sleep-for 0.1) ;; require a little bit to sleep, while buffer becames ready for get methods
      (ecb-rebuild-methods-buffer 1)))
   
-  (global-set-key (kbd "<f9>") 'ecb-toggle-compile-window)
+  (global-set-key (kbd "<C-f11>") 'ecb-toggle-compile-window)
   )
 
 ;; (setq ecb-create-layout-file (locate-user-config-file "ecb-user-layouts.el"))

@@ -32,7 +32,12 @@
 ;;;
 
 (defhooklet restaurant/chef-kitchen chef-mode
-  (require 'test-kitchen))
+  (require 'test-kitchen)
+  (local-set-key (kbd "<f9>") 'test-kitchen-converge)
+  (local-set-key (kbd "<S-f9>") 'test-kitchen-verify)
+  (local-set-key (kbd "<C-f9>") 'test-kitchen-converge-all)
+  (local-set-key (kbd "<C-S-f9>") 'test-kitchen-verify-all)
+  )
 
 ;; patch for original test-kitchen.el. It does not supports automatic login
 (defcustom test-kitchen-login-command "kitchen login"
