@@ -284,6 +284,10 @@
   '("Commit Changed" . magit-commit))
 
 (define-key prog-mode-map
+  [menu-bar vcs git checkout-to-new]
+  '("Checkout To New Branch" . magit-branch-and-checkout))
+
+(define-key prog-mode-map
   [menu-bar vcs git show-log-current]
   '("Log Current Branch" . magit-log-current))
 
