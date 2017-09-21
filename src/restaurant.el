@@ -36,10 +36,12 @@
 ;; set init and custom file
 (mkdir restaurant/user-config-directory t)
 
-(setq user-init-file (locate-source-file "init.el")
+(setq ;; user-init-file (locate-user-config-file "init.el")
       user-emacs-directory restaurant/user-config-directory
       custom-file (locate-user-config-file "restaurant.el")
-      local-file (locate-user-config-file "restaurant.el"))
+      local-file (locate-user-config-file "restaurant.el")
+      user-init-file (locate-user-config-file "restaurant.el"))
+
 ;; move semanticDB, srecode and ede to cache
 (custom-set-variables
  '(ede-project-placeholder-cache-file (locate-user-cache-file "restaurant-ede-projects.el"))
