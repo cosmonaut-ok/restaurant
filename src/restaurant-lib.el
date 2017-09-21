@@ -219,5 +219,16 @@
      key
      (split-string file-string "\n")
      delimiter)))
+;; ChefDK support
+(defun restaurant-chefdk-chef-command (command &optional home)
+  "Get command, when use chefDK."
+  (when (null home)
+    (setq home "/opt/chefdk"))
+  (let ((chef-file-full-path (concat
+			      (file-name-as-directory home)
+			      (file-name-as-directory "bin")
+			      command)))
+    (when (file-executable-p chef-file-full-path)
+      chef-file-full-path)))
 
 ;;; restaurant-lib.el ends here

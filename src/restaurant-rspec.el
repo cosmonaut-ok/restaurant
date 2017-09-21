@@ -46,4 +46,31 @@
   (local-set-key (kbd "<S-f8>") 'rspec-verify-single)
   )
 
+;; rspec-mode patch
+(defcustom rspec-use-chefdk-when-possible t
+  "When t and chefDK home defined correctly, run specs with 'chef exec'.
+Disables running specs with bundle, Zeus of Spring."
+  :type 'boolean
+  :group 'rspec-mode)
+
+(defcustom rspec-chefdk-home-directory "/opt/chefdk"
+  "Use `chef exec` for rspec when it's possible"
+  :type 'directory
+  :group 'rspec-mode)
+
+(defun rspec-chefdk-p ()
+  (and rspec-use-bundler-when-possible
+       (restaurant-chefdk-chef-command "chef")))
+
+(defun rspec-runner ()
+  "Return command line to run rspec."
+  (let ((chefdk-command (if (rspec-chefdk-p) (concat (restaurant-chefdk-chef-command "chef") " exec ") ""))
+	(bundle-command (if (rspec-bundle-p) "bundle exec " ""))
+        (zeus-command (if (rspec-zeus-p) "zeus " nil))
+        (spring-command (if (rspec-spring-p) "spring " nil)))
+    (concat (or chefdk-command zeus-command spring-command bundle-command)
+            (if (rspec-rake-p)
+                (concat rspec-rake-command " spec")
+              rspec-spec-command))))
+
 ;;; restaurant-rspec.el ends here
