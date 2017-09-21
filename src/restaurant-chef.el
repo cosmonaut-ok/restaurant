@@ -146,41 +146,78 @@ See URL `http://acrmp.github.io/foodcritic/'."
 (defhooklet restaurant/chef-add-extra-snippets chef-mode t
   (yas-activate-extra-mode 'chef-mode))
 
-(defhooklet restaurant/chefdk-switcher prog-mode restaurant/enable-chefdk
+(defun restaurant-chefdk-switch ()
   (custom-set-variables
-   '(berkshelf-use-chefdk-when-possible t)
-   '(rspec-use-chefdk-when-possible t)
-   '(test-kitchen-use-chefdk-when-possible t)
-   ;;
-   ;; '(knife-kitchen-use-chefdk-when-possible t)
-   ;; '(foodcritic-use-chefdk-when-possible t)
-   ;; '(bundler-use-chefdk-when-possible t)
-   ;; '(gem-use-chefdk-when-possible t)
-   ;; '(rubocop-use-chefdk-when-possible t)
-   ;; '(bundler-use-chefdk-when-possible t)
-   ;;
    '(berkshelf-chefdk-home-directory restaurant/chefdk-home)
    '(test-kitchen-chefdk-home-directory restaurant/chefdk-home)
-   '(rspec-chefdk-home-directory restaurant/chefdk-home)
-   )
-  )
-
-(defhooklet restaurant/bundler-switcher prog-mode restaurant/enable-bundler
-  (custom-set-variables
-   '(berkshelf-use-bundler-when-possible t)
-   '(rspec-use-bundler-when-possible t)
-   '(test-kitchen-use-bundler-when-possible t)
-   ;;
-   ;; '(knife-kitchen-use-bundler-when-possible t)
-   ;; '(foodcritic-use-bundler-when-possible t)
-   ;; '(bundler-use-bundler-when-possible t)
-   ;; '(gem-use-bundler-when-possible t)
-   ;; '(rubocop-use-bundler-when-possible t)
-   ;;
-   )
-  (if (not restaurant/enable-chefdk)
+   '(rspec-chefdk-home-directory restaurant/chefdk-home))
+  ;;
+  (if restaurant/enable-chefdk
       (custom-set-variables
-       '(chef-use-bundler t)))
-  )
+       '(berkshelf-use-chefdk-when-possible t)
+       '(rspec-use-chefdk-when-possible t)
+       '(test-kitchen-use-chefdk-when-possible t)
+       ;;
+       ;; '(knife-kitchen-use-chefdk-when-possible t)
+       ;; '(foodcritic-use-chefdk-when-possible t)
+       ;; '(bundler-use-chefdk-when-possible t)
+       ;; '(gem-use-chefdk-when-possible t)
+       ;; '(rubocop-use-chefdk-when-possible t)
+       ;; '(bundler-use-chefdk-when-possible t)
+       ;;
+       )
+    (custom-set-variables
+     '(berkshelf-use-chefdk-when-possible nil)
+     '(rspec-use-chefdk-when-possible nil)
+     '(test-kitchen-use-chefdk-when-possible nil)
+     ;;
+     ;; '(knife-kitchen-use-chefdk-when-possible t)
+     ;; '(foodcritic-use-chefdk-when-possible t)
+     ;; '(bundler-use-chefdk-when-possible t)
+     ;; '(gem-use-chefdk-when-possible t)
+     ;; '(rubocop-use-chefdk-when-possible t)
+     ;; '(bundler-use-chefdk-when-possible t)
+     ;;
+     )))    
+
+
+
+(defun restaurant-bundler-switch ()
+  (if restaurant/enable-bundler
+      (progn
+	(custom-set-variables
+	 '(berkshelf-use-bundler-when-possible t)
+	 '(rspec-use-bundler-when-possible t)
+	 '(test-kitchen-use-bundler-when-possible t)
+	 ;;
+	 ;; '(knife-kitchen-use-bundler-when-possible t)
+	 ;; '(foodcritic-use-bundler-when-possible t)
+	 ;; '(bundler-use-bundler-when-possible t)
+	 ;; '(gem-use-bundler-when-possible t)
+	 ;; '(rubocop-use-bundler-when-possible t)
+	 ;;
+	 )
+	(if (not restaurant/enable-chefdk)
+	    (custom-set-variables
+	     '(chef-use-bundler t))))
+    (progn
+      (custom-set-variables
+       '(berkshelf-use-bundler-when-possible nil)
+       '(rspec-use-bundler-when-possible nil)
+       '(test-kitchen-use-bundler-when-possible nil)
+       ;;
+       ;; '(knife-kitchen-use-bundler-when-possible nil)
+       ;; '(foodcritic-use-bundler-when-possible nil)
+       ;; '(bundler-use-bundler-when-possible nil)
+       ;; '(gem-use-bundler-when-possible nil)
+       ;; '(rubocop-use-bundler-when-possible nil)
+       ;;
+       '(chef-use-bundler nil)))))
+
+(defhooklet restaurant/chefdk-switcher prog-mode t
+  (restaurant-chefdk-switch))
+
+(defhooklet restaurant/bundler-switcher prog-mode t
+  (restaurant-bundler-switch))
 
 ;;; chef.el ends here

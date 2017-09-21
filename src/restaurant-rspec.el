@@ -47,7 +47,7 @@
   )
 
 ;; rspec-mode patch
-(defcustom rspec-use-chefdk-when-possible t
+(defcustom rspec-use-chefdk-when-possible nil
   "When t and chefDK home defined correctly, run specs with 'chef exec'.
 Disables running specs with bundle, Zeus of Spring."
   :type 'boolean
@@ -59,13 +59,13 @@ Disables running specs with bundle, Zeus of Spring."
   :group 'rspec-mode)
 
 (defun rspec-chefdk-p ()
-  (and rspec-use-bundler-when-possible
+  (and rspec-use-chefdk-when-possible
        (restaurant-chefdk-command "chef")))
 
 (defun rspec-runner ()
   "Return command line to run rspec."
-  (let ((chefdk-command (if (rspec-chefdk-p) (concat (restaurant-chefdk-command "chef") " exec ") ""))
-	(bundle-command (if (rspec-bundle-p) "bundle exec " ""))
+  (let ((chefdk-command (if (rspec-chefdk-p) (concat (restaurant-chefdk-command "chef") " exec ")))
+	(bundle-command (if (rspec-bundle-p) "bundle exec "))
         (zeus-command (if (rspec-zeus-p) "zeus " nil))
         (spring-command (if (rspec-spring-p) "spring " nil)))
     (concat (or chefdk-command zeus-command spring-command bundle-command)
