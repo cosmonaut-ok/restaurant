@@ -31,32 +31,28 @@
 ;;; test-kitchen
 ;;;
 
-(defhooklet restaurant/chef-kitchen chef-mode
+(defhooklet restaurant/chef-kitchen chef-mode restaurant/enable-chef
   (require 'test-kitchen)
+  ;;
+  (defcustom test-kitchen-login-command (cond ((test-kitchen-chefdk-p) "chef exec kitchen login")
+                                              ((test-kitchen-bundler-p) "bundle exec kitchen login")
+                                              (t "kitchen login"))
+    "The command used for login to converged VM (use it, when really want to use custom command. Not with chef of bundler)."
+    :type 'string
+    :group 'test-kitchen)
+
+  (defun test-kitchen-login (instance)
+    (interactive (list (completing-read "Kitchen instance to login: " (split-string (test-kitchen-list-bare)))))
+    (let ((root-dir (test-kitchen-locate-root-dir)))
+      (if root-dir
+          (let ((default-directory root-dir))
+            (with-current-buffer (term "/bin/bash")
+              (term-send-raw-string (concat test-kitchen-login-command " " instance "\n"))))
+        (error "Couldn't locate .kitchen.yml!"))))
+  ;;
+
   (local-set-key (kbd "<f9>") 'test-kitchen-converge)
   (local-set-key (kbd "<S-f9>") 'test-kitchen-verify)
   (local-set-key (kbd "<C-f9>") 'test-kitchen-converge-all)
   (local-set-key (kbd "<C-S-f9>") 'test-kitchen-verify-all)
   )
-
-;; patch for original test-kitchen.el. It does not supports automatic login
-(defcustom test-kitchen-login-command "kitchen login"
-  "The command used for converge project.")
-
-(defun test-kitchen-login (instance)
-  (interactive (list (completing-read "Kitchen instance to login: " (split-string (test-kitchen-list-bare)))))
-  (let ((root-dir (test-kitchen-locate-root-dir)))
-    (if root-dir
-        (let ((default-directory root-dir))
-	  (with-current-buffer (term "/bin/bash")
-	    (term-send-raw-string (concat test-kitchen-login-command " " instance "\n"))))
-      (error "Couldn't locate .kitchen.yml!"))))
-
-;; we use rvm and custom binary path to kitchen, so don't need 'chef exec'
-(custom-set-variables
- '(test-kitchen-converge-command "kitchen converge")
- '(test-kitchen-destroy-command "kitchen destroy")
- '(test-kitchen-list-command "kitchen list")
- '(test-kitchen-test-command "kitchen test")
- '(test-kitchen-verify-command "kitchen verify")
- )
