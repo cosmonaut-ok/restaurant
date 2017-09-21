@@ -219,11 +219,12 @@
      key
      (split-string file-string "\n")
      delimiter)))
+
 ;; ChefDK support
-(defun restaurant-chefdk-chef-command (command &optional home)
+(defun restaurant-chefdk-command (command &optional home)
   "Get command, when use chefDK."
   (when (null home)
-    (setq home "/opt/chefdk"))
+    (setq home restaurant/chefdk-home))
   (let ((chef-file-full-path (concat
 			      (file-name-as-directory home)
 			      (file-name-as-directory "bin")

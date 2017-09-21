@@ -146,4 +146,41 @@ See URL `http://acrmp.github.io/foodcritic/'."
 (defhooklet restaurant/chef-add-extra-snippets chef-mode t
   (yas-activate-extra-mode 'chef-mode))
 
+(defhooklet restaurant/chefdk-switcher prog-mode restaurant/enable-chefdk
+  (custom-set-variables
+   '(berkshelf-use-chefdk-when-possible t)
+   '(rspec-use-chefdk-when-possible t)
+   '(test-kitchen-use-chefdk-when-possible t)
+   ;;
+   ;; '(knife-kitchen-use-chefdk-when-possible t)
+   ;; '(foodcritic-use-chefdk-when-possible t)
+   ;; '(bundler-use-chefdk-when-possible t)
+   ;; '(gem-use-chefdk-when-possible t)
+   ;; '(rubocop-use-chefdk-when-possible t)
+   ;; '(bundler-use-chefdk-when-possible t)
+   ;;
+   '(berkshelf-chefdk-home-directory restaurant/chefdk-home)
+   '(test-kitchen-chefdk-home-directory restaurant/chefdk-home)
+   '(rspec-chefdk-home-directory restaurant/chefdk-home)
+   )
+  )
+
+(defhooklet restaurant/bundler-switcher prog-mode restaurant/enable-bundler
+  (custom-set-variables
+   '(berkshelf-use-bundler-when-possible t)
+   '(rspec-use-bundler-when-possible t)
+   '(test-kitchen-use-bundler-when-possible t)
+   ;;
+   ;; '(knife-kitchen-use-bundler-when-possible t)
+   ;; '(foodcritic-use-bundler-when-possible t)
+   ;; '(bundler-use-bundler-when-possible t)
+   ;; '(gem-use-bundler-when-possible t)
+   ;; '(rubocop-use-bundler-when-possible t)
+   ;;
+   )
+  (if (not restaurant/enable-chefdk)
+      (custom-set-variables
+       '(chef-use-bundler t)))
+  )
+
 ;;; chef.el ends here

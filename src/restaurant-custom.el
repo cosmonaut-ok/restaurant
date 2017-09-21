@@ -300,6 +300,24 @@
   :group 'restaurant/chef
   )
 
+(defcustom restaurant/enable-chefdk t
+  "Enable chef extensions, when using ruby files."
+  :type 'boolean
+  :group 'restaurant/chef
+  )
+
+(defcustom restaurant/chefdk-home "/opt/chefdk"
+  "Set chefDK home directory."
+  :type 'directory
+  :group 'restaurant/chef
+  )
+
+(defcustom restaurant/enable-bundler t
+  "Enable bundler, when using ruby files."
+  :type 'boolean
+  :group 'restaurant/chef
+  )
+
 ;;;
 ;;; 3rd-party important modes
 ;;;

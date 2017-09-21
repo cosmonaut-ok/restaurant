@@ -29,8 +29,6 @@
 
 (require 'bundler)
 
-(defvar restaurant/use-bundler t) ;; TODO: convert to defcustom
-
 ;; define bundler compilation mode
 (define-compilation-mode bundler-compilation-mode "Bundler compilation"
   "Compilation mode for Bundler output."

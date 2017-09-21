@@ -60,11 +60,11 @@ Disables running specs with bundle, Zeus of Spring."
 
 (defun rspec-chefdk-p ()
   (and rspec-use-bundler-when-possible
-       (restaurant-chefdk-chef-command "chef")))
+       (restaurant-chefdk-command "chef")))
 
 (defun rspec-runner ()
   "Return command line to run rspec."
-  (let ((chefdk-command (if (rspec-chefdk-p) (concat (restaurant-chefdk-chef-command "chef") " exec ") ""))
+  (let ((chefdk-command (if (rspec-chefdk-p) (concat (restaurant-chefdk-command "chef") " exec ") ""))
 	(bundle-command (if (rspec-bundle-p) "bundle exec " ""))
         (zeus-command (if (rspec-zeus-p) "zeus " nil))
         (spring-command (if (rspec-spring-p) "spring " nil)))

@@ -59,7 +59,7 @@
 	     " --ruby="
 	     ruby
 	     " --auto-dotfiles"
-	     (when restaurant/use-bundler
+	     (when restaurant/enable-bundler
 	       " --gems=bundler"))
 	    'rvm-installation-mode))))
 
