@@ -157,6 +157,7 @@ See URL `http://acrmp.github.io/foodcritic/'."
        '(berkshelf-use-chefdk-when-possible t)
        '(rspec-use-chefdk-when-possible t)
        '(test-kitchen-use-chefdk-when-possible t)
+       ;; '(chef-knife-command (concat (restaurant-chefdk-command "chef") " exec knife"))
        ;;
        ;; '(knife-kitchen-use-chefdk-when-possible t)
        ;; '(foodcritic-use-chefdk-when-possible t)
@@ -170,6 +171,7 @@ See URL `http://acrmp.github.io/foodcritic/'."
      '(berkshelf-use-chefdk-when-possible nil)
      '(rspec-use-chefdk-when-possible nil)
      '(test-kitchen-use-chefdk-when-possible nil)
+     ;; '(chef-knife-command "knife")
      ;;
      ;; '(knife-kitchen-use-chefdk-when-possible t)
      ;; '(foodcritic-use-chefdk-when-possible t)
@@ -178,7 +180,7 @@ See URL `http://acrmp.github.io/foodcritic/'."
      ;; '(rubocop-use-chefdk-when-possible t)
      ;; '(bundler-use-chefdk-when-possible t)
      ;;
-     )))    
+     )))
 
 
 
@@ -197,9 +199,10 @@ See URL `http://acrmp.github.io/foodcritic/'."
 	 ;; '(rubocop-use-bundler-when-possible t)
 	 ;;
 	 )
-	(if (not restaurant/enable-chefdk)
-	    (custom-set-variables
-	     '(chef-use-bundler t))))
+	;; (if (not restaurant/enable-chefdk)
+	;;     (custom-set-variables
+	;;      '(chef-use-bundler t)))
+        )
     (progn
       (custom-set-variables
        '(berkshelf-use-bundler-when-possible nil)
@@ -212,7 +215,8 @@ See URL `http://acrmp.github.io/foodcritic/'."
        ;; '(gem-use-bundler-when-possible nil)
        ;; '(rubocop-use-bundler-when-possible nil)
        ;;
-       '(chef-use-bundler nil)))))
+       ;; '(chef-use-bundler nil)
+       ))))
 
 (defhooklet restaurant/chefdk-switcher prog-mode t
   (restaurant-chefdk-switch))
