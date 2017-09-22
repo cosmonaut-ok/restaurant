@@ -90,6 +90,7 @@
   (interactive)
   (let ((msg
          (concat "Key		Description\n"
+                 "___		____________\n"
                  "\n"
                  "F3		Berks install/update\n"
                  "C-F3		Rvm use ruby@gem\n"
@@ -111,17 +112,20 @@
                  "C-F9		Run kitchen converge` on all VMs\n"
                  "\n"
                  "F11		Fullscreen editor\n"
-                 "C-F11		Show/hide compile window\n"
+                 "C-F11	Show/hide compile window\n"
                  "\n"
                  "F12		Open unix shell\n"
-                 "C-F12		Open ruby shell with IRB/PRY\n"
+                 "C-F12	Open ruby shell with IRB/PRY\n"
                  "C-S-F12	Open native emacs shell\n"
                  "\n"
                  "F7/C-s	Search\n"
                  "S-F7		Highlight phrase\n"
                  "C-S-F7	Unhighlight phrase of regexp\n"
-                 "M-F7		Search in whole project"
-             )))
+                 "M-F7	Search in whole project\n"
+                 "\n"
+                 "C-x C-s	Save current file\n"
+                 "C-x s	Save all unsaved opened files\n"
+                 )))
     (message-box msg)
     ))
 
