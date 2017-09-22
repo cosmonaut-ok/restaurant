@@ -29,6 +29,15 @@
 
 (require 'bundler)
 
+;; variable: restaurant/enable-chefdk
+;; variable: restaurant/chefdk-home
+
+(defun bundler-make-complete-command (cmd)
+  (let ((chef-command (restaurant-chefdk-command "chef")))
+    (if (and restaurant/enable-chefdk chef-command)
+        (concat chef-command " exec " cmd)
+      cmd)))
+
 ;; define bundler compilation mode
 (define-compilation-mode bundler-compilation-mode "Bundler compilation"
   "Compilation mode for Bundler output."
@@ -48,5 +57,72 @@
 
 (defhooklet restaurant/bundle enh-ruby-mode t
   (local-set-key (kbd "<S-f3>") 'bundle-update))
+
+;;;; patch for bundler.el to support chefdk
+
+(defun bundle-console ()
+  "Run an inferior Ruby process in the context of the current bundle."
+  (interactive)
+  (run-ruby (bundler-make-complete-command "bundle console")))
+
+(defun bundle-version ()
+  "Prints version information."
+  (interactive)
+  (shell-command (bundler-make-complete-command "bundle version")))
+
+(define-colored-compilation-mode restaurant/bundler-compilation-mode "*Bundler*")
+
+(defun bundle-command (cmd)
+  "Run cmd in an async buffer."
+  ;; (async-shell-command (bundler-make-complete-command cmd) "*Bundler*"))
+  (compile (bundler-make-complete-command cmd) 'restaurant/bundler-compilation-mode))
+
+(defun bundle-gem-location (gem-name)
+  "Returns the location of the given gem, or 'no-gemfile if the
+Gemfile could not be found, or nil if the Gem could not be
+found."
+  (let ((bundler-stdout
+         (shell-command-to-string
+          (bundler-make-complete-command
+           (format "bundle show %s" (shell-quote-argument gem-name)))))
+        (remote (file-remote-p default-directory)))
+    (cond
+     ((string-match "Could not locate Gemfile" bundler-stdout)
+      'no-gemfile)
+     ((string-match "Could not find " bundler-stdout)
+      nil)
+     (t
+      (concat remote
+              (replace-regexp-in-string
+               "Resolving dependencies...\\|\n" ""
+               bundler-stdout)
+              "/")))))
+
+(defun bundle-list-gems ()
+  (save-excursion
+    (let* ((cmd (bundler-make-complete-command "bundle list"))
+           (bundle-out (shell-command-to-string cmd))
+           (bundle-lines (split-string bundle-out "\n")))
+
+      (defun parse-bundle-list-line (line)
+        (cond
+         ((string-match "^  \\* \\([^\s]+\\).*$" line)
+          (match-string 1 line))
+         ((string-match "Could not \\(find\\|locate\\)" line)
+          (message line) nil)
+         ((string-match "Gems included by the bundle:\\|^ *$" line)
+          nil)
+         (t
+          (message "Warning: couldn't parse line from \"%s\":\n%s"
+                   cmd line)
+          nil)))
+
+      (remq nil (mapcar 'parse-bundle-list-line bundle-lines)))))
+
+(defun bundle-list-gem-paths ()
+  (save-excursion
+    (let* ((cmd (bundler-make-complete-command "bundle list --paths"))
+           (bundle-out (shell-command-to-string cmd)))
+      (split-string bundle-out "\n"))))
 
 ;;; restaurant-bundler.el ends here
