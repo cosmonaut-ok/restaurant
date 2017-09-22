@@ -1,4 +1,4 @@
-;;; chef.el --- make Restaurant bootstrap and early boot  -*- lexical-binding: t -*-
+;;; restaurant-chef.el --- make Restaurant bootstrap and early boot  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Alexander aka 'CosmonauT' Vynnyk
 
@@ -224,4 +224,4 @@ See URL `http://acrmp.github.io/foodcritic/'."
 (defhooklet restaurant/bundler-switcher prog-mode t
   (restaurant-bundler-switch))
 
-;;; chef.el ends here
+;;; restaurant-chef.el ends here

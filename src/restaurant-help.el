@@ -86,4 +86,45 @@
   (interactive)
   (show-md-doc-page "Installation"))
 
+(defun restaurant/keybindings ()
+  (interactive)
+  (let ((msg
+         (concat "Key		Description\n"
+                 "\n"
+                 "F3		Berks install/update\n"
+                 "C-F3		Rvm use ruby@gem\n"
+                 "S-F3		Bundle install/update\n"
+                 "\n"
+                 "F5		Check project with foodcritic\n"
+                 "S-F5		Check current file with foodcritic\n"
+                 "\n"
+                 "F6		Check project with rubocop/cookstyle\n"
+                 "S-F6		Check current file with rubocop/cookstyle\n"
+                 "\n"
+                 "F8		Run rspec/chefspec on project\n"
+                 "C-F8		rspec/chefspec only on current file\n"
+                 "C-S-F8	rspec/chefspec only on current line\n"
+                 "\n"
+                 "C-S-F9	Run `kitchen verify` with single VM\n"
+                 "S-F9		Run `kitchen verify` with all VMs\n"
+                 "F9		Run kitchen converge on single VM\n"
+                 "C-F9		Run kitchen converge` on all VMs\n"
+                 "\n"
+                 "F11		Fullscreen editor\n"
+                 "C-F11		Show/hide compile window\n"
+                 "\n"
+                 "F12		Open unix shell\n"
+                 "C-F12		Open ruby shell with IRB/PRY\n"
+                 "C-S-F12	Open native emacs shell\n"
+                 "\n"
+                 "F7/C-s	Search\n"
+                 "S-F7		Highlight phrase\n"
+                 "C-S-F7	Unhighlight phrase of regexp\n"
+                 "M-F7		Search in whole project"
+             )))
+    (message-box msg)
+    ))
+
+(global-set-key (kbd "<S-f1>") 'restaurant/keybindings)
+
 ;;; restaurant-help.el ends here
