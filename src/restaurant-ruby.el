@@ -156,6 +156,33 @@
 ;;;
 ;;; rubocop
 ;;;
+;; patch for original rubocop.el
+
+(defun rubocop-bundled-p ()
+  "Check if RuboCop has been bundled."
+  (let ((gemfile-lock (expand-file-name "Gemfile.lock" (rubocop-project-root))))
+    (when (and (file-exists-p gemfile-lock) restaurant/enable-bundler)
+      (with-temp-buffer
+        (insert-file-contents gemfile-lock)
+        (re-search-forward "rubocop" nil t)))))
+
+(defun rubocop-chefdked-p ()
+  (and restaurant/enable-chef restaurant/enable-chefdk (file-directory-p restaurant/chefdk-home)))
+
+(defun rubocop-build-command (command path)
+  "Build the full command to be run based on COMMAND and PATH.
+The command will be prefixed with `bundle exec` if RuboCop is bundled."
+  (concat
+   (cond ((rubocop-chefdked-p) "chef exec ")
+	 ((rubocop-bundled-p) "bundle exec ")
+	 (t ""))
+   command
+   (rubocop-build-requires)
+   " "
+   path))
+
+;; /patch for original rubocop.el
+
 (defhooklet restaurant/rubocop enh-ruby-mode restaurant/enable-rubocop
   (require 'rubocop)
   (rubocop-mode 1)
