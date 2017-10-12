@@ -419,4 +419,7 @@
 	(message "%s" file)
 	(delete-file file)))))
 
+;; set scratch message
+(setq initial-scratch-message ";; Wellcome to Restaurant's scratchpad\n;; Fill free to perform temporary text editings here")
+
 ;;; restaurant-common.el ends here
