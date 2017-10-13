@@ -132,7 +132,7 @@
 			(when ,condition
 			  (verbose-message "Launching ``%s'' hooklet on ``%s'' mode" ',name ',(car mode))
 			  ,@body)))
-	    (defhooklet ,name ,(cdr mode) ,condition ,body)))))
+	    (defhooklet ,name ,(cdr mode) ,condition ,@body)))))
 
 (defun restaurant/enable-verbose-messages ()
   (interactive)

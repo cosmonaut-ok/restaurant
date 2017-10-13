@@ -93,6 +93,12 @@
   :group 'restaurant/face
   )
 
+(defcustom restaurant/highlight-symbol t
+  "Automatically highlight all symbols in buffer, matched to selected."
+  :type 'boolean
+  :group 'restaurant/face
+  )
+
 ;;;
 ;;; backup
 ;;;

@@ -47,6 +47,7 @@
     "deferred"
     "emacs-async"
     "ht"
+    "highlight-symbol"
     ;; ruby
     "ruby-mode"
     "enh-ruby-mode"
