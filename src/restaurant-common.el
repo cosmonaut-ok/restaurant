@@ -184,6 +184,9 @@
 			 (interactive)
 			 (call-interactively (intern (ido-completing-read
 						      "M-x " (all-completions "" obarray 'commandp))))))
+;; set key to enable whitespace mode
+(global-set-key (kbd "C-c w") 'whitespace-mode)
+(global-set-key (kbd "C-c C-w") 'whitespace-mode)
 
 ;; set ido-completing-read as default completing function
 (setq ido-cr+-replace-completely t)
