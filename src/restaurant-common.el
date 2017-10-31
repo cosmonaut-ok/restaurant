@@ -425,6 +425,6 @@
 	(delete-file file)))))
 
 ;; set scratch message
-(setq initial-scratch-message ";; Wellcome to Restaurant's cutting board\n;; Fill free to use it, like your scratchpad\n;; and perform temporary text editings here\n")
+(setq initial-scratch-message ";; Wellcome to Restaurant's cutting board\n;; Feel free to use it, like your scratchpad\n;; and perform temporary text editings here\n")
 
 ;;; restaurant-common.el ends here

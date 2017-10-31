@@ -232,4 +232,14 @@
     (when (file-executable-p chef-file-full-path)
       chef-file-full-path)))
 
+(defun restaurant/new-empty-buffer ()
+  "Create a new empty buffer.
+New buffer will be named untitled or untitled<2>, untitled<3>, etc."
+  (interactive)
+  (let ((buf (generate-new-buffer "untitled")))
+    (switch-to-buffer buf)
+    (funcall initial-major-mode)
+    (setq buffer-offer-save t)))
+
+
 ;;; restaurant-lib.el ends here

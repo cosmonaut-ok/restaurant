@@ -845,4 +845,16 @@
   [menu-bar help-menu restaurant-help]
   '("Restaurant Help (Online)" . restaurant/help))
 
+;;;
+;;; Advanced buffer options
+;;;
+(add-to-list 'menu-bar-buffers-menu-command-entries
+	     '(rename-buffer menu-item "Rename Current Buffer" rename-buffer :help "Rename Current Buffer"))
+
+(add-to-list 'menu-bar-buffers-menu-command-entries
+	     '(restaurant/new-empty-buffer menu-item "Create Empty Buffer" restaurant/new-empty-buffer :help "Create Empty Buffer"))
+
+(add-to-list 'menu-bar-buffers-menu-command-entries
+	     '(command-separator-1 "--"))
+
 ;;; restaurant-menubar.el ends here
