@@ -83,6 +83,10 @@
   '("--" nil :visible))
 
 (define-key prog-mode-map
+  [menu-bar code whitespace-mode]
+  '("Highlight Whitespaces" . whitespace-mode))
+
+(define-key prog-mode-map
   [menu-bar code drag-stuff-up]
   '("Move Line/Selected Up" . drag-stuff-up))
 
