@@ -84,7 +84,7 @@
 
 (define-key prog-mode-map
   [menu-bar code whitespace-mode]
-  '("Highlight Whitespaces" . whitespace-mode))
+  '("Switch Whitespaces Highlighting" . whitespace-mode))
 
 (define-key prog-mode-map
   [menu-bar code drag-stuff-up]
