@@ -425,7 +425,7 @@
 	(delete-file file)))))
 
 ;; set scratch message
-(setq initial-scratch-message ";; Wellcome to Restaurant's cutting board\n;; Feel free to use it, like your scratchpad\n;; and perform temporary text editings here\n")
+(setq initial-scratch-message ";; Welcome to Restaurant's CUTTING BOARD\n;; Feel free to use it, like your scratchpad\n;; and perform temporary text editings here\n")
 
 (defhooklet restaurant/rename-scratch-buffer after-change-major-mode t
   ;; Rename scratch buffer
