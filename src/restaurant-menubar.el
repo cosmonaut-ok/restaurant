@@ -617,37 +617,40 @@
 ;;;
 ;;; rvm menu
 ;;;
-(define-key global-map
-  [menu-bar tools rvm]
-  (cons "RVM" (make-sparse-keymap "RVM")))
+(when restaurant/enable-rvm
+  ;; enable menu only if RVM integration enabled
+  (define-key global-map
+    [menu-bar tools rvm]
+    (cons "RVM" (make-sparse-keymap "RVM")))
 
-(define-key global-map
-  [menu-bar tools rvm rvm-install-rvm]
-  '("Install RVM" . rvm-install-rvm))
+  (define-key global-map
+    [menu-bar tools rvm rvm-install-rvm]
+    '("Install RVM" . rvm-install-rvm))
 
-(define-key global-map
-  [menu-bar tools rvm rvm-generate-docs]
-  '("Generate Ruby Documentation" . rvm-generate-docs))
+  (define-key global-map
+    [menu-bar tools rvm rvm-generate-docs]
+    '("Generate Ruby Documentation" . rvm-generate-docs))
 
-(define-key global-map
-  [menu-bar tools rvm rvm-use]
-  '("Use Ruby/Gemset As Default For This Session" . rvm-use))
+  (define-key global-map
+    [menu-bar tools rvm rvm-use]
+    '("Use Ruby/Gemset As Default For This Session" . rvm-use))
 
-(define-key global-map
-  [menu-bar tools rvm rvm-use-as-default]
-  '("Set Default Ruby And Gemset" . rvm-use-as-default))
+  (define-key global-map
+    [menu-bar tools rvm rvm-use-as-default]
+    '("Set Default Ruby And Gemset" . rvm-use-as-default))
 
-(define-key global-map
-  [menu-bar tools rvm rvm-open-gem]
-  '("Open Gem" . rvm-open-gem))
+  (define-key global-map
+    [menu-bar tools rvm rvm-open-gem]
+    '("Open Gem" . rvm-open-gem))
 
-(define-key global-map
-  [menu-bar tools rvm install-gem]
-  '("Install Gem" . rvm-gem-install))
+  (define-key global-map
+    [menu-bar tools rvm install-gem]
+    '("Install Gem" . rvm-gem-install))
 
-(define-key global-map
-  [menu-bar tools rvm rvm-use]
-  '("Switch Ruby And Gemset Version" . rvm-use))
+  (define-key global-map
+    [menu-bar tools rvm rvm-use]
+    '("Switch Ruby And Gemset Version" . rvm-use))
+  )
 
 ;;;
 ;;; bundler Menu

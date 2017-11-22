@@ -259,7 +259,7 @@
   :group 'restaurant/ruby
   )
 
-(defcustom restaurant/enable-rvm t
+(defcustom restaurant/enable-rvm nil
   "Use RVM (if possible)."
   :type 'boolean
   :group 'restaurant/ruby

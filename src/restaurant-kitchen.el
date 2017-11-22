@@ -48,7 +48,8 @@
               (term-send-raw-string (concat (test-kitchen-make-command test-kitchen-login-command)  " " instance "\n"))))
         (error "Couldn't locate .kitchen.yml!"))))
   ;;
-
+  (setq test-kitchen-use-chefdk-when-possible restaurant/enable-chefdk)
+  ;;
   (local-set-key (kbd "<f9>") 'test-kitchen-converge)
   (local-set-key (kbd "<S-f9>") 'test-kitchen-verify)
   (local-set-key (kbd "<C-f9>") 'test-kitchen-converge-all)

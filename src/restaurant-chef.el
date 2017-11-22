@@ -119,28 +119,36 @@
   )
 
 (require 'flycheck) ;; TODO: it's hack. Need to fix it
-(eval-after-load "flycheck"
-  '(when (and restaurant/enable-flycheck restaurant/enable-chef restaurant/enable-foodcritic)
-     (flycheck-define-checker chef-foodcritic
-			      "A Chef cookbooks syntax checker using Foodcritic.
+(let ((chef-file-full-path (concat
+			    (file-name-as-directory restaurant/chefdk-home)
+			    (file-name-as-directory "bin")
+			    "chef")))
+  (eval-after-load "flycheck"
+    `(when (and restaurant/enable-flycheck restaurant/enable-chef restaurant/enable-foodcritic)
+       (flycheck-define-checker chef-foodcritic
+				"A Chef cookbooks syntax checker using Foodcritic.
 See URL `http://acrmp.github.io/foodcritic/'."
-			      :command ("foodcritic" (option-list "--tags" flycheck-foodcritic-tags) source)
-			      :error-patterns
-			      ((error line-start (message) ": " (file-name) ":" line line-end))
-			      :modes (enh-ruby-mode ruby-mode)
-			      :predicate
-			      (lambda ()
-				(let ((parent-dir (f-parent default-directory)))
-				  (or
-				   ;; Chef CookBook
-				   ;; http://docs.opscode.com/chef/knife.html#id38
-				   (locate-dominating-file parent-dir "recipes")
-				   (locate-dominating-file parent-dir "resources")
-				   (locate-dominating-file parent-dir "providers")
-				   ;; Knife Solo
-				   ;; http://matschaffer.github.io/knife-solo/#label-Init+command
-				   (locate-dominating-file parent-dir "cookbooks"))))
-			      :next-checkers ((warnings-only . ruby-rubocop)))))
+				:command ,(if restaurant/enable-chefdk
+					      `(,chef-file-full-path "exec" "foodcritic" (option-list "--tags" flycheck-foodcritic-tags) source)
+					    '("foodcritic" (option-list "--tags" flycheck-foodcritic-tags) source)
+					    ;;("foodcritic" (option-list "--tags" flycheck-foodcritic-tags) source)
+				)
+				:error-patterns
+				((error line-start (message) ": " (file-name) ":" line line-end))
+				:modes (enh-ruby-mode ruby-mode)
+				:predicate
+				(lambda ()
+				  (let ((parent-dir (f-parent default-directory)))
+				    (or
+				     ;; Chef CookBook
+				     ;; http://docs.opscode.com/chef/knife.html#id38
+				     (locate-dominating-file parent-dir "recipes")
+				     (locate-dominating-file parent-dir "resources")
+				     (locate-dominating-file parent-dir "providers")
+				     ;; Knife Solo
+				     ;; http://matschaffer.github.io/knife-solo/#label-Init+command
+				     (locate-dominating-file parent-dir "cookbooks"))))
+				:next-checkers ((warnings-only . ruby-rubocop))))))
 
 ;; yas-chef-mode
 (defhooklet restaurant/chef-add-extra-snippets chef-mode t
