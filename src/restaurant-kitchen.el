@@ -31,22 +31,23 @@
 ;;; test-kitchen
 ;;;
 
-(defhooklet restaurant/chef-kitchen chef-mode restaurant/enable-chef
-  (require 'test-kitchen)
-  ;;
-  (defcustom test-kitchen-login-command "kitchen login"
-    "The command used for login to converged VM (use it, when really want to use custom command. Not with chef of bundler)."
-    :type 'string
-    :group 'test-kitchen)
+(require 'test-kitchen)
+;;
+(defcustom test-kitchen-login-command "kitchen login"
+  "The command used for login to converged VM."
+  :type 'string
+  :group 'test-kitchen)
 
-  (defun test-kitchen-login (instance)
-    (interactive (list (completing-read "Kitchen instance to login: " (split-string (test-kitchen-list-bare)))))
-    (let ((root-dir (test-kitchen-locate-root-dir)))
-      (if root-dir
-          (let ((default-directory root-dir))
-            (with-current-buffer (term "/bin/bash")
-              (term-send-raw-string (concat (test-kitchen-make-command test-kitchen-login-command)  " " instance "\n"))))
-        (error "Couldn't locate .kitchen.yml!"))))
+(defun test-kitchen-login (instance)
+  (interactive (list (completing-read "Kitchen instance to login: " (split-string (test-kitchen-list-bare)))))
+  (let ((root-dir (test-kitchen-locate-root-dir)))
+    (if root-dir
+        (let ((default-directory root-dir))
+          (with-current-buffer (term "/bin/bash")
+            (term-send-raw-string (concat (test-kitchen-get-full-command test-kitchen-login-command)  " " instance "\n"))))
+      (error "Couldn't locate .kitchen.yml!"))))
+
+(defhooklet restaurant/chef-kitchen chef-mode restaurant/enable-chef
   ;;
   (setq test-kitchen-use-chefdk-when-possible restaurant/enable-chefdk)
   ;;
