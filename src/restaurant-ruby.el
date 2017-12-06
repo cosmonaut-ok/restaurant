@@ -173,7 +173,11 @@
   "Build the full command to be run based on COMMAND and PATH.
 The command will be prefixed with `bundle exec` if RuboCop is bundled."
   (concat
-   (cond ((rubocop-chefdked-p) "chef exec ")
+   (cond ((rubocop-chefdked-p)
+	  (concat
+	   (file-name-as-directory restaurant/chefdk-home)
+	   (file-name-as-directory "bin")
+	   "chef" "exec "))
 	 ((rubocop-bundled-p) "bundle exec ")
 	 (t ""))
    command
