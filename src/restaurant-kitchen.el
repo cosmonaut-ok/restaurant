@@ -47,7 +47,7 @@
             (term-send-raw-string (concat (test-kitchen-get-full-command test-kitchen-login-command)  " " instance "\n"))))
       (error "Couldn't locate .kitchen.yml!"))))
 
-(defhooklet restaurant/chef-kitchen chef-mode restaurant/enable-chef
+(defhooklet restaurant/chef-kitchen (chef-mode ruby-mode enh-ruby-mode eruby-mode html-erb-mode) restaurant/enable-chef
   ;;
   (setq test-kitchen-use-chefdk-when-possible restaurant/enable-chefdk)
   ;;
