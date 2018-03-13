@@ -40,7 +40,7 @@
 (eval-after-load 'rspec-mode
  '(rspec-install-snippets))
 
-(defhooklet restaurant/rspec enh-ruby-mode t
+(defhooklet restaurant/rspec (chef-mode ruby-mode enh-ruby-mode eruby-mode html-erb-mode) t
   (local-set-key (kbd "<f8>") 'rspec-verify-all)
   (local-set-key (kbd "<C-f8>") 'rspec-verify)
   (local-set-key (kbd "<S-f8>") 'rspec-verify-single)

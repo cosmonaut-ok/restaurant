@@ -31,6 +31,7 @@ ARCHIVE_NAME=$(shell basename @EMACS_URI@)
 
 ## f*king github with its name conventions!
 SOURCE_DIR=emacs-$(shell basename @EMACS_URI@ .tar.gz)
+EMACS_VERSION=$(shell echo $(SOURCE_DIR) | cut -d'-' -f3)
 LOCAL_EMACS=@LOCAL_EMACS_DIR@/bin/emacs
 CURRENT_DIR=$(shell pwd)
 LDLIB=$LD_LIBRARY_PATH:${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/
@@ -67,7 +68,7 @@ else
 	make install DESTDIR=@BUILD_DIR@/emacs-build
 	@echo "Preparing to working state"
 	@cp -r @BUILD_DIR@/${SOURCE_DIR}/lib-src/ @BUILD_DIR@/emacs-build/lib-src/
-	@mv -f @BUILD_DIR@/emacs-build/share/@LOCAL_EMACS_DIR@/25.2/* @BUILD_DIR@/emacs-build/
+	@mv -f @BUILD_DIR@/emacs-build/share/@LOCAL_EMACS_DIR@/$(EMACS_VERSION)/* @BUILD_DIR@/emacs-build/
 	@mv -f @BUILD_DIR@/emacs-build/share/man/ @BUILD_DIR@/emacs-build/
 	@mv -f @BUILD_DIR@/emacs-build/share/info/ @BUILD_DIR@/emacs-build/
 	@echo "Stripping from unneded files"
