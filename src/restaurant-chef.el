@@ -116,6 +116,7 @@
   ;;
   (dolist (res restaurant/chef-keywords-list)
     (pushnew res enh-ruby-extra-keywords :test 'string-equal))
+  (erm-reset) ;; `erm-reset'  will need to be called in order for any global changes to take effect.
   )
 
 (require 'flycheck) ;; TODO: it's hack. Need to fix it
