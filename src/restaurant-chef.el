@@ -28,7 +28,8 @@
 ;;; Code:
 
 (defvar restaurant/chef-keywords-list
-  '("apt_repository"
+  '("action"
+    "apt_repository"
     "ark"
     "at_exit" ;; ?
     "baseurl"
@@ -79,9 +80,11 @@
     "subscribes"
     "ohai"
     "only_if"
+    "options"
     "override"
     "owner"
     "package"
+    "path"
     "php_fpm_pool"
     "python_pip"
     "python_service"
@@ -93,6 +96,7 @@
     "rpm_package"
     "rsync_serve"
     "ruby_block"
+    "sensitive"
     "service"
     "simple_iptables_rule"
     "source"
@@ -110,14 +114,7 @@
     "yum_repository"
     ))
 
-(defhooklet restaurant/chef-mode-init enh-ruby-mode restaurant/enable-chef
-  (require 'chef-mode)
-  (chef-mode 1)
-  ;;
-  (dolist (res restaurant/chef-keywords-list)
-    (pushnew res enh-ruby-extra-keywords :test 'string-equal))
-  (erm-reset) ;; `erm-reset'  will need to be called in order for any global changes to take effect.
-  )
+(require 'chef-mode)
 
 (require 'flycheck) ;; TODO: it's hack. Need to fix it
 (let ((chef-file-full-path (concat
@@ -155,6 +152,28 @@ See URL `http://acrmp.github.io/foodcritic/'."
 (defhooklet restaurant/chef-add-extra-snippets chef-mode t
   (yas-activate-extra-mode 'chef-mode))
 
+(defhooklet restaurant/imenu-replace chef-mode t
+  (setq imenu-generic-expression
+        '(("Ruby structures" "^\\( *\\(def\\|class\\|module\\) +.+\\)" 1)
+          ("Actions and Resources" "^\\( *\\([a-zA-Z][a-zA-Z0-9]\\).+ +.+do\\)" 1)
+          ("Included Receipes" "^\\( *\\(include_recipe\\) +.+\\)" 1)
+          ))
+  (setq imenu-create-index-function 'imenu-default-create-index-function)
+  )
+
+(defhooklet restaurant/chef-mode-init enh-ruby-mode restaurant/enable-chef
+  (dolist (res restaurant/chef-keywords-list)
+    ;; (pushnew res enh-ruby-extra-keywords :test 'string-equal)
+    (add-to-list 'enh-ruby-extra-keywords res)
+    ;; (add-to-list 'enh-ruby-defun-beg-keywords res)
+    )
+  ;; add "action" to method-list
+  ;; (add-to-list 'enh-ruby-defun-beg-keywords "action")
+
+  (erm-reset) ;; `erm-reset'  will need to be called in order for any global changes to take effect.
+  (chef-mode 1)
+  )
+
 (defun restaurant-chefdk-switch ()
   (custom-set-variables
    '(berkshelf-chefdk-home-directory restaurant/chefdk-home)
@@ -190,8 +209,6 @@ See URL `http://acrmp.github.io/foodcritic/'."
      ;; '(bundler-use-chefdk-when-possible t)
      ;;
      )))
-
-
 
 (defun restaurant-bundler-switch ()
   (if restaurant/enable-bundler
@@ -232,5 +249,4 @@ See URL `http://acrmp.github.io/foodcritic/'."
 
 (defhooklet restaurant/bundler-switcher prog-mode t
   (restaurant-bundler-switch))
-
 ;;; restaurant-chef.el ends here
