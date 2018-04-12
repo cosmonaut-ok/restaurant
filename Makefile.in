@@ -174,7 +174,13 @@ mrproper: clean-emacs clean clean-3rdparty clean-lib
 
 package: build libdeps
 	@echo "Building package"
-	@mkdir -p @BUILD_DIR@/restaurant/
+	@mkdir -p @BUILD_DIR@/restaurant/ etc/
+
+	# generate default restaurant.conf
+	@echo "RUBY_VERSION=2.3" > etc/restaurant.conf
+	@echo "GEMSET_NAME=global" >> etc/restaurant.conf
+	@echo "OPTIONS=-fs" >> etc/restaurant.conf
+
 	@for i in @RELEASE_FILES@; do cp -rp $$i @BUILD_DIR@/restaurant/; done
 	@touch @BUILD_DIR@/restaurant/build
 	@echo "Stripping package from unneded files"
