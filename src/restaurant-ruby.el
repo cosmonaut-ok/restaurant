@@ -41,24 +41,32 @@
 (require 'ruby-mode)
 
 ;; inf-ruby and robe
+(defun ruby-chefdked-p ()
+  (and restaurant/enable-chefdk (file-directory-p restaurant/chefdk-home)))
 
 (defvar restaurant/ruby-present-p nil)
-(if (and
-     (executable-find "ruby")
-     (or (executable-find "irb")
-	 (executable-find "pry")))
+(if (or
+     (and
+      (executable-find "ruby")
+      (or (executable-find "irb")
+          (executable-find "pry")))
+     (ruby-chefdked-p))
     (progn
       (require 'robe)
       (require 'inf-ruby)
-      (when (executable-find "pry")
-	(setq inf-ruby-default-implementation "pry"))
+      (cond ((ruby-chefdked-p)
+             (eval `(add-to-list 'inf-ruby-implementations' ("chefdk-pry" . ,(concat
+                                                                              (file-name-as-directory restaurant/chefdk-home)
+                                                                              (file-name-as-directory "bin")
+                                                                              "chef exec pry"))))
+             (custom-set-variables '(inf-ruby-default-implementation "chefdk-pry")))
+            ((executable-find "pry")
+             (setq inf-ruby-default-implementation "pry")))
       (inf-ruby)
-      (when (executable-find "pry")
-	(robe-start))
+      (when (or (ruby-chefdked-p) (executable-find "pry"))
+        (robe-start))
       (custom-set-variables '(restaurant/ruby-present-p t)))
   (warn "WARNING! ``Ruby'' and/or ``irb'' are not installed in your system. You can install it, by clicking ``Menu'' -> ``Help'' -> ``Install Restaurant required dependencies'',\nor via RVM (``Menu'' -> ``Tools'' -> ``RVM'' -> ``install gemfile'' -> ``irb'') and irb/pry via gems or in your preferred way, else only restricted ruby support available"))
-
-;; (defalias 'ruby-mode 'enh-ruby-mode)
 
 ;; Adapted from the method used by TextMate, this library provides a command
 ;; ruby-toggle-hash-syntax which attempts to automatically convert the
