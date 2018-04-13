@@ -108,3 +108,4 @@ etc/restaurant.conf
 test/.kitchen/
 test/files/
 test/Berksfile.lock
+Gemfile

@@ -3,23 +3,36 @@
 set -e
 set -a
 
+SCRIPT_HOME="$(dirname `realpath $0`)"
+REQUIRED_PACKAGES="git vagrant discount gnupg"
+CONF_FILE=${SCRIPT_HOME}/etc/restaurant.conf
+
+if [ -f ${CONF_FILE} ]; then
+    . ${CONF_FILE}
+else
+    RUBY_VERSION=''
+    GEMSET_NAME=''
+    CHEF_VERSION=''
+    OPTIONS=''
+fi
+
 if [ ! -z $1 ]; then
     RUBY_VERSION=$1
 else
-    RUBY_VERSION=2.3
+    test -z ${RUBY_VERSION} && RUBY_VERSION=2.3.7
 fi
 
 if [ ! -z $2 ]; then
     GEMSET_NAME=$2
 else
-    GEMSET_NAME="global"
+    test -z ${GEMSET_NAME} && GEMSET_NAME="global"
 fi
 
-SCRIPT_HOME="$(dirname `realpath $0`)"
-REQUIRED_PACKAGES="git vagrant discount gnupg"
-CONF_FILE=${SCRIPT_HOME}/etc/restaurant.conf
-
-test -f ${CONF_FILE} && . ${CONF_FILE}
+if [ ! -z $3 ]; then
+    CHEF_VERSION=$3
+else
+    test -z ${CHEF_VERSION} && CHEF_VERSION="13"
+fi
 
 print_message()
 {
@@ -117,7 +130,14 @@ bootstrap_rvm ()
     echo "RVM Installed"
   fi
   # install required gems
-  with_ruby ${RUBY_VERSION} ${GEMSET_NAME} "cd $SCRIPT_HOME && bundle install"
+  if [ -f ${SCRIPT_HOME}/data/Gemfile.${CHEF_VERSION} ]; then
+      cp -f ${SCRIPT_HOME}/data/Gemfile.${CHEF_VERSION} ${SCRIPT_HOME}/Gemfile
+      with_ruby ${RUBY_VERSION} ${GEMSET_NAME} "cd $SCRIPT_HOME && bundle install"
+      rm -f ${SCRIPT_HOME}/Gemfile
+  else
+      echo "Chef version ${CHEF_VERSION} is not supported by restaurant. Please, use one of $(find data -name 'Gemfile.*' -exec basename $i {} \; | cut -d'.' -f2)"
+      exit 1
+  fi
 }
 
 generate_configfile ()
@@ -126,6 +146,7 @@ generate_configfile ()
        mkdir -p ${SCRIPT_HOME}/etc/
        echo "RUBY_VERSION=${RUBY_VERSION}" > ${CONF_FILE}
        echo "GEMSET_NAME=${GEMSET_NAME}" >> ${CONF_FILE}
+       echo "CHEF_VERSION=${CHEF_VERSION}" >> ${CONF_FILE}
        echo "OPTIONS=\"-fs\"" >> ${CONF_FILE}
     fi
 }

@@ -177,7 +177,7 @@ package: build libdeps
 	@mkdir -p @BUILD_DIR@/restaurant/ etc/
 
 	# generate default restaurant.conf
-	@echo "RUBY_VERSION=2.3" > etc/restaurant.conf
+	@echo "RUBY_VERSION=2.3.7" > etc/restaurant.conf
 	@echo "GEMSET_NAME=global" >> etc/restaurant.conf
 	@echo "OPTIONS=-fs" >> etc/restaurant.conf
 
