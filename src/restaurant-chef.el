@@ -35,13 +35,13 @@
     "apt_preference"
     "apt_repository"
     "apt_update"
-    
+
     "bash"
     "batch"
     "bff_package"
     "breakpoint"
     "build_essential"
-    
+
     "cab_package"
     "chef_acl"
     "chef_client"
@@ -62,7 +62,7 @@
     "cookbook_file"
     "cron"
     "csh"
-    
+
     "delete_lines"
     "deploy"
     "directory"
@@ -74,20 +74,20 @@
     "dpkg_package"
     "dsc_resource"
     "dsc_script"
-    
+
     "erlang_call"
     "examples"
     "execute"
-    
+
     "file"
     "filebeat_prospector"
     "flywaydb"
     "freebsd_package"
-    
+
     "gem_package"
     "git"
     "group"
-    
+
     "homebrew_cask"
     "homebrew_package"
     "homebrew_tap"
@@ -95,7 +95,7 @@
     "hostsfile_entry"
     "htpasswd"
     "http_request"
-    
+
     "ifconfig"
     "ips_package"
     "iptables_rule"
@@ -107,16 +107,16 @@
     "jenkins_script"
     "jenkins_ssh_slave"
     "jenkins_user"
-    
+
     "ksh"
-    
+
     "launchd"
     "link"
     "load_balancer"
     "log"
     "logrotate_app"
     "logstash_forwarder"
-    
+
     "machine"
     "machine_batch"
     "machine_execute"
@@ -136,7 +136,7 @@
 
     "nfs_export"
     "nvm_install"
-    
+
     "ohai"
     "ohai_hint"
     "openbsd_package"
@@ -144,7 +144,7 @@
     "openssl_rsa_private_key"
     "openssl_rsa_public_key"
     "osx_profile"
-    
+
     "package"
     "pacman_package"
     "paludis_package"
@@ -197,7 +197,7 @@
     "user"
     "user_ulimit"
     "users_manage"
-    
+
     "windows_ad_join"
     "windows_auto_run"
     "windows_env"
@@ -212,15 +212,15 @@
     "windows_service"
     "windows_shortcut"
     "windows_task"
-    
+
     "xml_edit"
     "xml_file"
-    
+
     "yum"
     "yum_package"
     "yum_package_lock"
     "yum_repository"
-    
+
     "zypper_package"
     "zypper_repository"
     ))
@@ -229,33 +229,33 @@
 
 (require 'flycheck) ;; TODO: it's hack. Need to fix it
 (let ((chef-file-full-path (concat
-			    (file-name-as-directory restaurant/chefdk-home)
-			    (file-name-as-directory "bin")
-			    "chef")))
+          (file-name-as-directory restaurant/chefdk-home)
+          (file-name-as-directory "bin")
+          "chef")))
   (eval-after-load "flycheck"
     `(when (and restaurant/enable-flycheck restaurant/enable-chef restaurant/enable-foodcritic)
        (flycheck-define-checker chef-foodcritic
-				"A Chef cookbooks syntax checker using Foodcritic.
+        "A Chef cookbooks syntax checker using Foodcritic.
 See URL `http://acrmp.github.io/foodcritic/'."
-				:command ,(if restaurant/enable-chefdk
-					      `(,chef-file-full-path "exec" "foodcritic" (option-list "--tags" flycheck-foodcritic-tags) source)
-					    '("foodcritic" (option-list "--tags" flycheck-foodcritic-tags) source))
-				:error-patterns
-				((error line-start (message) ": " (file-name) ":" line line-end))
-				:modes (enh-ruby-mode ruby-mode)
-				:predicate
-				(lambda ()
-				  (let ((parent-dir (f-parent default-directory)))
-				    (or
-				     ;; Chef CookBook
-				     ;; http://docs.opscode.com/chef/knife.html#id38
-				     (locate-dominating-file parent-dir "recipes")
-				     (locate-dominating-file parent-dir "resources")
-				     (locate-dominating-file parent-dir "providers")
-				     ;; Knife Solo
-				     ;; http://matschaffer.github.io/knife-solo/#label-Init+command
-				     (locate-dominating-file parent-dir "cookbooks"))))
-				:next-checkers ((warnings-only . ruby-rubocop))))))
+        :command ,(if restaurant/enable-chefdk
+                `(,chef-file-full-path "exec" "foodcritic" (option-list "--tags" flycheck-foodcritic-tags) source)
+              '("foodcritic" (option-list "--tags" flycheck-foodcritic-tags) source))
+        :error-patterns
+        ((error line-start (message) ": " (file-name) ":" line line-end))
+        :modes (enh-ruby-mode ruby-mode)
+        :predicate
+        (lambda ()
+          (let ((parent-dir (f-parent default-directory)))
+            (or
+             ;; Chef CookBook
+             ;; http://docs.opscode.com/chef/knife.html#id38
+             (locate-dominating-file parent-dir "recipes")
+             (locate-dominating-file parent-dir "resources")
+             (locate-dominating-file parent-dir "providers")
+             ;; Knife Solo
+             ;; http://matschaffer.github.io/knife-solo/#label-Init+command
+             (locate-dominating-file parent-dir "cookbooks"))))
+        :next-checkers ((warnings-only . ruby-rubocop))))))
 
 ;; yas-chef-mode
 (defhooklet restaurant/chef-add-extra-snippets chef-mode t
@@ -322,21 +322,21 @@ See URL `http://acrmp.github.io/foodcritic/'."
 (defun restaurant-bundler-switch ()
   (if restaurant/enable-bundler
       (progn
-	(custom-set-variables
-	 '(berkshelf-use-bundler-when-possible t)
-	 '(rspec-use-bundler-when-possible t)
-	 '(test-kitchen-use-bundler-when-possible t)
-	 ;;
-	 ;; '(knife-kitchen-use-bundler-when-possible t)
-	 ;; '(foodcritic-use-bundler-when-possible t)
-	 ;; '(bundler-use-bundler-when-possible t)
-	 ;; '(gem-use-bundler-when-possible t)
-	 ;; '(rubocop-use-bundler-when-possible t)
-	 ;;
-	 )
-	;; (if (not restaurant/enable-chefdk)
-	;;     (custom-set-variables
-	;;      '(chef-use-bundler t)))
+  (custom-set-variables
+   '(berkshelf-use-bundler-when-possible t)
+   '(rspec-use-bundler-when-possible t)
+   '(test-kitchen-use-bundler-when-possible t)
+   ;;
+   ;; '(knife-kitchen-use-bundler-when-possible t)
+   ;; '(foodcritic-use-bundler-when-possible t)
+   ;; '(bundler-use-bundler-when-possible t)
+   ;; '(gem-use-bundler-when-possible t)
+   ;; '(rubocop-use-bundler-when-possible t)
+   ;;
+   )
+  ;; (if (not restaurant/enable-chefdk)
+  ;;     (custom-set-variables
+  ;;      '(chef-use-bundler t)))
         )
     (progn
       (custom-set-variables

@@ -265,14 +265,16 @@
   :group 'restaurant/ruby
   )
 
-(defcustom restaurant/rvm-default-gemset (or
-					  (get-value-by-key-from-file
-                                           "GEMSET_NAME"
-                                           (locate-source-file "etc/restaurant.conf"))
-					  "global")
-  "Default rvm default gemset."
-  :type 'string
-  :group 'restaurant/ruby)
+(let ((f (locate-source-file "etc/restaurant.conf")))
+  (defcustom restaurant/rvm-default-gemset (or
+					    (and
+					     (file-exists-p f)
+					     (get-value-by-key-from-file "GEMSET_NAME" f))
+					    "global")
+    "Default rvm default gemset."
+    :type 'string
+    :group 'restaurant/ruby)
+  )
 
 (defcustom restaurant/enable-rubocop t
   "Enable rubocop, when open ruby file."

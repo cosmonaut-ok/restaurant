@@ -34,15 +34,15 @@
   (auto-revert-mode 1) ;; TODO: is it needed here?
   ;; set foodctiric checking command
   (let ((chef-file-full-path (concat
-			      (file-name-as-directory restaurant/chefdk-home)
-			      (file-name-as-directory "bin")
-			      "chef")))
+            (file-name-as-directory restaurant/chefdk-home)
+            (file-name-as-directory "bin")
+            "chef")))
     (setq foodcritic-check-command
-	  (if restaurant/enable-chefdk
-	      (concat chef-file-full-path " exec " "foodcritic"
-		      (if foodcritic-ignore-tags " -t " ""))
-	    (concat "foodcritic"
-		    (if foodcritic-ignore-tags " -t " "")))))
+    (if restaurant/enable-chefdk
+        (concat chef-file-full-path " exec " "foodcritic"
+          (if foodcritic-ignore-tags " -t " ""))
+      (concat "foodcritic"
+        (if foodcritic-ignore-tags " -t " "")))))
   ;; keybindings
   (local-set-key (kbd "<f5>") 'foodcritic-check-project)
   (local-set-key (kbd "<S-f5>") 'foodcritic-check-current-file)

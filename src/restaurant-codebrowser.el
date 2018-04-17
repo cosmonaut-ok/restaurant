@@ -42,7 +42,7 @@
 
   ;;;; defining standard layouts
   (ecb-layout-define "restaurant-3-0" left
-		     "This function creates the following layout:
+         "This function creates the following layout:
 
    -------------------------------------------------------
    |              |                                      |
@@ -70,15 +70,15 @@ If you have not set a compilation-window in `ecb-compile-window-height' then
 the layout contains no persistent compilation window and the other windows get a
 little more place. This layout works best if it is contained in
 `ecb-show-sources-in-directories-buffer'!"
-		     (ecb-set-speedbar-buffer)
-		     (ecb-split-ver 0.5)
-		     (ecb-set-history-buffer)
-		     (ecb-split-ver 0.5)
-		     (ecb-set-methods-buffer)
-		     (select-window (next-window)))
+         (ecb-set-speedbar-buffer)
+         (ecb-split-ver 0.5)
+         (ecb-set-history-buffer)
+         (ecb-split-ver 0.5)
+         (ecb-set-methods-buffer)
+         (select-window (next-window)))
 
   (ecb-layout-define "restaurant-3-1" left-right
-		     "This function creates the following layout:
+         "This function creates the following layout:
 
    --------------------------------------------------------------
    |              |                               |             |
@@ -105,17 +105,17 @@ little more place. This layout works best if it is contained in
 If you have not set a compilation-window in `ecb-compile-window-height' then
 the layout contains no persistent compilation window and the other windows get a
 little more place."
-		     (ecb-set-methods-buffer)
-		     (ecb-split-ver 0.4)
-		     (ecb-set-sources-buffer)
-		     (ecb-split-ver 0.5)
-		     (ecb-set-history-buffer)
-		     (select-window (next-window (next-window)))
-		     (ecb-set-directories-buffer)
-		     (select-window (previous-window (selected-window) 0)))
+         (ecb-set-methods-buffer)
+         (ecb-split-ver 0.4)
+         (ecb-set-sources-buffer)
+         (ecb-split-ver 0.5)
+         (ecb-set-history-buffer)
+         (select-window (next-window (next-window)))
+         (ecb-set-directories-buffer)
+         (select-window (previous-window (selected-window) 0)))
 
   (ecb-layout-define "restaurant-2-2" left-right
-		     "This function creates the following layout:
+         "This function creates the following layout:
 
    --------------------------------------------------------------
    |              |                               |             |
@@ -142,17 +142,17 @@ little more place."
 If you have not set a compilation-window in `ecb-compile-window-height' then
 the layout contains no persistent compilation window and the other windows get a
 little more place."
-		     (ecb-set-methods-buffer)
-		     (ecb-split-ver 0.5)
-		     (ecb-set-history-buffer)
-		     (select-window (next-window (next-window)))
-		     (ecb-set-directories-buffer)
-		     (ecb-split-ver 0.66)
-		     (ecb-set-sources-buffer)
-		     (select-window (previous-window (previous-window (selected-window) 0) 0)))
+         (ecb-set-methods-buffer)
+         (ecb-split-ver 0.5)
+         (ecb-set-history-buffer)
+         (select-window (next-window (next-window)))
+         (ecb-set-directories-buffer)
+         (ecb-split-ver 0.66)
+         (ecb-set-sources-buffer)
+         (select-window (previous-window (previous-window (selected-window) 0) 0)))
 
   (ecb-layout-define "restaurant-default" left-right
-		     "This function creates the following layout:
+         "This function creates the following layout:
 
    --------------------------------------------------------------
    |              |                               |             |
@@ -179,13 +179,13 @@ little more place."
 If you have not set a compilation-window in `ecb-compile-window-height' then
 the layout contains no persistent compilation window and the other windows get a
 little more place."
-		     (ecb-set-methods-buffer)
-		     (ecb-split-ver 0.5)
-		     (ecb-set-history-buffer)
-		     (select-window (next-window (next-window)))
-		     (ecb-set-directories-buffer)
-		     (select-window (previous-window (selected-window) 0) 0)
-		     (push "restaurant-default" ecb-show-sources-in-directories-buffer))
+         (ecb-set-methods-buffer)
+         (ecb-split-ver 0.5)
+         (ecb-set-history-buffer)
+         (select-window (next-window (next-window)))
+         (ecb-set-directories-buffer)
+         (select-window (previous-window (selected-window) 0) 0)
+         (push "restaurant-default" ecb-show-sources-in-directories-buffer))
 
   (custom-set-variables
    '(ecb-tip-of-the-day nil)
@@ -210,10 +210,10 @@ little more place."
    ;; ecb-create-layout-frame-width 110
    '(ecb-primary-secondary-mouse-buttons 'mouse-1--mouse-2)
    ;; '(semantic-decoration-styles (list '("semantic-decoration-on-includes" . t)
-   ;; 				      '("semantic-tag-boundary" . t))
-   ;; 				;; ecb-create-layout-frame-height 40
-   ;; 				;; ecb-create-layout-frame-width 110
-   ;; 				))
+   ;;               '("semantic-tag-boundary" . t))
+   ;;         ;; ecb-create-layout-frame-height 40
+   ;;         ;; ecb-create-layout-frame-width 110
+   ;;         ))
 
    ;; (add-hook 'ecb-show-ecb-windows-before-hook
    ;;           'ecb-enlarge-frame-width-before-show)
@@ -250,12 +250,12 @@ little more place."
    '(ecb-layout-name "restaurant-default")
    )
   ;; (add-hook 'prog-mode-hook 'ecb-rebuild-methods-buffer)
-  
+
   (defhooklet restaurant/ecb-generic-hooks prog-mode t
     (and
      (sleep-for 0.1) ;; require a little bit to sleep, while buffer becames ready for get methods
      (ecb-rebuild-methods-buffer 1)))
-  
+
   (global-set-key (kbd "<C-f11>") 'ecb-toggle-compile-window)
   )
 
@@ -276,18 +276,19 @@ little more place."
    '(sr-speedbar-right-side nil)))
 
 (defun toggle-code-browser ()
+  "Toggle code browser."
   (interactive)
   (if restaurant/code-browser-switch-to-simple
       (sr-speedbar-toggle)
     (or (ecb-toggle-ecb-windows)
-	(call-interactively 'ecb-activate))))
+  (call-interactively 'ecb-activate))))
 
 (global-set-key (kbd "<f11>") 'toggle-code-browser)
 
 (add-hook 'emacs-startup-hook '(lambda ()
-				 (when (not noninteractive)
-				   (if restaurant/code-browser-switch-to-simple
-				       (sr-speedbar-open)
-				     (call-interactively 'ecb-activate)))))
+         (when (not noninteractive)
+           (if restaurant/code-browser-switch-to-simple
+               (sr-speedbar-open)
+             (call-interactively 'ecb-activate)))))
 
-;;;;; config-ecb.el ends here ---
+;;; restaurant-codebrowser.el ends here

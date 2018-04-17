@@ -44,8 +44,8 @@
 ;;;; Global default configuration parameters
 
 (custom-set-variables
- '(yes-or-no-p 'y-or-n-p)		;replace y-e-s by y
- '(inhibit-startup-message t)		;no splash screen
+ '(yes-or-no-p 'y-or-n-p)   ;replace y-e-s by y
+ '(inhibit-startup-message t)   ;no splash screen
  ;; backup
  '(make-backup-files restaurant/autobackup)
  '(use-backup-dir restaurant/autobackup) ;use backup directory
@@ -181,9 +181,9 @@
  )
 
 (global-set-key "\M-x" (lambda ()
-			 (interactive)
-			 (call-interactively (intern (ido-completing-read
-						      "M-x " (all-completions "" obarray 'commandp))))))
+       (interactive)
+       (call-interactively (intern (ido-completing-read
+                  "M-x " (all-completions "" obarray 'commandp))))))
 ;; set key to enable whitespace mode
 (global-set-key (kbd "C-c w") 'whitespace-mode)
 (global-set-key (kbd "C-c C-w") 'whitespace-mode)
@@ -213,8 +213,8 @@
 ;;;
 
 (defvar restaurant-max-line-length (concat "^[^\n]\\{"
-					   (number-to-string restaurant/max-line-length)
-					   "\\}\\(.*\\)$"))
+             (number-to-string restaurant/max-line-length)
+             "\\}\\(.*\\)$"))
 
 ;;;
 ;;; activate generic options
@@ -241,7 +241,7 @@
   (setq indent-tabs-mode restaurant/indent-tabs-mode)
   ;; highlight-symbol-mode
   (highlight-symbol-mode restaurant/highlight-symbol)
-  
+
   (local-set-key (kbd "C-c C-f") 'flash-cross)
   (local-set-key (kbd "RET") 'newline-and-indent)
 
@@ -254,8 +254,8 @@
 ;;
 (when (and restaurant/check-parens-before-save buffer-file-name)
   (add-hook 'before-save-hook
-	    'check-parens
-	    nil t))
+      'check-parens
+      nil t))
 
 ;; magit-gh-pulls
 (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
@@ -312,11 +312,11 @@
   ;; highlight too long lines
   (when restaurant/highlight-too-long-lines
     (let ((restaurant-max-line-length (concat "^[^\n]\\{"
-					      (number-to-string restaurant/max-line-length)
-					      "\\}\\(.*\\)$"))
-	  (restaurant-previous-max-line-length (concat "^[^\n]\\{"
-						       (number-to-string restaurant-last-max-line-length)
-						       "\\}\\(.*\\)$")))
+                (number-to-string restaurant/max-line-length)
+                "\\}\\(.*\\)$"))
+    (restaurant-previous-max-line-length (concat "^[^\n]\\{"
+                   (number-to-string restaurant-last-max-line-length)
+                   "\\}\\(.*\\)$")))
       (font-lock-remove-keywords nil (list (list (concat "^[^\n]\\{" restaurant-previous-max-line-length "\\}\\(.*\\)$") 1 font-lock-warning-face t)))
       (font-lock-add-keywords nil (list (list restaurant-max-line-length 1 font-lock-warning-face t)))))
   (setq restaurant-max-line-length restaurant/max-line-length))
@@ -379,7 +379,7 @@
 
 ;;;; Notify result from compilation buffer
 (add-to-list 'compilation-finish-functions
-	     'notify-compilation-result)
+       'notify-compilation-result)
 
 ;;;
 ;;; helm-swoop
@@ -406,7 +406,7 @@
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")
-			 ("org" . "http://orgmode.org/elpa/")))
+       ("org" . "http://orgmode.org/elpa/")))
 
 (package-initialize)
 
@@ -416,13 +416,13 @@
 (when restaurant/clear-autobackups
   (message "Deleting old backup files...")
   (let ((week (* 60 60 24 7))
-	(current (float-time (current-time))))
+  (current (float-time (current-time))))
     (dolist (file (directory-files temporary-file-directory t))
       (when (and (backup-file-name-p file)
-		 (> (- current (float-time (fifth (file-attributes file))))
-		    week))
-	(message "%s" file)
-	(delete-file file)))))
+     (> (- current (float-time (fifth (file-attributes file))))
+        week))
+  (message "%s" file)
+  (delete-file file)))))
 
 ;; set scratch message
 (setq initial-scratch-message ";; Welcome to Restaurant's CUTTING BOARD\n;; Feel free to use it, like your scratchpad\n;; and perform temporary text editings here\n")
@@ -431,8 +431,8 @@
   ;; Rename scratch buffer
   (if (and (get-buffer "*scratch*") (not (get-buffer "scratch")))
       (with-current-buffer "*scratch*"
-	(rename-buffer "*cutting-board*")
-	;;
-	(insert (propertize initial-scratch-message)))))
+  (rename-buffer "*cutting-board*")
+  ;;
+  (insert (propertize initial-scratch-message)))))
 
 ;;; restaurant-common.el ends here

@@ -43,11 +43,6 @@
   "Compilation mode for Bundler output."
   (add-hook 'compilation-filter-hook 'restaurant/colorize-compilation-buffer nil t))
 
-(defun bundle-command (cmd)
-  "Run CMD in an async buffer."
-  (let ((default-directory (bundle-locate-gemfile)))
-    (compile cmd 'bundler-compilation-mode)))
-
 (defun bundle-install-restaurant-gems ()
   (interactive)
   (when restaurant/enable-rvm
