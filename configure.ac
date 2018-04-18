@@ -46,6 +46,7 @@ AC_SUBST(EMACS)
 AC_SUBST(BUILD_OPTIONS, ["--without-pop --with-gnutls"])
 AC_SUBST(BYTE_COMPILE_P)
 AC_SUBST(STATIC)
+AC_SUBST(EMACS_NAME, restaurant-bin)
 
 # Checks for programs.
 AC_ARG_WITH(gui,      [  --with-gui=TOOLKIT      use gtk2, gtk3, motif, athena, no (default gtk3)], GUI_TOOLKIT=$withval, GUI_TOOLKIT="gtk3")

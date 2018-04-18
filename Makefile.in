@@ -32,7 +32,7 @@ ARCHIVE_NAME=$(shell basename @EMACS_URI@)
 ## f*king github with its name conventions!
 SOURCE_DIR=emacs-$(shell basename @EMACS_URI@ .tar.gz)
 EMACS_VERSION=$(shell echo $(SOURCE_DIR) | cut -d'-' -f3)
-LOCAL_EMACS=@LOCAL_EMACS_DIR@/bin/emacs
+LOCAL_EMACS=@LOCAL_EMACS_DIR@/bin/@EMACS_NAME@
 CURRENT_DIR=$(shell pwd)
 LDLIB=$LD_LIBRARY_PATH:${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/
 INSTANCES=''
@@ -63,7 +63,7 @@ else
 	@cd @BUILD_DIR@/${SOURCE_DIR} && \
 	autoreconf -fi -I m4
 	cd @BUILD_DIR@/${SOURCE_DIR} && \
-	./configure CFLAGS=@EMACS_CFLAGS@ --prefix=/ --with-x-toolkit=@GUI_TOOLKIT@ @BUILD_OPTIONS@ && \
+	./configure CFLAGS=@EMACS_CFLAGS@ --prefix=/ --with-x-toolkit=@GUI_TOOLKIT@ --program-transform-name=s,emacs,@EMACS_NAME@, @BUILD_OPTIONS@ && \
 	make && \
 	make install DESTDIR=@BUILD_DIR@/emacs-build
 	@echo "Preparing to working state"
@@ -82,7 +82,7 @@ endif
 
 libdeps: emacs
 	@mkdir -p ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/
-	@for i in `ldd ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/bin/emacs | grep -vE 'libc.so.6|libpthread.so.0' | awk '{print $$3}'`; do \
+	@for i in `ldd ${CURRENT_DIR}/${LOCAL_EMACS} | grep -vE 'libc.so.6|libpthread.so.0' | awk '{print $$3}'`; do \
 		cp -rH $$i ${CURRENT_DIR}/@LOCAL_EMACS_DIR@/lib/; \
 	done
 

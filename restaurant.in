@@ -6,6 +6,8 @@ ME=$(readlink -f $0)
 MYDIR=$(dirname $ME)
 REQUIRED_PACKAGES="git"
 OS="$(which lsb_release 2>/dev/null >/dev/null && lsb_release -s -i)"
+LOCAL_EMACS=@LOCAL_EMACS_DIR@/bin/@EMACS_NAME@
+
 if [ $OS == 'Debian' ] || [ $OS == 'Ubuntu' ]; then
     ## optimize libgecode
     export USE_SYSTEM_GECODE=1
@@ -46,8 +48,8 @@ done
 
 if [ ! -z $EMACS ]; then
     :
-elif [ -x $MYDIR/@LOCAL_EMACS_DIR@/bin/emacs ]; then
-    export EMACS=$MYDIR/@LOCAL_EMACS_DIR@/bin/emacs
+elif [ -x $MYDIR/$LOCAL_EMACS ]; then
+    export EMACS=$MYDIR/$LOCAL_EMACS
     export EMACSDATA=$MYDIR/@LOCAL_EMACS_DIR@/etc/
     export LD_LIBRARY_PATH=${MYDIR}/emacs/lib/:"$(ld --verbose | grep SEARCH_DIR | tr -s ' ;' ':' | sed 's/SEARCH_DIR("\=//g;s/")//g;s/:$//g')"
     
