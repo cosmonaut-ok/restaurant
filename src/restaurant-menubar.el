@@ -548,6 +548,15 @@
   [menu-bar run shell-command]
   '("Shell Command" . shell-command))
 
+;;;; whitespace mode
+(define-key global-map
+  [menu-bar tools whitespace-mode]
+  '("Highlight Whitespaces" . whitespace-mode))
+
+(define-key global-map
+  [menu-bar tools highlight-regexp]
+  '("Highlight Word Or Regexp" . highlight-regexp))
+
 (define-key prog-mode-map
   [menu-bar run shell-command-separator-2]
   '("--" nil :visible))
@@ -565,6 +574,8 @@
 (define-key global-map
   [menu-bar tools inf-ruby]
   '( "Interactive Ruby Console" . inf-ruby))
+
+
 
 ;;;
 ;;; package management

@@ -57,3 +57,68 @@ Other linuxes officially not supported, and Restaurant is not tested on it. But 
 WARNING: Restaurant is not working on systems with glibc < 2.18. But, you can try to use external emacs to run Restaurant.
 
 You can use Restaurant with external emacs, built for your OS. Just run `EMACS=/path/to/emacs ./restaurant` (of course, it is not tested with it too).
+
+## Keybindings
+
+### General
+
+* `Shift+F1` Restaurant Keybindings Help
+
+* `F11` - toggle code browser
+* `Ctrl+F11` - toggle compile window (bottom)
+* `Shift+TAB` - complete at point
+* `Ctrl+TAB` - expand from template at point
+
+### Toggle interactive consoles
+
+* `Ctrl+F12` open ruby interactive console (based on PRY)
+* `F12` open built-in shell terminal
+* `Shift+F12` open elisp interactive console
+
+### Kitchen-specific
+
+* `F9` run `kitchen converge` (choose instance from drop-down menu)
+* `Shift+F9` run `kitchen verify` (choose instance from drop-down menu)
+* `Ctrl+F9` run `kitchen converge` for all available instances
+* `Ctrl+Shift+F9` run `kitchen verify` for all available instances
+
+### Linters
+
+* `F5` foodcritic current chef cookbook
+* `Shift+F5` foodcritic current cookbook file
+
+* `F6` check current cookbook with rubocop (with respect to cookstyle)
+* `Shift-F6` current file with rubocop (with respect to cookstyle)
+
+### Unit Testing (rspec/chefspec)
+
+* `F8` run all rspec unit tests
+* `Ctrl+F8` run rspec tests, described only in current file
+* `Shift+F8` run single rspec test (under cursor)
+
+### Search/Highlight
+
+* `F7` search
+* `Alt+F7` search in project (bound to repository directory)
+
+* `Shift+F7` highlight word/regexp in current file
+* `Ctrl+Shift+F7` highlight word/regexp in current file
+* `Ctrl+c w`, `Ctrl+c Ctrl+w` (un)highlight whitespaces in current file
+* `Ctrl+c Ctrl+f` flash-cross
+
+### JSON-specific
+
+* `Ctrl+Alt+q` json-reformat-region
+* `Ctrl+c Ctrl+g` jsons-print-path
+
+### Other
+
+* `Ctrl+F3` select ruby version from rvm-installed (like `rvm use`)
+* `Shift+F3` run `bundle update` command in current project
+* `F3` run `berks update` command in current project
+* `Shift+SPC` hs-toggle-hiding
+
+
+
+
+Ctrl+Alt+S helm-swoop -> TODO: REMOVE
