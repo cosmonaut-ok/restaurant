@@ -17,7 +17,7 @@
     "foodcritic" "rvm" "codebrowser" "markdown"
     "yaml" "json" "web" "erb" "fly" "popup-menu"
     "shell-script" "menubar" "toolbar" "theme"
-    "help"))
+    "help" "helm"))
 
 ;; loading initial user-directories file
 (let ((ud-file (concat restaurant/source-directory "src/restaurant-user-directories.el")))
@@ -47,7 +47,8 @@
  '(ede-project-placeholder-cache-file (locate-user-cache-file "restaurant-ede-projects.el"))
  '(semanticdb-default-save-directory (locate-user-cache-file "restaurant-semanticdb"))
  '(srecode-map-save-file (locate-user-cache-file "restaurant-srecode-map.el"))
- '(ido-save-directory-list-file (locate-user-cache-file "ido.last")))
+ ;; '(ido-save-directory-list-file (locate-user-cache-file "ido.last"))
+ )
 
 ;; create custom file if it does not exists
 (unless (file-exists-p custom-file)

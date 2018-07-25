@@ -67,6 +67,12 @@
     "company-inf-ruby"
     "company-quickhelp"
     "company-web"
+    ;; helm
+    "helm"
+    "helm-robe"
+    "helm-company"
+    "helm-projectile"
+    "helm-shell-history"
     ;; markdown
     "markdown-mode"
     "markdown-preview-mode"
@@ -98,10 +104,10 @@
     "yasnippets"
     ;; "yasnippet-snippets" ;; yasnippet/snippets are the same
     "projectile"
-    "ido-ubiquitous" ;; needed for magit
-    "ido-hacks"
-    "ido-vertical-mode"
-    "ido-better-flex"
+    ;; "ido-ubiquitous" ;; needed for magit
+    ;; "ido-hacks"
+    ;; "ido-vertical-mode"
+    ;; "ido-better-flex"
     "drag-stuff" ;; move lines/regions up/down
     "ssh"
     ;; notifications support

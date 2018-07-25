@@ -166,31 +166,32 @@
 
 ;;;; ido
 ;; https://github.com/magnars/.emacs.d/blob/master/settings/setup-ido.el
-(require 'ido)
-(require 'ido-vertical-mode)
-(require 'ido-completing-read+)
-;;
-(ido-mode 1)
-(ido-vertical-mode 1)
-(ido-better-flex/enable)
+;; (require 'ido)
+;; (require 'ido-vertical-mode)
+;; (require 'ido-completing-read+)
+;; ;;
+;; (ido-mode 1)
+;; (ido-vertical-mode 1)
+;; (ido-better-flex/enable)
 
-(custom-set-variables
- '(ido-vertical-show-count t)
- '(ido-enable-flex-matching t)
- '(ido-vertical-define-keys 'C-n-C-p-up-and-down)
- )
+;; (custom-set-variables
+;;  '(ido-vertical-show-count t)
+;;  '(ido-enable-flex-matching t)
+;;  '(ido-vertical-define-keys 'C-n-C-p-up-and-down)
+;;  )
 
-(global-set-key "\M-x" (lambda ()
-       (interactive)
-       (call-interactively (intern (ido-completing-read
-                  "M-x " (all-completions "" obarray 'commandp))))))
+;; (global-set-key "\M-x" (lambda ()
+;;        (interactive)
+;;        (call-interactively (intern (ido-completing-read
+;;                   "M-x " (all-completions "" obarray 'commandp))))))
+
 ;; set key to enable whitespace mode
 (global-set-key (kbd "C-c w") 'whitespace-mode)
 (global-set-key (kbd "C-c C-w") 'whitespace-mode)
 
 ;; set ido-completing-read as default completing function
-(setq ido-cr+-replace-completely t)
-(setq-default completing-read-function 'ido-completing-read)
+;; (setq ido-cr+-replace-completely t)
+;; (setq-default completing-read-function 'ido-completing-read)
 
 ;;;; If we read a compressed file, uncompress it on the fly:
 ;;;; (this works with .tar.gz and .tgz file as well)
@@ -231,7 +232,7 @@
   ;; projectile
   (require 'projectile)
   ;; magit
-  (setq magit-completing-read-function 'magit-ido-completing-read)
+  ;; (setq magit-completing-read-function 'magit-ido-completing-read)
   ;;
   (subword-mode 1)
   (font-lock-mode 1)

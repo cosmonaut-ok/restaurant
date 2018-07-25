@@ -75,7 +75,7 @@
               text))
     (candidates (predictive-complete arg))))
 
-(restaurant/local-push-company-backend 'company-predictive)
+;; (restaurant/local-push-company-backend 'company-predictive)
 
 ;;
 (restaurant/local-push-company-backend 'company-files)
