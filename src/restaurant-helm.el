@@ -1,4 +1,4 @@
-(progn
+;; (progn
   (require 'helm-config)
   (require 'helm-grep)
   ;; To fix error at compile:
@@ -66,7 +66,7 @@
 	helm-locate-fuzzy-match t
 	helm-display-header-line nil)
 
-  (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
+(add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
 
   (global-set-key (kbd "M-x") 'helm-M-x)
   (global-set-key (kbd "M-y") 'helm-show-kill-ring)
@@ -130,7 +130,7 @@
   ;; 	       (setq helm-swoop-speed-or-color t))
 
   (helm-mode 1)
-)
+;; )
   ;; (use-package helm-projectile
   ;; 	       :init
   ;; 	       (helm-projectile-on)

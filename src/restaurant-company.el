@@ -80,4 +80,13 @@
 ;;
 (restaurant/local-push-company-backend 'company-files)
 
+;; helm-company
+(require 'helm-company)
+(eval-after-load 'company
+  '(progn
+     (define-key company-mode-map (kbd "C-:") 'helm-company)
+     (define-key company-active-map (kbd "C-:") 'helm-company)
+     ;; (helm-company-init)
+     ))
+
 ;;; restaurant-company.el ends here

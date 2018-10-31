@@ -17,7 +17,7 @@
     "foodcritic" "rvm" "codebrowser" "markdown"
     "yaml" "json" "web" "erb" "fly" "popup-menu"
     "shell-script" "menubar" "toolbar" "theme"
-    "help" "helm"))
+    "help"))
 
 ;; loading initial user-directories file
 (let ((ud-file (concat restaurant/source-directory "src/restaurant-user-directories.el")))

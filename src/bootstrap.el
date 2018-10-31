@@ -73,6 +73,7 @@
     "helm-company"
     "helm-projectile"
     "helm-shell-history"
+    "helm-swoop"
     ;; markdown
     "markdown-mode"
     "markdown-preview-mode"
