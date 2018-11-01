@@ -81,6 +81,10 @@
     "web-mode"
     "web-completion-data"
     "mmm-mode"
+    ;; terraform
+    "terraform-mode"
+    ;; docker
+    "dockerfile-mode"
     ;; other
     "ecb"
     "sr-speedbar"

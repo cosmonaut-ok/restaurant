@@ -21,6 +21,7 @@ gem 'activesupport', '~> 5.1.5'
 gem 'dep_selector', '~> 1.0.6'
 gem 'cookstyle', '~> 2.1.0'
 gem 'reek', '~> 4.8.1'
+gem 'graphql', '~> 1.8.11'
 group :metrics do
   gem 'simplecov', require: false
 end
