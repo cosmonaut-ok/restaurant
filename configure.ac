@@ -34,7 +34,7 @@ m4_define([M4_RESTAURANT_VERSION], m4_esyscmd(grep autoconf-anchor src/restauran
 AC_INIT([Restaurant Chef IDE], [M4_RESTAURANT_VERSION], cosmonaut.ok@zoho.com)
 
 AC_SUBST(RESTAURANT_VERSION, M4_RESTAURANT_VERSION)
-AC_SUBST(EMACS_URI, https://github.com/emacs-mirror/emacs/archive/emacs-25.3.tar.gz)
+AC_SUBST(EMACS_URI, https://github.com/emacs-mirror/emacs/archive/emacs-26.1.tar.gz)
 AC_SUBST(EMACS_RESTAURANT_URI, https://sourceforge.net/projects/restaurant-ide/files/static/emacs-restaurant.tar.gz/download)
 AC_SUBST(ELGET_RESTAURANT_URI, https://sourceforge.net/projects/restaurant-ide/files/static/el-get-packages.tar.gz/download)
 AC_SUBST(EMACS_CFLAGS)
