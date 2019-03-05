@@ -46,8 +46,7 @@
 (custom-set-variables
  '(ede-project-placeholder-cache-file (locate-user-cache-file "restaurant-ede-projects.el"))
  '(semanticdb-default-save-directory (locate-user-cache-file "restaurant-semanticdb"))
- '(srecode-map-save-file (locate-user-cache-file "restaurant-srecode-map.el"))
- '(ido-save-directory-list-file (locate-user-cache-file "ido.last")))
+ '(srecode-map-save-file (locate-user-cache-file "restaurant-srecode-map.el")))
 
 ;; create custom file if it does not exists
 (unless (file-exists-p custom-file)

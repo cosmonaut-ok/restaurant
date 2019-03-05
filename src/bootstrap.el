@@ -61,6 +61,13 @@
     "rvm"
     "yari"
     "bundler"
+    ;; python
+    "python"
+    "python-mode"
+    "pymacs"
+    "python-environment"
+    "company-jedi"
+    "autopair"
     ;; "rspec-mode" ;; moved to scripts
     ;; completion
     "company-mode"
@@ -83,8 +90,23 @@
     "mmm-mode"
     ;; terraform
     "terraform-mode"
+    ;; jenkins
+    "jenkins"
     ;; docker
     "dockerfile-mode"
+    ;; helm
+    "helm"
+    "helm-company"
+    "helm-dictionary"
+    "helm-gtags"
+    "helm-ipython"
+    "helm-projectile"
+    "helm-pydoc"
+    "helm-robe"
+    "helm-shell"
+    "helm-shell-history"
+    "helm-themes"
+    "helm-swoop"
     ;; other
     "ecb"
     "sr-speedbar"
@@ -102,10 +124,6 @@
     "yasnippets"
     ;; "yasnippet-snippets" ;; yasnippet/snippets are the same
     "projectile"
-    "ido-ubiquitous" ;; needed for magit
-    "ido-hacks"
-    "ido-vertical-mode"
-    "ido-better-flex"
     "drag-stuff" ;; move lines/regions up/down
     "ssh"
     ;; notifications support
